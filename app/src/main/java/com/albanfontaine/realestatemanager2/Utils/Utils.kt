@@ -22,7 +22,7 @@ class Utils{
          * @return
          */
         fun getTodayDate(): String {
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
             return dateFormat.format(Date())
         }
 
@@ -33,7 +33,7 @@ class Utils{
          * @return
          */
         fun isInternetAvailable(context: Context): Boolean {
-            val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val network = cm.activeNetworkInfo
             return wifi.isWifiEnabled && network != null && network!!.isConnectedOrConnecting()

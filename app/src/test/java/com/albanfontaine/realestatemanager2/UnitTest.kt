@@ -19,4 +19,9 @@ class UnitTest{
         assertEquals(92, convertEuroToDollar(euros))
     }
 
+    @Test
+    fun checkInternetConnectionTest(){
+
+    }
+
 }

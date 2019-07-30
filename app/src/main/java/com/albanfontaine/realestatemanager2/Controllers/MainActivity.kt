@@ -1,7 +1,7 @@
 package com.albanfontaine.realestatemanager2.Controllers
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.albanfontaine.realestatemanager2.R
 
 class MainActivity : AppCompatActivity() {
