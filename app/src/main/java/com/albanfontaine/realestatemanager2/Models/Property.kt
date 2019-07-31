@@ -1,5 +1,5 @@
 package com.albanfontaine.realestatemanager2.Models
 
-data class Property(val type: String, val price: Int, val surface: Double, val roomNumber: Int, val description: String, val photos: Array<Photo>,
-                    val address: String, val pointsOfInterest: String, var available: Boolean, val marketEntryDate:String,
-                    val sellDate: String, val agent: User)
+data class Property(var type: String, var price: Int, var surface: Double, var roomNumber: Int, var description: String, var photos: Array<Photo>,
+                    var address: String, var pointsOfInterest: String?, var available: Boolean = true, var marketEntryDate:String,
+                    var sellDate: String? = null, var agent: String)
