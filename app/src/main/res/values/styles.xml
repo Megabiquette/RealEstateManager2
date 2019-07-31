@@ -20,4 +20,9 @@
         <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorSecondary">@android:color/background_light</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
 </resources>
