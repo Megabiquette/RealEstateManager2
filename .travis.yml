@@ -4,7 +4,7 @@ language: android
 env:
   global:
   - EMULATOR_API_LEVEL=22
-  - ADB_INSTALL_TIMEOUT=5
+  - ADB_INSTALL_TIMEOUT=8
 
 android:
   components:
