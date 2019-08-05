@@ -1,4 +1,4 @@
-package com.albanfontaine.realestatemanager2.Controllers
+package com.albanfontaine.realestatemanager2.controllers
 
 
 import android.os.Bundle

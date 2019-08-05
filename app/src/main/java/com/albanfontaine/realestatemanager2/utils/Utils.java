@@ -1,9 +1,7 @@
-package com.albanfontaine.realestatemanager2.Utils;
+package com.albanfontaine.realestatemanager2.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

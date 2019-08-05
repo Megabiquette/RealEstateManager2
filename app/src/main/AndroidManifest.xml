@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -12,30 +14,30 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/REMTheme">
-        <activity android:name=".Controllers.EditActivity"
+        <activity android:name=".controllers.EditActivity"
                   android:label="Editer un bien"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".Controllers.MainActivity"/>
+                    android:value=".controllers.MainActivity"/>
         </activity>
-        <activity android:name=".Controllers.SearchActivity"
+        <activity android:name=".controllers.SearchActivity"
                   android:label="Rechercher un bien"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".Controllers.MainActivity"/>
+                    android:value=".controllers.MainActivity"/>
         </activity>
         <activity
-                android:name=".Controllers.AddActivity"
+                android:name=".controllers.AddActivity"
                 android:label="Ajouter un bien"
                 android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".Controllers.MainActivity"/>
+                    android:value=".controllers.MainActivity"/>
         </activity>
         <activity
-                android:name=".Controllers.MainActivity"
+                android:name=".controllers.MainActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

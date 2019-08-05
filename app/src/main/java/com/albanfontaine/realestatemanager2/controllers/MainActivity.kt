@@ -1,8 +1,7 @@
-package com.albanfontaine.realestatemanager2.Controllers
+package com.albanfontaine.realestatemanager2.controllers
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
