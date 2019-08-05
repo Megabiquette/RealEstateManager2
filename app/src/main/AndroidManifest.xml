@@ -12,8 +12,31 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/REMTheme">
-        <activity android:name=".Controllers.MainActivity"
+        <activity android:name=".Controllers.EditActivity"
+                  android:label="Editer un bien"
                   android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".Controllers.MainActivity"/>
+        </activity>
+        <activity android:name=".Controllers.SearchActivity"
+                  android:label="Rechercher un bien"
+                  android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".Controllers.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".Controllers.AddActivity"
+                android:label="Ajouter un bien"
+                android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".Controllers.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".Controllers.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>

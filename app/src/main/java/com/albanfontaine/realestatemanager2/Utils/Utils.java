@@ -37,10 +37,8 @@ public class Utils {
      * @return
      */
     public static Boolean isInternetAvailable(Context context){
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = cm.getActiveNetworkInfo();
-        return wifi.isWifiEnabled() && network != null && network.isConnectedOrConnecting();
+        return cm.getActiveNetworkInfo() != null;
     }
 
     /**

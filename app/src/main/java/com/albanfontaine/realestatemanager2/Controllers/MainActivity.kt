@@ -1,5 +1,6 @@
 package com.albanfontaine.realestatemanager2.Controllers
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -25,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
-            R.id.toolbar_add -> Log.e("menu", "add")
-            R.id.toolbar_edit -> Log.e("menu", "edit")
-            R.id.toolbar_search -> Log.e("menu", "search")
+        val activityClass = when(item?.itemId){
+            R.id.toolbar_add -> AddActivity::class.java
+            R.id.toolbar_edit -> EditActivity::class.java
+            R.id.toolbar_search -> SearchActivity::class.java
             else -> return true
         }
+        val intent = Intent(this, activityClass)
+        startActivity(intent)
         return true
     }
 

@@ -5,7 +5,10 @@
     <string name="toolbar_menu_edit">Editer</string>
     <string name="toolbar_menu_search">Recherche</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="property_card_surface">Surface</string>
+    <string name="property_card_number_rooms">Nombre de pieces</string>
+    <string name="property_card_locationn">Emplacement</string>
+    <string name="property_card_POIs">A proximité</string>
+
 
 </resources>
