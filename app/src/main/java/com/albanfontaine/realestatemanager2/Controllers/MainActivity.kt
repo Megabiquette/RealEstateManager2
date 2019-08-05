@@ -2,8 +2,7 @@ package com.albanfontaine.realestatemanager2.Controllers
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         configureToolbar()
+        showFragment()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
             else -> return true
         }
         return true
+    }
+
+    private fun showFragment(){
+        supportFragmentManager.beginTransaction()
+            .add(R.id.activity_base_frame_layout, ListFragment())
+            .commit()
     }
 
     ///////////////////

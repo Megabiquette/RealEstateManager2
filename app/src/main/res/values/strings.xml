@@ -5,4 +5,7 @@
     <string name="toolbar_menu_edit">Editer</string>
     <string name="toolbar_menu_search">Recherche</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
