@@ -1,14 +1,33 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
 
-    <string name="toolbar_menu_add">Ajouter</string>
-    <string name="toolbar_menu_edit">Editer</string>
-    <string name="toolbar_menu_search">Recherche</string>
+    <string name="toolbar_menu_add">Add</string>
+    <string name="toolbar_menu_edit">Edit</string>
+    <string name="toolbar_menu_search">Search</string>
 
-    <string name="property_card_surface">Surface</string>
-    <string name="property_card_number_rooms">Nombre de pieces</string>
-    <string name="property_card_locationn">Emplacement</string>
-    <string name="property_card_POIs">A proximité</string>
+    <string name="property_type">Type:</string>
+    <string name="property_price">Price:</string>
+    <string name="property_surface">Surface:</string>
+    <string name="property_numberRooms">Number of rooms:</string>
+    <string name="property_description">Description:</string>
+    <string name="property_location">Location:</string>
+    <string name="property_POIs">Points of interest:</string>
+    <string name="dollar_sign">$</string>
+    <string name="square_meters">m²</string>
+    <string name="property_available">Available</string>
+    <string name="property_entry_date">Entry date:</string>
+    <string name="property_sale_date">Sale date:</string>
+    <string name="property_agent">Agent in charge:</string>
+    <string name="property_button_add_media">Add media</string>
+    <string name="property_medias_added">%1d media(s) added</string>
+    <string name="property_button_add_property">Add property</string>
 
+
+    <string-array name="property_types">
+        <item>Flat</item>
+        <item>House</item>
+        <item>Loft</item>
+        <item>Manor</item>
+    </string-array>
 
 </resources>

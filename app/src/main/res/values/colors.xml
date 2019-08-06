@@ -7,5 +7,6 @@
     <color name="background_light">#fafafa</color>
     <color name="background_gray">#eeeeee</color>
     
-    <color name="text_normal_dark">#8a000000</color>
+    <color name="text_normal_dark">#DF000000</color>
+    <color name="text_normal_gray">#BA1D1D1D</color>
 </resources>
