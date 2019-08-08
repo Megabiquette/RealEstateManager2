@@ -5,6 +5,13 @@
     <string name="toolbar_menu_edit">Edit</string>
     <string name="toolbar_menu_search">Search</string>
 
+    <string-array name="property_types">
+        <item>Flat</item>
+        <item>House</item>
+        <item>Loft</item>
+        <item>Manor</item>
+    </string-array>
+
     <string name="property_type">Type:</string>
     <string name="property_price">Price:</string>
     <string name="property_surface">Surface:</string>
@@ -19,15 +26,16 @@
     <string name="property_sale_date">Sale date:</string>
     <string name="property_agent">Agent in charge:</string>
     <string name="property_button_add_media">Add media</string>
-    <string name="property_medias_added">%1d media(s) added</string>
+    <plurals name="property_medias_added">
+        <item quantity="one">%1d media added</item>
+        <item quantity="other">%1d medias added</item>
+    </plurals>
     <string name="property_button_add_property">Add property</string>
-
-
-    <string-array name="property_types">
-        <item>Flat</item>
-        <item>House</item>
-        <item>Loft</item>
-        <item>Manor</item>
-    </string-array>
+    <string name="media_dialog_title">Add media</string>
+    <string name="media_dialog_message">Choose media source</string>
+    <string name="media_dialog_gallery">From gallery</string>
+    <string name="media_dialog_take_photo">Take photo</string>
+    <string name="media_dialog_cancel">Cancel</string>
+    <string name="media_dialog_no_cam">No camera found on device</string>
 
 </resources>

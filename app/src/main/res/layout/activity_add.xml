@@ -1,257 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".controllers.AddActivity"
-        android:orientation="vertical">
+        tools:context=".controllers.AddActivity">
 
-    <include
-            layout="@layout/toolbar"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginTop="@dimen/item_margin_top"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_type"/>
-        <Spinner
-                android:id="@+id/add_activity_type_spinner"
-                android:layout_width="@dimen/field_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:layout_marginEnd="@dimen/item_margin_horizontal"/>
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_description"/>
-        <EditText
-                android:id="@+id/add_activity_description_editText"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="2000"
-                android:maxLines="8" />
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_price"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:text="@string/dollar_sign"
-                android:textSize="@dimen/text_title"/>
-        <EditText
-                android:id="@+id/add_activity_price_editText"
-                android:layout_width="@dimen/field_width"
+        <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-    </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_surface"/>
-        <EditText
-                android:id="@+id/add_activity_surface_editText"
-                android:layout_width="@dimen/field_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/square_meters"
-                android:textSize="@dimen/text_title"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginTop="@dimen/item_margin_top"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_type"/>
+            <Spinner
+                    android:id="@+id/add_activity_type_spinner"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:layout_marginEnd="@dimen/item_margin_horizontal"/>
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_numberRooms"/>
-        <EditText
-                android:id="@+id/add_activity_numberRooms_editText"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_description"/>
+            <EditText
+                    android:id="@+id/add_activity_description_editText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLength="2000"
+                    android:maxLines="8" />
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_location"/>
-        <EditText
-                android:id="@+id/add_activity_location_editText"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="2000"
-                android:maxLines="6" />
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_price"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:text="@string/dollar_sign"
+                    android:textSize="@dimen/text_title"/>
+            <EditText
+                    android:id="@+id/add_activity_price_editText"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:maxLength="20"/>
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_POIs"/>
-        <EditText
-                android:id="@+id/add_activity_POIs_editText"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="2000"
-                android:maxLines="6" />
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_surface"/>
+            <EditText
+                    android:id="@+id/add_activity_surface_editText"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="7"
+                    android:textAlignment="viewEnd"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/square_meters"
+                    android:textSize="@dimen/text_title"/>
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_available"/>
-        <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/add_activity_available_checkBox"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_numberRooms"/>
+            <EditText
+                    android:id="@+id/add_activity_numberRooms_editText"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"/>
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_entry_date"/>
-        <EditText
-                android:id="@+id/add_activity_entry_date_editText"
-                android:layout_width="@dimen/field_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_location"/>
+            <EditText
+                    android:id="@+id/add_activity_location_editText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLength="2000"
+                    android:maxLines="6" />
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_sale_date"/>
-        <EditText
-                android:id="@+id/add_activity_sale_date_editText"
-                android:layout_width="@dimen/field_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_POIs"/>
+            <EditText
+                    android:id="@+id/add_activity_POIs_editText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLength="2000"
+                    android:maxLines="6" />
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal"  >
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_agent"/>
-        <EditText
-                android:id="@+id/add_activity_agent_editText"
-                android:layout_width="@dimen/field_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"/>
-    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_available"/>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/add_activity_available_checkBox"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+        </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/field_padding"
-                  android:layout_marginStart="@dimen/item_margin_horizontal"
-                  android:layout_marginEnd="@dimen/item_margin_horizontal" >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_entry_date"/>
+            <EditText
+                    android:id="@+id/add_activity_entry_date_editText"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_sale_date"/>
+            <EditText
+                    android:id="@+id/add_activity_sale_date_editText"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_agent"/>
+            <EditText
+                    android:id="@+id/add_activity_agent_editText"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/field_padding"
+                      android:layout_marginStart="@dimen/item_margin_horizontal"
+                      android:layout_marginEnd="@dimen/item_margin_horizontal" >
+            <Button
+                    android:id="@+id/add_activity_add_media_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_button_add_media"/>
+            <TextView
+                    android:id="@+id/add_activity_media_added_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    tools:text="0 medias added"/>
+        </LinearLayout>
+
         <Button
-                android:id="@+id/add_activity_add_media_button"
+                android:id="@+id/add_activity_add_property_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/property_button_add_media"/>
-        <TextView
-                android:id="@+id/add_activity_media_added_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:text="@string/property_medias_added"/>
+                android:layout_height="@dimen/field_button_height"
+                android:text="@string/property_button_add_property"
+                android:layout_marginTop="@dimen/item_margin_top"
+                android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
 
-    <Button
-            android:id="@+id/add_activity_add_property_button"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/field_button_height"
-            android:text="@string/property_button_add_property"
-            android:layout_marginTop="@dimen/item_margin_top"
-            android:layout_gravity="center_horizontal"/>
-
-
-
-</LinearLayout>
+</ScrollView>

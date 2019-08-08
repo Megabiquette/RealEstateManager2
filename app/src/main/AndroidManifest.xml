@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.albanfontaine.realestatemanager2">
 
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -15,14 +18,14 @@
             android:supportsRtl="true"
             android:theme="@style/REMTheme">
         <activity android:name=".controllers.EditActivity"
-                  android:label="Editer un bien"
+                  android:label="Edit property"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".controllers.MainActivity"/>
         </activity>
         <activity android:name=".controllers.SearchActivity"
-                  android:label="Rechercher un bien"
+                  android:label="Search property"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -30,7 +33,7 @@
         </activity>
         <activity
                 android:name=".controllers.AddActivity"
-                android:label="Ajouter un bien"
+                android:label="Add property"
                 android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

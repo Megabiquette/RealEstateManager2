@@ -6,9 +6,9 @@
     android:layout_height="wrap_content">
     
     <ImageView
-        android:id="@+id/list_item_image"
-        android:layout_width="128dp"
-        android:layout_height="128dp"/>
+        android:id="@+id/list_item_media"
+        android:layout_width="@dimen/item_media_width_height"
+        android:layout_height="@dimen/item_media_width_height"/>
 
     <LinearLayout
         android:layout_width="match_parent"

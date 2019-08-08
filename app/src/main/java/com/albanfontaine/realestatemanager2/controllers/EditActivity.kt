@@ -5,15 +5,18 @@ import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.toolbar.*
 
 class EditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        setContentView(R.layout.activity_add)
 
         configureToolbar()
+
+        val gson = Gson()
 
     }
 
