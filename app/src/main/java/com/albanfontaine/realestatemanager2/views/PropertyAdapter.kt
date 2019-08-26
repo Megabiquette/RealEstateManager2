@@ -16,7 +16,7 @@ class PropertyAdapter(var properties: List<Property>, var context: Context): Rec
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
-
+        holder.updateWithProperty(properties.get(position), context)
     }
 
     override fun getItemCount(): Int = properties.size

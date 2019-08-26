@@ -1,5 +1,21 @@
 package com.albanfontaine.realestatemanager2.models
 
-data class Property(var type: String, var price: Int, var surface: Double, var roomNumber: Int, var description: String, var media: Array<Media>,
-                    var address: String, var pointsOfInterest: String?, var available: Boolean = true, var marketEntryDate:String,
-                    var sellDate: String? = null, var agent: String)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Property(
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "type") var type: String,
+    @ColumnInfo(name = "price") var price: Int,
+    @ColumnInfo(name = "surface") var surface: Double,
+    @ColumnInfo(name = "room_number") var roomNumber: Int,
+    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "media") var media: Array<Media>,
+    @ColumnInfo(name = "address") var address: String,
+    @ColumnInfo(name = "points_of_interest") var pointsOfInterest: String?,
+    @ColumnInfo(name = "available") var available: Boolean = true,
+    @ColumnInfo(name = "market_entry_date") var marketEntryDate:String,
+    @ColumnInfo(name = "sell_date") var sellDate: String? = null,
+    @ColumnInfo(name = "agent") var agent: String)
