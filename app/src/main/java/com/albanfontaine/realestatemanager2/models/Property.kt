@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Property(
-    @PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "type") var type: String,
     @ColumnInfo(name = "price") var price: Int,
     @ColumnInfo(name = "surface") var surface: Double,

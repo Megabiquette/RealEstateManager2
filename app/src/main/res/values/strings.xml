@@ -35,7 +35,9 @@
     <string name="media_dialog_message">Choose media source</string>
     <string name="media_dialog_gallery">From gallery</string>
     <string name="media_dialog_take_photo">Take photo</string>
+    <string name="media_dialog_ok">Ok</string>
     <string name="media_dialog_cancel">Cancel</string>
+    <string name="media_dialog_add_description">Add description</string>
     <string name="media_dialog_no_cam">No camera found on device</string>
 
 </resources>
