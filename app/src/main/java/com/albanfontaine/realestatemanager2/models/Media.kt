@@ -5,9 +5,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(foreignKeys = arrayOf(ForeignKey(entity = Property::class, parentColumns = arrayOf("id"), childColumns = arrayOf("propertyId"))))
+@Entity(foreignKeys = [ForeignKey(entity = Property::class, parentColumns = arrayOf("id"), childColumns = arrayOf("property_id"))])
 data class Media(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="id") val id: Long,
     @ColumnInfo(name = "uri") val url: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "property_id") val propertyId: Int)
+    @ColumnInfo(name = "property_id", index = true) var propertyId: Int?)
