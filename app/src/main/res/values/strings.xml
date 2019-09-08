@@ -39,5 +39,6 @@
     <string name="media_dialog_cancel">Cancel</string>
     <string name="media_dialog_add_description">Add description</string>
     <string name="media_dialog_no_cam">No camera found on device</string>
+    <string name="property_error_0_media">You must add at least one media</string>
 
 </resources>

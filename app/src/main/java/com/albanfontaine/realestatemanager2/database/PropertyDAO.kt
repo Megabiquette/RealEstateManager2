@@ -1,6 +1,5 @@
 package com.albanfontaine.realestatemanager2.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,7 +9,7 @@ import com.albanfontaine.realestatemanager2.models.Property
 @Dao
 interface PropertyDAO{
     @Query("SELECT * FROM Property")
-    fun getProperties() : LiveData<List<Property>>
+    fun getProperties() : List<Property>
 
     @Insert
     fun insertProperty(property: Property) : Long

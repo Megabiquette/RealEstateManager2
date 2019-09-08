@@ -9,6 +9,6 @@ import androidx.room.PrimaryKey
 data class Media(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id") val id: Long,
-    @ColumnInfo(name = "uri") val url: String,
+    @ColumnInfo(name = "uri") val uri: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "property_id", index = true) var propertyId: Int?)
+    @ColumnInfo(name = "property_id", index = true) var propertyId: Long?)

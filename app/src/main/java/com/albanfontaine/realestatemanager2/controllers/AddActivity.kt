@@ -19,6 +19,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import com.albanfontaine.realestatemanager2.R
+import com.albanfontaine.realestatemanager2.database.AppDatabase
+import com.albanfontaine.realestatemanager2.database.MediaDAO
+import com.albanfontaine.realestatemanager2.database.PropertyDAO
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.utils.Constants
@@ -28,40 +31,46 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class AddActivity : AppCompatActivity() {
+    private var mMedias: ArrayList<Media> = ArrayList()
+    private lateinit var mMediaDialog: AlertDialog
+    private lateinit var mCurrentMediaPath: String
 
-    private var medias: ArrayList<Media> = ArrayList()
-    private lateinit var mediaDialog: AlertDialog
-    private lateinit var currentMediaPath: String
+    // DB
+    private var mDb: AppDatabase? = null
+    private var mPropertyDAO: PropertyDAO? = null
+    private var mMediaDAO: MediaDAO? = null
 
     // Form
-    private var propType: String? = null
-    private var propPrice: Int? = null
-    private var propSurface: Double? = null
-    private var propRoomNb: Int? = null
-    private var propDescription: String? = null
-    private var propAddress: String? = null
-    private var propPOI: String? = null
-    private var propAvailable: Boolean? = null
-    private var propMarketEntryDate: String? = null
-    private var propSellDate: String? = null
-    private var propAgent: String? = null
+    private var mPropType: String? = null
+    private var mPropPrice: Int? = null
+    private var mPropSurface: Double? = null
+    private var mPropRoomNb: Int? = null
+    private var mPropDescription: String? = null
+    private var mPropLocation: String? = null
+    private var mPropPOI: String? = null
+    private var mPropAvailable: Boolean? = null
+    private var mPropMarketEntryDate: String? = null
+    private var mPropSellDate: String? = null
+    private var mPropAgent: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-
         configureToolbar()
         configureSpinner()
         configureMediaDialog(this)
+        configureDatabase()
         setMediasText()
 
         val addMediaButton = add_activity_add_media_button
         val addPropertyButton = add_activity_add_property_button
 
-        addMediaButton.setOnClickListener{mediaDialog.show()}
+        addMediaButton.setOnClickListener{mMediaDialog.show()}
         addPropertyButton.setOnClickListener{addProperty()}
     }
 
@@ -71,22 +80,20 @@ class AddActivity : AppCompatActivity() {
             when(requestCode){
                 Constants.GALLERY_REQUEST_CODE -> {
                     imageUri = data?.data
-                    currentMediaPath = imageUri.toString()
+                    mCurrentMediaPath = imageUri.toString()
                 }
                 Constants.CAMERA_REQUEST_CODE -> {
                     imageUri = data?.data
                     // Save to gallery
                     Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also{
                         mediaScanIntent ->
-                        val f = File(currentMediaPath)
+                        val f = File(mCurrentMediaPath)
                         mediaScanIntent.data = imageUri
                         sendBroadcast(mediaScanIntent)
                     }
                 }
             }
 
-            // Add description to media
-            lateinit var mediaDescription: String
             showMediaDescriptionDialog(this, imageUri)
         }
     }
@@ -106,7 +113,7 @@ class AddActivity : AppCompatActivity() {
         builder.apply {
             setPositiveButton(R.string.media_dialog_ok,
                 DialogInterface.OnClickListener { dialog, which -> mediaDescription = input.text.toString()
-                    medias.add(Media(0, currentMediaPath, mediaDescription, null))
+                    mMedias.add(Media(0, mCurrentMediaPath, mediaDescription, null))
                     setMediasText()})
             setNegativeButton(R.string.media_dialog_cancel,
                 DialogInterface.OnClickListener { dialog, which ->  dialog.cancel() })
@@ -147,18 +154,43 @@ class AddActivity : AppCompatActivity() {
             ".jpg",
             storageDir
         ).apply {
-            currentMediaPath = absolutePath
+            mCurrentMediaPath = absolutePath
         }
-    }
-
-    private fun checkForm(): Boolean{
-       return true
     }
 
     private fun addProperty(){
-        if(checkForm()){
-            val property = Property(0, propType, propPrice, propSurface, propRoomNb, propDescription, propAddress, propPOI, propAvailable, propMarketEntryDate, propSellDate, propAgent)
+        if(mMedias.size > 0){
+            getForm()
+            val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+            mDb = AppDatabase.getInstance(this)
+            val executor: Executor = Executors.newSingleThreadExecutor()
+
+            executor.execute{
+                Log.e("executor", "Executed")
+                val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
+                Log.e("propId", propId.toString())
+                for(media: Media in mMedias){
+                    val mediaToAdd: Media = Media(0, media.uri, media.description, propId)
+                    mMediaDAO?.insertMedia(mediaToAdd)
+                }
+            }
+        } else{
+            Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun getForm(){
+        mPropType = add_activity_type_spinner.selectedItem.toString().trim()
+        mPropPrice = add_activity_price_editText.text.toString().trim().toInt()
+        mPropSurface = add_activity_surface_editText.text.toString().trim().toDouble()
+        mPropRoomNb = add_activity_numberRooms_editText.text.toString().trim().toInt()
+        mPropDescription = add_activity_description_editText.text.toString().trim()
+        mPropLocation = add_activity_location_editText.text.toString().trim()
+        mPropPOI = add_activity_POIs_editText.text.toString().trim()
+        mPropAvailable = add_activity_available_checkBox.isChecked
+        mPropMarketEntryDate = add_activity_entry_date_editText.text.toString().trim()
+        mPropSellDate = add_activity_sale_date_editText.text.toString().trim()
+        mPropAgent = add_activity_agent_editText.text.toString().trim()
     }
 
     ///////////////////
@@ -190,10 +222,16 @@ class AddActivity : AppCompatActivity() {
         }
         builder.setMessage(R.string.media_dialog_message)
             .setTitle(R.string.media_dialog_title)
-        mediaDialog = builder.create()
+        mMediaDialog = builder.create()
+    }
+
+    private fun configureDatabase(){
+        mDb = AppDatabase.getInstance(this)
+        mPropertyDAO = mDb?.propertyDAO()
+        mMediaDAO =mDb?.mediaDAO()
     }
 
     private fun setMediasText(){
-        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, medias.size, medias.size)
+        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, mMedias.size, mMedias.size)
     }
 }

@@ -1,13 +1,15 @@
 package com.albanfontaine.realestatemanager2.views
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.models.Property
 
-class PropertyAdapter(var properties: List<Property>, var context: Context): RecyclerView.Adapter<PropertyViewHolder>() {
+class PropertyAdapter(private val properties: List<Property>, val context: Context, val activity: Activity): RecyclerView.Adapter<PropertyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -16,9 +18,13 @@ class PropertyAdapter(var properties: List<Property>, var context: Context): Rec
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
-        holder.updateWithProperty(properties.get(position), context)
+        holder.updateWithProperty(properties?.get(position), context, activity)
     }
 
-    override fun getItemCount(): Int = properties.size
+    override fun getItemCount(): Int{
+        Log.e("getItemCount", properties.size.toString())
+
+        return properties.size
+    }
 
 }
