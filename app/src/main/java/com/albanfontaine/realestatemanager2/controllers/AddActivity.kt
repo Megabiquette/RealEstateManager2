@@ -20,8 +20,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
-import com.albanfontaine.realestatemanager2.database.MediaDAO
-import com.albanfontaine.realestatemanager2.database.PropertyDAO
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.utils.Constants
@@ -41,14 +39,12 @@ class AddActivity : AppCompatActivity() {
 
     // DB
     private var mDb: AppDatabase? = null
-    private var mPropertyDAO: PropertyDAO? = null
-    private var mMediaDAO: MediaDAO? = null
 
     // Form
     private var mPropType: String? = null
-    private var mPropPrice: Int? = null
-    private var mPropSurface: Double? = null
-    private var mPropRoomNb: Int? = null
+    private var mPropPrice: String? = null
+    private var mPropSurface: String? = null
+    private var mPropRoomNb: String? = null
     private var mPropDescription: String? = null
     private var mPropLocation: String? = null
     private var mPropPOI: String? = null
@@ -64,7 +60,6 @@ class AddActivity : AppCompatActivity() {
         configureToolbar()
         configureSpinner()
         configureMediaDialog(this)
-        configureDatabase()
         setMediasText()
 
         val addMediaButton = add_activity_add_media_button
@@ -75,25 +70,22 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        var imageUri: Uri? = null
         if(resultCode == Activity.RESULT_OK){
+            val imageUri: Uri? = data?.data
             when(requestCode){
                 Constants.GALLERY_REQUEST_CODE -> {
-                    imageUri = data?.data
                     mCurrentMediaPath = imageUri.toString()
                 }
                 Constants.CAMERA_REQUEST_CODE -> {
-                    imageUri = data?.data
                     // Save to gallery
                     Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also{
                         mediaScanIntent ->
                         val f = File(mCurrentMediaPath)
-                        mediaScanIntent.data = imageUri
+                        mediaScanIntent.data = Uri.fromFile(f)
                         sendBroadcast(mediaScanIntent)
                     }
                 }
             }
-
             showMediaDescriptionDialog(this, imageUri)
         }
     }
@@ -123,10 +115,10 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun getPhotoFromGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type ="image/*"
-        val mimeTypes = arrayOf("images/jpeg", "image/png")
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE)
     }
 
@@ -137,7 +129,9 @@ class AddActivity : AppCompatActivity() {
         }else{
             try{
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "com.albanfontaine.realestatemanager2.fileprovider", createImageFile()))
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "com.albanfontaine.realestatemanager2.provider", createImageFile()))
                 startActivityForResult(intent, Constants.CAMERA_REQUEST_CODE)
             } catch (e: IOException){
                 e.printStackTrace()
@@ -170,8 +164,13 @@ class AddActivity : AppCompatActivity() {
                 val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
                 Log.e("propId", propId.toString())
                 for(media: Media in mMedias){
-                    val mediaToAdd: Media = Media(0, media.uri, media.description, propId)
-                    mMediaDAO?.insertMedia(mediaToAdd)
+                    val mediaToAdd = Media(0, media.uri, media.description, propId)
+                    mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+                }
+                runOnUiThread{
+                    Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_SHORT).show()
+                    // BACK TO MAIN screen
+                    finish()
                 }
             }
         } else{
@@ -181,9 +180,9 @@ class AddActivity : AppCompatActivity() {
 
     private fun getForm(){
         mPropType = add_activity_type_spinner.selectedItem.toString().trim()
-        mPropPrice = add_activity_price_editText.text.toString().trim().toInt()
-        mPropSurface = add_activity_surface_editText.text.toString().trim().toDouble()
-        mPropRoomNb = add_activity_numberRooms_editText.text.toString().trim().toInt()
+        mPropPrice = add_activity_price_editText.text.toString().trim()
+        mPropSurface = add_activity_surface_editText.text.toString().trim()
+        mPropRoomNb = add_activity_numberRooms_editText.text.toString().trim()
         mPropDescription = add_activity_description_editText.text.toString().trim()
         mPropLocation = add_activity_location_editText.text.toString().trim()
         mPropPOI = add_activity_POIs_editText.text.toString().trim()
@@ -223,12 +222,6 @@ class AddActivity : AppCompatActivity() {
         builder.setMessage(R.string.media_dialog_message)
             .setTitle(R.string.media_dialog_title)
         mMediaDialog = builder.create()
-    }
-
-    private fun configureDatabase(){
-        mDb = AppDatabase.getInstance(this)
-        mPropertyDAO = mDb?.propertyDAO()
-        mMediaDAO =mDb?.mediaDAO()
     }
 
     private fun setMediasText(){

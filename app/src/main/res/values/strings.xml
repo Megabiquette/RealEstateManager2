@@ -40,5 +40,8 @@
     <string name="media_dialog_add_description">Add description</string>
     <string name="media_dialog_no_cam">No camera found on device</string>
     <string name="property_error_0_media">You must add at least one media</string>
+    <string name="property_added"></string>
+    <string name="property_medias">Medias</string>
+    <string name="property_description_2">Description</string>
 
 </resources>

@@ -17,6 +17,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/REMTheme">
+
         <activity android:name=".controllers.EditActivity"
                   android:label="Edit property"
                   android:screenOrientation="portrait">
@@ -34,7 +35,8 @@
         <activity
                 android:name=".controllers.AddActivity"
                 android:label="Add property"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:parentActivityName=".controllers.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".controllers.MainActivity"/>
@@ -52,7 +54,7 @@
 
         <provider
                 android:name="androidx.core.content.FileProvider"
-                android:authorities="com.albanfontaine.realestatemanager2.fileprovider"
+                android:authorities="com.albanfontaine.realestatemanager2.provider"
                 android:exported="false"
                 android:grantUriPermissions="true">
             <meta-data

@@ -17,4 +17,7 @@ interface PropertyDAO{
     @Update
     fun updateProperty(property: Property) : Int
 
+	// For testing
+    @Query("DELETE FROM Property")
+    fun deleteProperties()
 }

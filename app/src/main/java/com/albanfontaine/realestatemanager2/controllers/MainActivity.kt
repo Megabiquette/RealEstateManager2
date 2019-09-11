@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu)
+        if (!resources.getBoolean(R.bool.isTablet)){
+            val editProperty = menu?.findItem(R.id.toolbar_edit)
+            editProperty?.setVisible(false)
+        }
         return true
     }
 

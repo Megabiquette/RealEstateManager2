@@ -22,8 +22,6 @@ class PropertyAdapter(private val properties: List<Property>, val context: Conte
     }
 
     override fun getItemCount(): Int{
-        Log.e("getItemCount", properties.size.toString())
-
         return properties.size
     }
 

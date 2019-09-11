@@ -16,6 +16,4 @@
             android:icon="@drawable/ic_search_w"
             android:title="@string/toolbar_menu_search"
             app:showAsAction="ifRoom" />
-
-
 </menu>

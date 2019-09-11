@@ -12,4 +12,8 @@ interface MediaDAO {
 
     @Insert
     fun insertMedia(media: Media) : Long
+
+	// For testing
+    @Query("DELETE FROM Media")
+    fun deleteMedias()
 }
