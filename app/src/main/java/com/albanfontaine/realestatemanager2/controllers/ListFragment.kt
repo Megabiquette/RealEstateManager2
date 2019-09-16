@@ -1,6 +1,5 @@
 package com.albanfontaine.realestatemanager2.controllers
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -22,7 +21,7 @@ class ListFragment : Fragment() {
 
     private lateinit var mProperties: List<Property>
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mAdapter: PropertyAdapter
+    private var mAdapter: PropertyAdapter? = null
 
     private var mDb: AppDatabase? = null
 
@@ -32,6 +31,14 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         getProperties()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(mAdapter != null){
+            getProperties()
+            mAdapter?.notifyDataSetChanged()
+        }
     }
 
     private fun configureRecyclerView(){

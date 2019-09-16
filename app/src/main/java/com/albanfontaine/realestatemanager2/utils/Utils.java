@@ -1,7 +1,12 @@
 package com.albanfontaine.realestatemanager2.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+
+import androidx.core.app.ActivityCompat;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,5 +63,16 @@ public class Utils {
     public static String formatDate(Date date){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         return dateFormat.format(date);
+    }
+
+    /**
+     * Checks if the app has permission to write to device storage
+     * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity){
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if(permission != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity, Constants.Companion.getPERMISSIONS_STORAGE(), Constants.REQUEST_EXTERNAL_STORAGE);
+        }
     }
 }

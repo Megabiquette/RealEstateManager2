@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -71,17 +72,23 @@ class AddActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == Activity.RESULT_OK){
-            val imageUri: Uri? = data?.data
+            var imageUri: Uri? = null
             when(requestCode){
                 Constants.GALLERY_REQUEST_CODE -> {
+                    imageUri = data?.data
                     mCurrentMediaPath = imageUri.toString()
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                        baseContext.contentResolver.takePersistableUriPermission(imageUri!!, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    }
                 }
                 Constants.CAMERA_REQUEST_CODE -> {
                     // Save to gallery
                     Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also{
                         mediaScanIntent ->
                         val f = File(mCurrentMediaPath)
-                        mediaScanIntent.data = Uri.fromFile(f)
+                        imageUri = Uri.fromFile(f)
+                        mCurrentMediaPath = imageUri.toString()
+                        mediaScanIntent.data = imageUri
                         sendBroadcast(mediaScanIntent)
                     }
                 }
@@ -115,10 +122,12 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun getPhotoFromGallery(){
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+			type = "image/*"
+			addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+			addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+			addCategory(Intent.CATEGORY_OPENABLE)
+		}
         startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE)
     }
 
@@ -128,10 +137,11 @@ class AddActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, R.string.media_dialog_no_cam, Toast.LENGTH_LONG).show()
         }else{
             try{
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "com.albanfontaine.realestatemanager2.provider", createImageFile()))
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+					addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+					addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+					putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(baseContext, "com.albanfontaine.realestatemanager2.provider", createImageFile()))
+                }
                 startActivityForResult(intent, Constants.CAMERA_REQUEST_CODE)
             } catch (e: IOException){
                 e.printStackTrace()
@@ -141,8 +151,8 @@ class AddActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     private fun createImageFile(): File{
-        val timestamp: String? = SimpleDateFormat("ddMMyyyy", Locale.FRANCE).format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val timestamp: String? = SimpleDateFormat("ddMMyyyy_HHmmss", Locale.FRANCE).format(Date())
+        val storageDir: File? = Environment.getExternalStorageDirectory()
         return File.createTempFile(
             "JPEG_${timestamp}_",
             ".jpg",
@@ -169,7 +179,6 @@ class AddActivity : AppCompatActivity() {
                 }
                 runOnUiThread{
                     Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_SHORT).show()
-                    // BACK TO MAIN screen
                     finish()
                 }
             }

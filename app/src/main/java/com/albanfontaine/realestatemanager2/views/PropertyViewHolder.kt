@@ -25,8 +25,8 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
     private var mDb: AppDatabase? = null
 
     fun updateWithProperty(property: Property?, context: Context, activity: Activity){
-        Log.e("updateWithProperty", property?.id.toString())
         if(property != null){
+            Log.e("updateWithProperty", "property id = " + property?.id.toString())
             mDb = AppDatabase.getInstance(context)
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{
