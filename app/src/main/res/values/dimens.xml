@@ -11,4 +11,6 @@
     <dimen name="field_padding">2dp</dimen>
     <dimen name="field_button_height">60dp</dimen>
 
+	<dimen name="property_card_item_text_padding">15dp</dimen>
+    <dimen name="property_card_map_width_height">196dp</dimen>
 </resources>

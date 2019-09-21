@@ -1,47 +1,48 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
 
-    <string name="toolbar_menu_add">Add</string>
-    <string name="toolbar_menu_edit">Edit</string>
-    <string name="toolbar_menu_search">Search</string>
+    <string name="toolbar_menu_add">Ajouter</string>
+    <string name="toolbar_menu_edit">Editer</string>
+    <string name="toolbar_menu_search">Rechercher</string>
 
     <string-array name="property_types">
-        <item>Flat</item>
-        <item>House</item>
+        <item>Appartement</item>
+        <item>Maison</item>
         <item>Loft</item>
-        <item>Manor</item>
+        <item>Manoir</item>
     </string-array>
 
     <string name="property_type">Type:</string>
-    <string name="property_price">Price:</string>
+    <string name="property_price">Prix:</string>
     <string name="property_surface">Surface:</string>
-    <string name="property_numberRooms">Number of rooms:</string>
+    <string name="property_numberRooms">Nombre de pièces:</string>
     <string name="property_description">Description:</string>
-    <string name="property_location">Location:</string>
-    <string name="property_POIs">Points of interest:</string>
+    <string name="property_location">Adresse:</string>
+    <string name="property_POIs">Points d\'interêts:</string>
     <string name="dollar_sign">$</string>
     <string name="square_meters">m²</string>
-    <string name="property_available">Available</string>
-    <string name="property_entry_date">Entry date:</string>
-    <string name="property_sale_date">Sale date:</string>
-    <string name="property_agent">Agent in charge:</string>
-    <string name="property_button_add_media">Add media</string>
+    <string name="property_available">Disponible</string>
+    <string name="property_sold">Vendu</string>
+    <string name="property_entry_date">Date de mise en vente:</string>
+    <string name="property_sale_date">Date de vente:</string>
+    <string name="property_agent">Agent immobilier:</string>
+    <string name="property_button_add_media">Ajouter photo</string>
     <plurals name="property_medias_added">
-        <item quantity="one">%1d media added</item>
-        <item quantity="other">%1d medias added</item>
+        <item quantity="one">%1d photo ajoutée</item>
+        <item quantity="other">%1d photos ajoutées</item>
     </plurals>
-    <string name="property_button_add_property">Add property</string>
-    <string name="media_dialog_title">Add media</string>
-    <string name="media_dialog_message">Choose media source</string>
-    <string name="media_dialog_gallery">From gallery</string>
-    <string name="media_dialog_take_photo">Take photo</string>
+    <string name="property_button_add_property">Ajouter bien</string>
+    <string name="media_dialog_title">Ajouter photo</string>
+    <string name="media_dialog_message">Choisir la source de la photo</string>
+    <string name="media_dialog_gallery">Galerie</string>
+    <string name="media_dialog_take_photo">Prendre photo</string>
     <string name="media_dialog_ok">Ok</string>
-    <string name="media_dialog_cancel">Cancel</string>
-    <string name="media_dialog_add_description">Add description</string>
-    <string name="media_dialog_no_cam">No camera found on device</string>
-    <string name="property_error_0_media">You must add at least one media</string>
-    <string name="property_added">Property added</string>
-    <string name="property_medias">Medias</string>
+    <string name="media_dialog_cancel">Annuler</string>
+    <string name="media_dialog_add_description">Ajouter description</string>
+    <string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
+    <string name="property_error_0_media">Vous devez ajouter au moins une photo</string>
+    <string name="property_added">Bien ajouté</string>
+    <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
 
 </resources>

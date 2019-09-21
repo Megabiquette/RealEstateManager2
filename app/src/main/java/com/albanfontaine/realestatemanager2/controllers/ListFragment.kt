@@ -1,5 +1,6 @@
 package com.albanfontaine.realestatemanager2.controllers
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Property
+import com.albanfontaine.realestatemanager2.utils.Constants
+import com.albanfontaine.realestatemanager2.utils.ItemClickSupport
 import com.albanfontaine.realestatemanager2.views.PropertyAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.util.concurrent.Executor
@@ -41,14 +44,6 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun configureRecyclerView(){
-
-        mRecyclerView = fragment_list_recycler_view
-        mAdapter = PropertyAdapter(mProperties, requireContext(), requireActivity())
-        mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = LinearLayoutManager(activity)
-    }
-
     private fun getProperties(){
         mDb = AppDatabase.getInstance(requireContext())
         val executor: Executor = Executors.newSingleThreadExecutor()
@@ -63,7 +58,30 @@ class ListFragment : Fragment() {
             }
             activity?.runOnUiThread{
                 configureRecyclerView()
+                configureOnClickRecyclerView();
             }
         }
+    }
+
+    private fun configureRecyclerView(){
+        mRecyclerView = fragment_list_recycler_view
+        mAdapter = PropertyAdapter(mProperties, requireContext(), requireActivity())
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private fun configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_list_item)
+            .setOnItemClickListener(object: ItemClickSupport.OnItemClickListener{
+                override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
+                    val id = mProperties.get(position).id
+                    val bundle = Bundle()
+                    bundle.putLong(Constants.PROPERTY_ID, id)
+                    val propertyCardFragment = PropertyCardFragment()
+                    propertyCardFragment.arguments = bundle
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.commit()
+
+                }
+            })
     }
 }

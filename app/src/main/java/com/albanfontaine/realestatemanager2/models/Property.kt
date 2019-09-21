@@ -15,7 +15,7 @@ data class Property(
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "address") var address: String?,
     @ColumnInfo(name = "points_of_interest") var pointsOfInterest: String?,
-    @ColumnInfo(name = "available") var available: Boolean? = true,
+    @ColumnInfo(name = "available") var available: Boolean = true,
     @ColumnInfo(name = "market_entry_date") var marketEntryDate: String?,
     @ColumnInfo(name = "sell_date") var sellDate: String? = null,
     @ColumnInfo(name = "agent") var agent: String? )

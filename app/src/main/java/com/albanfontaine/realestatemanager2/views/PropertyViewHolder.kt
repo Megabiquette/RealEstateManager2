@@ -17,16 +17,16 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
-    private var mMedia: ImageView = view.list_item_media
-    private var mType: TextView = view.list_item_type
-    private var mLocation: TextView = view.list_item_location
-    private var mPrice: TextView = view.list_item_price
+    private val mMedia: ImageView = view.list_item_media
+    private val mType: TextView = view.list_item_type
+    private val mLocation: TextView = view.list_item_location
+    private val mPrice: TextView = view.list_item_price
 
     private var mDb: AppDatabase? = null
 
     fun updateWithProperty(property: Property?, context: Context, activity: Activity){
         if(property != null){
-            Log.e("updateWithProperty", "property id = " + property?.id.toString())
+            Log.e("updateWithProperty", "property id = " + property.id.toString())
             mDb = AppDatabase.getInstance(context)
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{

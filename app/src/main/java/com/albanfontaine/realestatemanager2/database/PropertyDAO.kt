@@ -11,13 +11,12 @@ interface PropertyDAO{
     @Query("SELECT * FROM Property")
     fun getProperties() : List<Property>
 
+    @Query("SELECT * FROM Property WHERE id = :id")
+    fun getProperty(id: Long): Property
+
     @Insert
     fun insertProperty(property: Property) : Long
 
     @Update
     fun updateProperty(property: Property) : Int
-
-	// For testing
-    @Query("DELETE FROM Property")
-    fun deleteProperties()
 }

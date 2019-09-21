@@ -25,6 +25,7 @@ import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.utils.Constants
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.media_description.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
 import java.io.IOException
@@ -49,7 +50,7 @@ class AddActivity : AppCompatActivity() {
     private var mPropDescription: String? = null
     private var mPropLocation: String? = null
     private var mPropPOI: String? = null
-    private var mPropAvailable: Boolean? = null
+    private var mPropAvailable: Boolean = true
     private var mPropMarketEntryDate: String? = null
     private var mPropSellDate: String? = null
     private var mPropAgent: String? = null
@@ -71,6 +72,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
             var imageUri: Uri? = null
             when(requestCode){
@@ -102,8 +104,8 @@ class AddActivity : AppCompatActivity() {
 
         val inflater: LayoutInflater = LayoutInflater.from(activity)
         val view: View = inflater.inflate(R.layout.media_description, null)
-        val input: EditText = view.findViewById(R.id.media_description_editText)
-        val image: ImageView = view.findViewById(R.id.media_description_image)
+        val input: EditText = view.media_description_editText
+        val image: ImageView = view.media_description_image
         image.setImageURI(imageUri)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity, R.style.DialogTheme)

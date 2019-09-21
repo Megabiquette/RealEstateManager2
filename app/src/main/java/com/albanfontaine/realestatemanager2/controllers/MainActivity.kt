@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
+import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -18,14 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         Utils.verifyStoragePermissions(this)
         configureToolbar()
-        showFragment()
+        showListFragment()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu)
         if (!resources.getBoolean(R.bool.isTablet)){
             val editProperty = menu?.findItem(R.id.toolbar_edit)
-            editProperty?.setVisible(false)
+            editProperty?.isVisible = false
         }
         return true
     }
@@ -42,11 +43,22 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun showFragment(){
+    private fun showListFragment(){
         supportFragmentManager.beginTransaction()
-            .add(R.id.activity_base_frame_layout, ListFragment())
+            .replace(R.id.activity_base_frame_layout, ListFragment())
             .commit()
     }
+
+/*
+    private fun showCardFragment(id: Long){
+        val bundle = Bundle()
+        bundle.putLong(Constants.PROPERTY_ID, id)
+        val propertyCardFragment = PropertyCardFragment()
+        propertyCardFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.activity_base_frame_layout, propertyCardFragment)
+            .commit()
+    } */
 
     ///////////////////
     // CONFIGURATION //

@@ -1,37 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.PropertyCardFragment"
-    android:orientation="vertical"
-    android:padding="@dimen/item_padding" >
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".controllers.AddActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/property_medias"
-        android:textSize="@dimen/text_title"
-        android:textStyle="bold"/>
+        android:orientation="vertical"
+        android:padding="@dimen/item_margin_horizontal"
+        tools:context=".controllers.PropertyCardFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/property_card_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/property_medias"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/property_description_2"
-        android:textSize="@dimen/text_title"
-        android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/property_card_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top" />
 
-    <TextView
-        android:id="@+id/property_card_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/item_margin_top"/>
+        <LinearLayout
+            android:id="@+id/property_card_description_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/property_description_2"
+                android:textSize="@dimen/text_title"
+                android:textStyle="bold" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/property_card_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_margin_top" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/property_card_surface_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_surface"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/property_card_surface"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_padding" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/square_meters"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/property_card_numberRooms_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_numberRooms"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/property_card_numberRooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_padding" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/property_card_location_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/property_location"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/property_card_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/property_card_map"
+                android:layout_width="@dimen/property_card_map_width_height"
+                android:layout_height="@dimen/property_card_map_width_height"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/item_margin_top" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/property_card_POIs_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/property_POIs"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/property_card_POIs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/property_card_entry_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_entry_date"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/property_card_entry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_padding" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/property_card_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:textStyle="bold"
+            android:text="@string/property_available"/>
+
+        <LinearLayout
+            android:id="@+id/property_card_sale_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_sale_date"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/property_card_sale_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/property_card_agent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_agent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/property_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/property_card_price_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_price"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_margin_horizontal"
+                android:text="@string/dollar_sign"
+                android:textSize="@dimen/text_title"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/property_card_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_title" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
