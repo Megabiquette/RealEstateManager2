@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Property
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
 import java.util.concurrent.Executor
@@ -34,15 +33,7 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
                 Log.e("mediaUri", mediaURI)
                 activity.runOnUiThread{
                     val uri: Uri = Uri.parse(mediaURI)
-                    Picasso.Builder(context).listener{_, _, e->e.printStackTrace()}.build().load(uri).fit().centerCrop().into(mMedia, object: Callback{
-                        override fun onSuccess(){
-                            Log.e("picasso", "success")
-                        }
-
-                        override fun onError() {
-                            Log.e("picasso", "error")
-                        }
-                    })
+                    Picasso.with(context).load(uri).fit().centerCrop().into(mMedia)
                 }
             }
 

@@ -13,4 +13,6 @@
 
 	<dimen name="property_card_item_text_padding">15dp</dimen>
     <dimen name="property_card_map_width_height">196dp</dimen>
+    <dimen name="media_item_padding">2dp</dimen>
+    <dimen name="media_item_description_padding">10dp</dimen>
 </resources>

@@ -18,6 +18,14 @@
             android:supportsRtl="true"
             android:theme="@style/REMTheme">
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI" />
+
         <activity android:name=".controllers.EditActivity"
                   android:label="Edit property"
                   android:screenOrientation="portrait">

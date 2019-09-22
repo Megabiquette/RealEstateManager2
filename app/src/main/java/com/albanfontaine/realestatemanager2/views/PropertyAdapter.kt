@@ -18,7 +18,7 @@ class PropertyAdapter(private val properties: List<Property>, val context: Conte
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
-        holder.updateWithProperty(properties?.get(position), context, activity)
+        holder.updateWithProperty(properties.get(position), context, activity)
     }
 
     override fun getItemCount(): Int{

@@ -4,7 +4,7 @@
 	android:orientation="vertical"
 	android:layout_width="@dimen/item_media_width_height"
 	android:layout_height="@dimen/item_media_width_height"
-	android:layout_margin="@dimen/item_padding" >
+	android:layout_margin="@dimen/media_item_padding" >
 
 	<ImageView
 		android:id="@+id/fragment_property_card_item_imageView"
@@ -17,7 +17,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:textColor="@color/background_light"
-		android:padding="@dimen/property_card_item_text_padding"
-		android:background="#4D000000"/>
+		android:padding="@dimen/media_item_description_padding"
+		android:background="#4C000000"/>
 
 </RelativeLayout>
