@@ -26,15 +26,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI" />
 
-        <activity android:name=".controllers.EditActivity"
-                  android:label="Edit property"
-                  android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".controllers.MainActivity"/>
-        </activity>
         <activity android:name=".controllers.SearchActivity"
-                  android:label="Search property"
+                  android:label="Chercher bien"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -42,7 +35,7 @@
         </activity>
         <activity
                 android:name=".controllers.AddActivity"
-                android:label="Add property"
+                android:label="Ajouter bien"
                 android:screenOrientation="portrait"
                 android:parentActivityName=".controllers.MainActivity">
             <meta-data

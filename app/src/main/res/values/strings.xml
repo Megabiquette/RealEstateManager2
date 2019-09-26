@@ -6,11 +6,16 @@
     <string name="toolbar_menu_search">Rechercher</string>
 
     <string-array name="property_types">
-        <item>Appartement</item>
-        <item>Maison</item>
-        <item>Loft</item>
-        <item>Manoir</item>
+        <item>@string/flat</item>
+        <item>@string/house</item>
+        <item>@string/loft</item>
+        <item>@string/manor</item>
     </string-array>
+
+    <string name="flat">Appartement</string>
+    <string name="house">Maison</string>
+    <string name="loft">Loft</string>
+    <string name="manor">Manoir</string>
 
     <string name="property_type">Type:</string>
     <string name="property_price">Prix:</string>
@@ -36,7 +41,7 @@
     <string name="media_dialog_message">Choisir la source de la photo</string>
     <string name="media_dialog_gallery">Galerie</string>
     <string name="media_dialog_take_photo">Prendre photo</string>
-    <string name="media_dialog_ok">Ok</string>
+    <string name="media_dialog_ok">OK</string>
     <string name="media_dialog_cancel">Annuler</string>
     <string name="media_dialog_add_description">Ajouter description</string>
     <string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
@@ -44,5 +49,10 @@
     <string name="property_added">Bien ajouté</string>
     <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
+
+    <string name="price_dollars">$%1$s</string>
+    <string name="price_euros">%1$s€</string>
+
+    <string name="edit_property">Editer bien</string>
 
 </resources>

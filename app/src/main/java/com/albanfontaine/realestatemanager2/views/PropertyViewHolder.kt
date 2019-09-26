@@ -25,12 +25,10 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
 
     fun updateWithProperty(property: Property?, context: Context, activity: Activity){
         if(property != null){
-            Log.e("updateWithProperty", "property id = " + property.id.toString())
             mDb = AppDatabase.getInstance(context)
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{
                 val mediaURI: String = mDb?.mediaDAO()?.getMedias(property.id)?.get(0)!!.uri
-                Log.e("mediaUri", mediaURI)
                 activity.runOnUiThread{
                     val uri: Uri = Uri.parse(mediaURI)
                     Picasso.with(context).load(uri).fit().centerCrop().into(mMedia)

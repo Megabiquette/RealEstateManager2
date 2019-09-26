@@ -1,14 +1,9 @@
 package com.albanfontaine.realestatemanager2.controllers
 
-
-import android.net.Uri
-import android.opengl.Visibility
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,9 +17,7 @@ import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils
 import com.albanfontaine.realestatemanager2.views.MediaAdapter
-import com.albanfontaine.realestatemanager2.views.PropertyAdapter
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_property_card.*
 import java.util.concurrent.Executors
 
@@ -57,6 +50,7 @@ class PropertyCardFragment : Fragment() {
     private lateinit var mPriceLayout: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         val id: Long? = arguments?.getLong(Constants.PROPERTY_ID)
         if(id != null){
             getProperty(id)
@@ -66,6 +60,24 @@ class PropertyCardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         configViews()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        if (!resources.getBoolean(R.bool.isTablet)){
+            val addProperty = menu.findItem(R.id.toolbar_add)
+            addProperty?.isVisible = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            //R.id.toolbar_add -> AddActivity::class.java
+            R.id.toolbar_edit -> editProperty()
+            R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
+            else -> return true
+        }
+        return true
     }
 
     private fun getProperty(id: Long){
@@ -79,23 +91,38 @@ class PropertyCardFragment : Fragment() {
             }
             activity?.runOnUiThread{
                 configureRecyclerView()
-
             }
         }
     }
 
+    private fun changePriceCurrency(){
+        if (mPrice.text.toString()[0] == '$'){
+            mPrice.text = activity?.resources?.getString(R.string.price_euros, Utils.formatPriceToEuros(mProperty.price))
+        }else{
+            mPrice.text = activity?.resources?.getString(R.string.price_dollars, mProperty.price)
+        }
+    }
+
+    private fun editProperty(){
+        val intent = Intent(activity, AddActivity::class.java)
+        intent.putExtra(Constants.PROPERTY_ID, mProperty.id)
+        startActivity(intent)
+    }
+
+    // CONFIGURATION
+
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
-        if(mProperty.description != null){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
-        if(mProperty.surface != null){ mSurface.text = mProperty.surface} else{ mSurfaceLayout.visibility = View.GONE}
-        if(mProperty.roomNumber != null){ mNumberRooms.text = mProperty.roomNumber} else{ mNumberRoomsLayout.visibility = View.GONE}
-        if(mProperty.pointsOfInterest != null){ mPOIs.text = mProperty.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
-        if(mProperty.marketEntryDate != null){ mEntryDate.text = mProperty.marketEntryDate} else{ mEntryDateLayout.visibility = View.GONE}
+        if(!mProperty.description.equals("")){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
+        if(!mProperty.surface.equals("")){ mSurface.text = mProperty.surface} else{ mSurfaceLayout.visibility = View.GONE}
+        if(!mProperty.roomNumber.equals("")){ mNumberRooms.text = mProperty.roomNumber} else{ mNumberRoomsLayout.visibility = View.GONE}
+        if(!mProperty.pointsOfInterest.equals("")){ mPOIs.text = mProperty.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
+        if(!mProperty.marketEntryDate.equals("")){ mEntryDate.text = mProperty.marketEntryDate} else{ mEntryDateLayout.visibility = View.GONE}
         if(mProperty.available){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
-        if(mProperty.sellDate != null){mSaleDate.text = mProperty.sellDate} else{ mSaleDateLayout.visibility = View.GONE}
-        if(mProperty.agent != null){ mAgent.text = mProperty.agent} else{ mAgentLayout.visibility = View.GONE}
-        if(mProperty.price != null){ mPrice.text = mProperty.price} else{ mPriceLayout.visibility = View.GONE}
-        if(mProperty.address != null){
+        if(!mProperty.sellDate.equals("")){mSaleDate.text = mProperty.sellDate} else{ mSaleDateLayout.visibility = View.GONE}
+        if(!mProperty.agent.equals("")){ mAgent.text = mProperty.agent} else{ mAgentLayout.visibility = View.GONE}
+        if(!mProperty.price.equals("")){ mPrice.text = activity?.resources?.getString(R.string.price_dollars, mProperty.price)} else{ mPriceLayout.visibility = View.GONE}
+        if(!mProperty.address.equals("")){
             mLocation.text = mProperty.address
             val mapUrl: String = Utils.getMapUrl(mProperty.address)
             Picasso.with(context).load(mapUrl).fit().into(mMap)
@@ -123,6 +150,8 @@ class PropertyCardFragment : Fragment() {
         mSaleDateLayout = property_card_sale_date_layout
         mAgentLayout = property_card_agent_layout
         mPriceLayout = property_card_price_layout
+
+        mPrice.setOnClickListener{ changePriceCurrency() }
     }
 
     private fun configureRecyclerView(){

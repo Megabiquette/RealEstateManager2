@@ -36,8 +36,13 @@ import java.util.concurrent.Executors
 
 class AddActivity : AppCompatActivity() {
     private var mMedias: ArrayList<Media> = ArrayList()
+    private var mMediasNumber: Int = 0
     private lateinit var mMediaDialog: AlertDialog
     private lateinit var mCurrentMediaPath: String
+
+    // Property to be EDITED only
+    private var mPropertyId: Long? = null
+    private var mProperty: Property? = null
 
     // DB
     private var mDb: AppDatabase? = null
@@ -69,6 +74,15 @@ class AddActivity : AppCompatActivity() {
 
         addMediaButton.setOnClickListener{mMediaDialog.show()}
         addPropertyButton.setOnClickListener{addProperty()}
+
+        // Checks if the user wants to edit a property
+        val extras: Bundle? = intent.extras
+        if(extras != null){
+            mPropertyId = intent.getLongExtra(Constants.PROPERTY_ID, 0)
+            title = resources.getString(R.string.edit_property)
+            addPropertyButton.text = this.resources.getString(R.string.edit_property)
+            getPropertyToEdit()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -115,6 +129,7 @@ class AddActivity : AppCompatActivity() {
             setPositiveButton(R.string.media_dialog_ok,
                 DialogInterface.OnClickListener { dialog, which -> mediaDescription = input.text.toString()
                     mMedias.add(Media(0, mCurrentMediaPath, mediaDescription, null))
+                    mMediasNumber++
                     setMediasText()})
             setNegativeButton(R.string.media_dialog_cancel,
                 DialogInterface.OnClickListener { dialog, which ->  dialog.cancel() })
@@ -207,6 +222,42 @@ class AddActivity : AppCompatActivity() {
     // CONFIGURATION //
     ///////////////////
 
+    // For EDIT only
+    private fun getPropertyToEdit(){
+        val db = AppDatabase.getInstance(this)
+        val executor = Executors.newSingleThreadExecutor()
+        executor.execute{
+            mProperty = db?.propertyDAO()?.getProperty(mPropertyId!!)
+            mMediasNumber = db?.mediaDAO()?.getMedias(mPropertyId!!)?.size!!
+            this.runOnUiThread{
+                Log.e("id", mPropertyId.toString())
+                setupFields()
+            }
+        }
+    }
+
+    // For EDIT only
+    private fun setupFields(){
+        val type: Int = when(mProperty?.type){
+            this.resources.getString(R.string.flat) -> 0
+            this.resources.getString(R.string.house) -> 1
+            this.resources.getString(R.string.loft) -> 2
+            else -> 3
+        }
+        add_activity_type_spinner.setSelection(type)
+
+        if(!mProperty?.description.equals("")){ add_activity_description_editText.setText(mProperty?.description)}
+        if(!mProperty?.surface.equals("")){ add_activity_surface_editText.setText(mProperty?.surface)}
+        if(!mProperty?.roomNumber.equals("")){ add_activity_numberRooms_editText.setText(mProperty?.roomNumber)}
+        if(!mProperty?.pointsOfInterest.equals("")){ add_activity_POIs_editText.setText(mProperty?.pointsOfInterest)}
+        if(!mProperty?.marketEntryDate.equals("")){ add_activity_entry_date_editText.setText(mProperty?.marketEntryDate)}
+        if(!mProperty?.available!!){ add_activity_available_checkBox.isChecked = false}
+        if(!mProperty?.sellDate.equals("")){add_activity_sale_date_editText.setText(mProperty?.sellDate)}
+        if(!mProperty?.agent.equals("")){ add_activity_agent_editText.setText(mProperty?.agent)}
+        if(!mProperty?.price.equals("")){ add_activity_price_editText.setText(mProperty?.price)}
+        if(!mProperty?.address.equals("")){ add_activity_location_editText.setText(mProperty?.address)}
+    }
+
     private fun configureToolbar(){
         setSupportActionBar(toolbar as Toolbar)
         val ab : ActionBar? = getSupportActionBar()
@@ -236,6 +287,6 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun setMediasText(){
-        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, mMedias.size, mMedias.size)
+        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, mMediasNumber, mMediasNumber)
     }
 }

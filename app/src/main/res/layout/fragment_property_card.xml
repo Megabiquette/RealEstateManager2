@@ -230,18 +230,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:text="@string/dollar_sign"
-                android:textSize="@dimen/text_title"
-                android:textColor="@color/colorPrimary" />
-
-            <TextView
                 android:id="@+id/property_card_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
+                android:layout_marginStart="@dimen/item_margin_horizontal"
                 android:textSize="@dimen/text_title" />
         </LinearLayout>
 

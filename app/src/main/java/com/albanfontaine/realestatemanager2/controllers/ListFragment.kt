@@ -1,11 +1,10 @@
 package com.albanfontaine.realestatemanager2.controllers
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -28,11 +27,30 @@ class ListFragment : Fragment() {
     private var mDb: AppDatabase? = null
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         getProperties()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        if (!resources.getBoolean(R.bool.isTablet)){
+            val editProperty = menu.findItem(R.id.toolbar_edit)
+            editProperty?.isVisible = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.toolbar_add -> startActivity(Intent(activity,AddActivity::class.java))
+            //R.id.toolbar_edit ->
+            R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
+            else -> return true
+        }
+        return true
     }
 
     override fun onResume() {
@@ -50,10 +68,7 @@ class ListFragment : Fragment() {
             mProperties = mDb?.propertyDAO()?.getProperties()!!
             if(!mProperties.isNullOrEmpty()){
                 mProperties?.forEach {
-                    Log.e("property", it.toString())
                 }
-            }else{
-                Log.e("getProps", "empty")
             }
             activity?.runOnUiThread{
                 configureRecyclerView()
@@ -78,8 +93,7 @@ class ListFragment : Fragment() {
                     bundle.putLong(Constants.PROPERTY_ID, id)
                     val propertyCardFragment = PropertyCardFragment()
                     propertyCardFragment.arguments = bundle
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.commit()
-
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.addToBackStack(null)?.commit()
                 }
             })
     }

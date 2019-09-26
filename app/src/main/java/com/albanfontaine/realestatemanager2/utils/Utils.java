@@ -11,9 +11,9 @@ import androidx.core.app.ActivityCompat;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.StringJoiner;
 
 public class Utils {
     /**
@@ -89,10 +89,42 @@ public class Utils {
         StringBuilder sb = new StringBuilder(Constants.MAP_URL_BEGINNING);
         sb.append(addressParts[0]);
         for (int i = 1; i < addressParts.length; i++){
-            Log.e("mapUrl", i + addressParts[i]);
             sb.append("+").append(addressParts[i]);
         }
         sb.append(Constants.MAP_URL_END);
         return sb.toString();
+    }
+
+    /**
+     * Takes a String of a price in dollars and returns a String of a price in euros with the proper format
+     * @param priceDollars
+     * @return
+     */
+    public static String formatPriceToEuros(String priceDollars){
+        // 1 - Remove commas
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < priceDollars.length(); i++){
+            if(priceDollars.charAt(i) != ',')
+                sb.append(priceDollars.charAt(i));
+        }
+        // 2 - Convert to euros
+        String priceEuros = String.valueOf(Utils.convertDollarToEuro(Integer.parseInt(sb.toString())));
+        // 3 - Add spaces every 3 digits
+        ArrayList<Character> resultArray = new ArrayList<>();
+        int x = 0;
+        for(int i = priceEuros.length()-1; i >= 0; i--){
+            if(x == 3){
+                resultArray.add(0, ' ');
+                x = 0;
+            }
+            resultArray.add(0, priceEuros.charAt(i));
+            x++;
+        }
+        // 4 Convert arraylist to string
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < resultArray.size(); i++){
+            result.append(resultArray.get(i));
+        }
+        return result.toString();
     }
 }

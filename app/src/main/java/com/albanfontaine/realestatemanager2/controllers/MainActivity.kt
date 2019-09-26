@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         showListFragment()
     }
 
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu)
         if (!resources.getBoolean(R.bool.isTablet)){
@@ -30,11 +31,13 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+    */
 
+    /*
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val activityClass = when(item?.itemId){
             R.id.toolbar_add -> AddActivity::class.java
-            R.id.toolbar_edit -> EditActivity::class.java
+            R.id.toolbar_edit ->
             R.id.toolbar_search -> SearchActivity::class.java
             else -> return true
         }
@@ -42,10 +45,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         return true
     }
+     */
 
     private fun showListFragment(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_base_frame_layout, ListFragment())
+            .add(R.id.activity_base_frame_layout, ListFragment())
             .commit()
     }
 
