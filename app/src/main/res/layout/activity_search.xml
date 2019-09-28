@@ -96,25 +96,26 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginStart="@dimen/item_margin_horizontal"
-                android:layout_marginTop="@dimen/item_margin_top">
+                android:layout_marginTop="@dimen/item_margin_top"
+                android:layout_marginStart="@dimen/item_margin_horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/property_price"
                     android:textSize="@dimen/text_title"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/item_margin_horizontal">
+                    android:layout_weight="2"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -165,25 +166,26 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/item_margin_horizontal"
                 android:layout_marginTop="@dimen/item_margin_top">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/property_surface"
                     android:textSize="@dimen/text_title"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/item_margin_horizontal">
+                    android:layout_weight="2"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
