@@ -52,9 +52,6 @@
     <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
 
-    <string name="price_dollars">$%1$s</string>
-    <string name="price_euros">%1$s€</string>
-
     <string name="edit_property">Editer bien</string>
     <string name="min">Min:</string>
     <string name="max">Max:</string>

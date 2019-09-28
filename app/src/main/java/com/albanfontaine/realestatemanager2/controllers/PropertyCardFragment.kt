@@ -98,9 +98,9 @@ class PropertyCardFragment : Fragment() {
 
     private fun changePriceCurrency(){
         if (mPrice.text.toString()[0] == '$'){
-            mPrice.text = activity?.resources?.getString(R.string.price_euros, Utils.formatPriceToEuros(mProperty.price))
+            mPrice.text = Utils.formatPriceEuros(mProperty.price!!)
         }else{
-            mPrice.text = activity?.resources?.getString(R.string.price_dollars, mProperty.price)
+            mPrice.text = Utils.formatPriceDollars(mProperty.price!!)
         }
     }
 
@@ -115,14 +115,14 @@ class PropertyCardFragment : Fragment() {
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
         if(!mProperty.description.equals("")){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
-        if(!mProperty.surface.equals("")){ mSurface.text = mProperty.surface} else{ mSurfaceLayout.visibility = View.GONE}
-        if(!mProperty.roomNumber.equals("")){ mNumberRooms.text = mProperty.roomNumber} else{ mNumberRoomsLayout.visibility = View.GONE}
+        if(mProperty.surface != null){ mSurface.text = mProperty.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}
+        if(mProperty.roomNumber != null){ mNumberRooms.text = mProperty.roomNumber.toString()} else{ mNumberRoomsLayout.visibility = View.GONE}
         if(!mProperty.pointsOfInterest.equals("")){ mPOIs.text = mProperty.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
-        if(!mProperty.marketEntryDate.equals("")){ mEntryDate.text = mProperty.marketEntryDate} else{ mEntryDateLayout.visibility = View.GONE}
+        if(mProperty.marketEntryDate != null){ mEntryDate.text = mProperty.marketEntryDate.toString()} else{ mEntryDateLayout.visibility = View.GONE}
         if(mProperty.available){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
-        if(!mProperty.sellDate.equals("")){mSaleDate.text = mProperty.sellDate} else{ mSaleDateLayout.visibility = View.GONE}
+        if(mProperty.sellDate != null){mSaleDate.text = mProperty.sellDate.toString()} else{ mSaleDateLayout.visibility = View.GONE}
         if(!mProperty.agent.equals("")){ mAgent.text = mProperty.agent} else{ mAgentLayout.visibility = View.GONE}
-        if(!mProperty.price.equals("")){ mPrice.text = activity?.resources?.getString(R.string.price_dollars, mProperty.price)} else{ mPriceLayout.visibility = View.GONE}
+        if(mProperty.price != null){ mPrice.text =  Utils.formatPriceDollars(mProperty.price!!)} else{ mPriceLayout.visibility = View.GONE}
         if(!mProperty.address.equals("")){
             mLocation.text = mProperty.address
             val mapUrl: String = Utils.getMapUrl(mProperty.address)

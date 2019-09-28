@@ -44,20 +44,18 @@ class AddActivity : AppCompatActivity() {
     private var mPropertyId: Long? = null
     private var mProperty: Property? = null
 
-    // DB
     private var mDb: AppDatabase? = null
 
-    // Form
     private var mPropType: String? = null
-    private var mPropPrice: String? = null
-    private var mPropSurface: String? = null
-    private var mPropRoomNb: String? = null
+    private var mPropPrice: Int? = null
+    private var mPropSurface: Int? = null
+    private var mPropRoomNb: Int? = null
     private var mPropDescription: String? = null
     private var mPropLocation: String? = null
     private var mPropPOI: String? = null
     private var mPropAvailable: Boolean = true
-    private var mPropMarketEntryDate: String? = null
-    private var mPropSellDate: String? = null
+    private var mPropMarketEntryDate: Int? = null
+    private var mPropSellDate: Int? = null
     private var mPropAgent: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -222,16 +220,17 @@ class AddActivity : AppCompatActivity() {
 
     private fun getForm(){
         mPropType = add_activity_type_spinner.selectedItem.toString().trim()
-        mPropPrice = add_activity_price_editText.text.toString().trim()
-        mPropSurface = add_activity_surface_editText.text.toString().trim()
-        mPropRoomNb = add_activity_numberRooms_editText.text.toString().trim()
         mPropDescription = add_activity_description_editText.text.toString().trim()
         mPropLocation = add_activity_location_editText.text.toString().trim()
         mPropPOI = add_activity_POIs_editText.text.toString().trim()
         mPropAvailable = add_activity_available_checkBox.isChecked
-        mPropMarketEntryDate = add_activity_entry_date_editText.text.toString().trim()
-        mPropSellDate = add_activity_sale_date_editText.text.toString().trim()
         mPropAgent = add_activity_agent_editText.text.toString().trim()
+
+        if(!add_activity_price_editText.text.toString().trim().equals("")){mPropPrice = (add_activity_price_editText.text.toString().trim()).toInt()}
+        if(!add_activity_surface_editText.text.toString().trim().equals("")){mPropSurface = (add_activity_surface_editText.text.toString().trim()).toInt()}
+        if(!add_activity_numberRooms_editText.text.toString().trim().equals("")){mPropRoomNb = (add_activity_numberRooms_editText.text.toString().trim()).toInt()}
+        if(!add_activity_entry_date_editText.text.toString().trim().equals("")){mPropMarketEntryDate = (add_activity_entry_date_editText.text.toString().trim()).toInt()}
+        if(!add_activity_sale_date_editText.text.toString().trim().equals("")){mPropSellDate = (add_activity_sale_date_editText.text.toString().trim()).toInt()}
     }
 
     ///////////////////
@@ -263,15 +262,17 @@ class AddActivity : AppCompatActivity() {
         add_activity_type_spinner.setSelection(type)
 
         if(!mProperty?.description.equals("")){ add_activity_description_editText.setText(mProperty?.description)}
-        if(!mProperty?.surface.equals("")){ add_activity_surface_editText.setText(mProperty?.surface)}
-        if(!mProperty?.roomNumber.equals("")){ add_activity_numberRooms_editText.setText(mProperty?.roomNumber)}
         if(!mProperty?.pointsOfInterest.equals("")){ add_activity_POIs_editText.setText(mProperty?.pointsOfInterest)}
-        if(!mProperty?.marketEntryDate.equals("")){ add_activity_entry_date_editText.setText(mProperty?.marketEntryDate)}
         if(!mProperty?.available!!){ add_activity_available_checkBox.isChecked = false}
-        if(!mProperty?.sellDate.equals("")){add_activity_sale_date_editText.setText(mProperty?.sellDate)}
         if(!mProperty?.agent.equals("")){ add_activity_agent_editText.setText(mProperty?.agent)}
-        if(!mProperty?.price.equals("")){ add_activity_price_editText.setText(mProperty?.price)}
         if(!mProperty?.address.equals("")){ add_activity_location_editText.setText(mProperty?.address)}
+
+        if(mProperty?.price != null){ add_activity_price_editText.setText(mProperty?.price.toString())}
+        if(mProperty?.surface != null){ add_activity_surface_editText.setText(mProperty?.surface.toString())}
+        if(mProperty?.roomNumber != null){ add_activity_numberRooms_editText.setText(mProperty?.roomNumber.toString())}
+        if(mProperty?.marketEntryDate != null){ add_activity_entry_date_editText.setText(mProperty?.marketEntryDate.toString())}
+        if(mProperty?.sellDate != null){add_activity_sale_date_editText.setText(mProperty?.sellDate.toString())}
+
     }
 
     private fun configureToolbar(){

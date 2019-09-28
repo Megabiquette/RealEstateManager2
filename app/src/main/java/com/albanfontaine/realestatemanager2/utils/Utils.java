@@ -96,11 +96,77 @@ public class Utils {
     }
 
     /**
+     * Takes a date in dd/MM/yyyy format and converts it to yyyyMMdd format for database searches
+     * @param date
+     * @return
+     */
+    public static int formatDateForDB(String date){
+        StringBuilder result = new StringBuilder();
+        String[] array = date.split("/");
+        result.append(array[2]).append(array[1]).append(array[0]);
+        return Integer.parseInt(result.toString());
+    }
+
+    /**
+     * Takes an int and converts it to a String formatted for the dollar currency
+     * @param price
+     * @return
+     */
+    public static String formatPriceDollars(int price){
+        String priceString = String.valueOf(price);
+        ArrayList<Character> resultArray = new ArrayList<>();
+        // Add comma every 3 digits
+        int x = 0;
+        for(int i = priceString.length()-1; i >= 0; i--){
+            if(x == 3){
+                resultArray.add(0, ',');
+                x = 0;
+            }
+            resultArray.add(0, priceString.charAt(i));
+            x++;
+        }
+        // Convert arraylist to string
+        StringBuilder result = new StringBuilder("$");
+        for(int i = 0; i < resultArray.size(); i++){
+            result.append(resultArray.get(i));
+        }
+        return result.toString();
+    }
+
+    /**
+     * Takes an int and converts it to a String formatted for the euro currency
+     * @param price
+     * @return
+     */
+    public static String formatPriceEuros(int price){
+        String priceString = String.valueOf(price);
+        ArrayList<Character> resultArray = new ArrayList<>();
+        // Add space every 3 digits
+        int x = 0;
+        for(int i = priceString.length()-1; i >= 0; i--){
+            if(x == 3){
+                resultArray.add(0, ' ');
+                x = 0;
+            }
+            resultArray.add(0, priceString.charAt(i));
+            x++;
+        }
+        // Convert arraylist to string
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < resultArray.size(); i++){
+            result.append(resultArray.get(i));
+        }
+        result.append("€");
+        return result.toString();
+    }
+
+    /**
      * Takes a String of a price in dollars and returns a String of a price in euros with the proper format
      * @param priceDollars
      * @return
      */
-    public static String formatPriceToEuros(String priceDollars){
+    /*
+    public static String formatStringDollarsToEuros(String priceDollars){
         // 1 - Remove commas
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < priceDollars.length(); i++){
@@ -127,4 +193,7 @@ public class Utils {
         }
         return result.toString();
     }
+    */
+
 }
+
