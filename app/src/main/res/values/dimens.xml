@@ -7,7 +7,7 @@
     <dimen name="item_margin_top">12dp</dimen>
     <dimen name="item_media_width_height">128dp</dimen>
 
-    <dimen name="field_width">200dp</dimen>
+    <dimen name="field_width">130dp</dimen>
     <dimen name="field_padding">2dp</dimen>
     <dimen name="field_button_height">60dp</dimen>
 

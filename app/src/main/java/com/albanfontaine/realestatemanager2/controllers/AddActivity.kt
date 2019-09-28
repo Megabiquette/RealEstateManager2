@@ -67,7 +67,6 @@ class AddActivity : AppCompatActivity() {
         configureToolbar()
         configureSpinner()
         configureMediaDialog(this)
-        setMediasText()
 
         val addMediaButton = add_activity_add_media_button
         val addPropertyButton = add_activity_add_property_button
@@ -83,6 +82,7 @@ class AddActivity : AppCompatActivity() {
             addPropertyButton.text = this.resources.getString(R.string.edit_property)
             getPropertyToEdit()
         }
+        setMediasText()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -180,28 +180,44 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun addProperty(){
-        if(mMedias.size > 0){
-            getForm()
-            val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+        if(mMediasNumber <= 0){
+            // ERROR: no media added
+            Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
+        }else{
             mDb = AppDatabase.getInstance(this)
             val executor: Executor = Executors.newSingleThreadExecutor()
-
-            executor.execute{
-                Log.e("executor", "Executed")
-                val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
-                Log.e("propId", propId.toString())
-                for(media: Media in mMedias){
-                    val mediaToAdd = Media(0, media.uri, media.description, propId)
-                    mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+            getForm()
+            if (mPropertyId == null){
+                // ADD the property
+                val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+                executor.execute{
+                    val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
+                    for(media: Media in mMedias){
+                        val mediaToAdd = Media(0, media.uri, media.description, propId)
+                        mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+                    }
+                    runOnUiThread{
+                        Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                 }
-                runOnUiThread{
-                    Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_SHORT).show()
-                    finish()
+            } else {
+                // EDIT the property
+                val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+                executor.execute{
+                    mDb?.propertyDAO()?.updateProperty(property)
+                    for(media: Media in mMedias){
+                        val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
+                        mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+                    }
+                    runOnUiThread{
+                        Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
                 }
             }
-        } else{
-            Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
         }
+
     }
 
     private fun getForm(){
@@ -230,8 +246,8 @@ class AddActivity : AppCompatActivity() {
             mProperty = db?.propertyDAO()?.getProperty(mPropertyId!!)
             mMediasNumber = db?.mediaDAO()?.getMedias(mPropertyId!!)?.size!!
             this.runOnUiThread{
-                Log.e("id", mPropertyId.toString())
                 setupFields()
+                setMediasText()
             }
         }
     }

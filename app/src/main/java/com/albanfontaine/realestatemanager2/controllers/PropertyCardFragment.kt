@@ -75,6 +75,7 @@ class PropertyCardFragment : Fragment() {
             //R.id.toolbar_add -> AddActivity::class.java
             R.id.toolbar_edit -> editProperty()
             R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
+            R.id.toolbar_map -> startActivity(Intent(activity,MapActivity::class.java))
             else -> return true
         }
         return true

@@ -48,6 +48,7 @@ class ListFragment : Fragment() {
             R.id.toolbar_add -> startActivity(Intent(activity,AddActivity::class.java))
             //R.id.toolbar_edit ->
             R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
+            R.id.toolbar_map -> startActivity(Intent(activity,MapActivity::class.java))
             else -> return true
         }
         return true

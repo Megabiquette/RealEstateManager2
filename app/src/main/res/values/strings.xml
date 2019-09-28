@@ -4,6 +4,7 @@
     <string name="toolbar_menu_add">Ajouter</string>
     <string name="toolbar_menu_edit">Editer</string>
     <string name="toolbar_menu_search">Rechercher</string>
+    <string name="toolbar_menu_map">Carte</string>
 
     <string-array name="property_types">
         <item>@string/flat</item>
@@ -47,6 +48,7 @@
     <string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
     <string name="property_error_0_media">Vous devez ajouter au moins une photo</string>
     <string name="property_added">Bien ajouté</string>
+    <string name="property_edited">Bien édité</string>
     <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
 
@@ -54,5 +56,10 @@
     <string name="price_euros">%1$s€</string>
 
     <string name="edit_property">Editer bien</string>
-
+    <string name="min">Min:</string>
+    <string name="max">Max:</string>
+    <string name="from">Du</string>
+    <string name="to">Au</string>
+    <string name="min_medias">Photos minimum:</string>
+    <string name="reset">Effacer</string>
 </resources>
