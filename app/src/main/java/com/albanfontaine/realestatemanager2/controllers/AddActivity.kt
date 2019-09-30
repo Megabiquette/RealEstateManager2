@@ -24,6 +24,7 @@ import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.utils.Constants
+import com.albanfontaine.realestatemanager2.utils.Utils
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.media_description.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -51,7 +52,8 @@ class AddActivity : AppCompatActivity() {
     private var mPropSurface: Int? = null
     private var mPropRoomNb: Int? = null
     private var mPropDescription: String? = null
-    private var mPropLocation: String? = null
+    private var mPropAddress: String? = null
+    private var mPropNeighborhood: String? = null
     private var mPropPOI: String? = null
     private var mPropAvailable: Boolean = true
     private var mPropMarketEntryDate: Int? = null
@@ -125,10 +127,15 @@ class AddActivity : AppCompatActivity() {
         builder.setView(view)
         builder.apply {
             setPositiveButton(R.string.media_dialog_ok,
-                DialogInterface.OnClickListener { dialog, which -> mediaDescription = input.text.toString()
-                    mMedias.add(Media(0, mCurrentMediaPath, mediaDescription, null))
-                    mMediasNumber++
-                    setMediasText()})
+                DialogInterface.OnClickListener { dialog, which ->
+                    if(!input.text.toString().trim().equals("")){
+                        mediaDescription = input.text.toString()
+                        mMedias.add(Media(0, mCurrentMediaPath, mediaDescription, null))
+                        mMediasNumber++
+                        setMediasText()
+                    }else{
+                        Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.media_dialog_error_no_description), Toast.LENGTH_LONG).show()
+                    }})
             setNegativeButton(R.string.media_dialog_cancel,
                 DialogInterface.OnClickListener { dialog, which ->  dialog.cancel() })
         }
@@ -187,7 +194,7 @@ class AddActivity : AppCompatActivity() {
             getForm()
             if (mPropertyId == null){
                 // ADD the property
-                val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+                val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
                 executor.execute{
                     val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
                     for(media: Media in mMedias){
@@ -201,7 +208,7 @@ class AddActivity : AppCompatActivity() {
                 }
             } else {
                 // EDIT the property
-                val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropLocation, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+                val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress,mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
                 executor.execute{
                     mDb?.propertyDAO()?.updateProperty(property)
                     for(media: Media in mMedias){
@@ -221,7 +228,8 @@ class AddActivity : AppCompatActivity() {
     private fun getForm(){
         mPropType = add_activity_type_spinner.selectedItem.toString().trim()
         mPropDescription = add_activity_description_editText.text.toString().trim()
-        mPropLocation = add_activity_location_editText.text.toString().trim()
+        mPropAddress = add_activity_address_editText.text.toString().trim()
+        mPropNeighborhood = add_activity_neighborhood_editText.text.toString().trim()
         mPropPOI = add_activity_POIs_editText.text.toString().trim()
         mPropAvailable = add_activity_available_checkBox.isChecked
         mPropAgent = add_activity_agent_editText.text.toString().trim()
@@ -229,8 +237,8 @@ class AddActivity : AppCompatActivity() {
         if(!add_activity_price_editText.text.toString().trim().equals("")){mPropPrice = (add_activity_price_editText.text.toString().trim()).toInt()}
         if(!add_activity_surface_editText.text.toString().trim().equals("")){mPropSurface = (add_activity_surface_editText.text.toString().trim()).toInt()}
         if(!add_activity_numberRooms_editText.text.toString().trim().equals("")){mPropRoomNb = (add_activity_numberRooms_editText.text.toString().trim()).toInt()}
-        if(!add_activity_entry_date_editText.text.toString().trim().equals("")){mPropMarketEntryDate = (add_activity_entry_date_editText.text.toString().trim()).toInt()}
-        if(!add_activity_sale_date_editText.text.toString().trim().equals("")){mPropSellDate = (add_activity_sale_date_editText.text.toString().trim()).toInt()}
+        if(!add_activity_entry_date_editText.text.toString().trim().equals("")){mPropMarketEntryDate = (Utils.formatDateForDB(add_activity_entry_date_editText.text.toString().trim()))}
+        if(!add_activity_sale_date_editText.text.toString().trim().equals("")){mPropSellDate = (Utils.formatDateForDB(add_activity_sale_date_editText.text.toString().trim())).toInt()}
     }
 
     ///////////////////
@@ -265,13 +273,14 @@ class AddActivity : AppCompatActivity() {
         if(!mProperty?.pointsOfInterest.equals("")){ add_activity_POIs_editText.setText(mProperty?.pointsOfInterest)}
         if(!mProperty?.available!!){ add_activity_available_checkBox.isChecked = false}
         if(!mProperty?.agent.equals("")){ add_activity_agent_editText.setText(mProperty?.agent)}
-        if(!mProperty?.address.equals("")){ add_activity_location_editText.setText(mProperty?.address)}
+        if(!mProperty?.address.equals("")){ add_activity_address_editText.setText(mProperty?.address)}
+        if(!mProperty?.neighborhood.equals("")){ add_activity_neighborhood_editText.setText(mProperty?.neighborhood)}
 
         if(mProperty?.price != null){ add_activity_price_editText.setText(mProperty?.price.toString())}
         if(mProperty?.surface != null){ add_activity_surface_editText.setText(mProperty?.surface.toString())}
         if(mProperty?.roomNumber != null){ add_activity_numberRooms_editText.setText(mProperty?.roomNumber.toString())}
-        if(mProperty?.marketEntryDate != null){ add_activity_entry_date_editText.setText(mProperty?.marketEntryDate.toString())}
-        if(mProperty?.sellDate != null){add_activity_sale_date_editText.setText(mProperty?.sellDate.toString())}
+        if(mProperty?.marketEntryDate != null){ add_activity_entry_date_editText.setText(Utils.formatDateToText(mProperty?.marketEntryDate!!))}
+        if(mProperty?.sellDate != null){add_activity_sale_date_editText.setText(Utils.formatDateToText(mProperty?.sellDate!!))}
 
     }
 

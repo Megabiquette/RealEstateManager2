@@ -21,14 +21,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="#000"
-            android:text="Exemple" />
+            android:textColor="#000" />
         <TextView
-            android:id="@+id/list_item_location"
+            android:id="@+id/list_item_neighborhood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Exemple"
             android:layout_marginTop="@dimen/item_margin_top"/>
         <TextView
             android:id="@+id/list_item_price"
@@ -36,7 +34,6 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
-            android:text="Exemple"
             android:layout_marginTop="@dimen/item_margin_top" />
 
     </LinearLayout>

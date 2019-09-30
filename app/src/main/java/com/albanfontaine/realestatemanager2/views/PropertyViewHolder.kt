@@ -3,7 +3,6 @@ package com.albanfontaine.realestatemanager2.views
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,7 +17,7 @@ import java.util.concurrent.Executors
 class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
     private val mMedia: ImageView = view.list_item_media
     private val mType: TextView = view.list_item_type
-    private val mLocation: TextView = view.list_item_location
+    private val mAddress: TextView = view.list_item_neighborhood
     private val mPrice: TextView = view.list_item_price
 
     private var mDb: AppDatabase? = null
@@ -36,7 +35,7 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
             }
 
             mType.text = property.type
-            mLocation.text = property.address
+            mAddress.text = property.neighborhood
             mPrice.text = "\$" + property.price
         }
     }

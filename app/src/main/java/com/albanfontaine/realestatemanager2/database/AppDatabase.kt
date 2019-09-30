@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
 
-@Database(entities = [Media::class, Property::class], version = 2, exportSchema = false)
+@Database(entities = [Media::class, Property::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase{
 
     abstract fun propertyDAO(): PropertyDAO

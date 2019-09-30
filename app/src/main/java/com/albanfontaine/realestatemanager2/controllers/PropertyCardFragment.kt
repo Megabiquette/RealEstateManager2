@@ -28,10 +28,12 @@ class PropertyCardFragment : Fragment() {
     private lateinit var mRecyclerView: RecyclerView
     private var mAdapter: MediaAdapter? = null
 
+    private lateinit var mType: TextView
+    private lateinit var mNeighborhood: TextView
     private lateinit var mDescription: TextView
     private lateinit var mSurface: TextView
     private lateinit var mNumberRooms: TextView
-    private lateinit var mLocation: TextView
+    private lateinit var mAddress: TextView
     private lateinit var mPOIs: TextView
     private lateinit var mEntryDate: TextView
     private lateinit var mAvailable: TextView
@@ -42,7 +44,7 @@ class PropertyCardFragment : Fragment() {
     private lateinit var mDescriptionLayout: LinearLayout
     private lateinit var mSurfaceLayout: LinearLayout
     private lateinit var mNumberRoomsLayout: LinearLayout
-    private lateinit var mLocationLayout: LinearLayout
+    private lateinit var mAddressLayout: LinearLayout
     private lateinit var mPOIsLayout: LinearLayout
     private lateinit var mEntryDateLayout: LinearLayout
     private lateinit var mSaleDateLayout: LinearLayout
@@ -98,7 +100,7 @@ class PropertyCardFragment : Fragment() {
 
     private fun changePriceCurrency(){
         if (mPrice.text.toString()[0] == '$'){
-            mPrice.text = Utils.formatPriceEuros(mProperty.price!!)
+            mPrice.text = Utils.formatPriceEuros(Utils.convertDollarToEuro(mProperty.price!!))
         }else{
             mPrice.text = Utils.formatPriceDollars(mProperty.price!!)
         }
@@ -114,27 +116,30 @@ class PropertyCardFragment : Fragment() {
 
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
+        if(!mProperty.neighborhood.equals("")){ mNeighborhood.text = mProperty.neighborhood} else{ mNeighborhood.visibility = View.GONE}
         if(!mProperty.description.equals("")){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
         if(mProperty.surface != null){ mSurface.text = mProperty.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}
         if(mProperty.roomNumber != null){ mNumberRooms.text = mProperty.roomNumber.toString()} else{ mNumberRoomsLayout.visibility = View.GONE}
         if(!mProperty.pointsOfInterest.equals("")){ mPOIs.text = mProperty.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
-        if(mProperty.marketEntryDate != null){ mEntryDate.text = mProperty.marketEntryDate.toString()} else{ mEntryDateLayout.visibility = View.GONE}
+        if(mProperty.marketEntryDate != null){ mEntryDate.text = Utils.formatDateToText(mProperty.marketEntryDate!!)} else{ mEntryDateLayout.visibility = View.GONE}
         if(mProperty.available){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
-        if(mProperty.sellDate != null){mSaleDate.text = mProperty.sellDate.toString()} else{ mSaleDateLayout.visibility = View.GONE}
+        if(mProperty.sellDate != null){mSaleDate.text = Utils.formatDateToText(mProperty.sellDate!!)} else{ mSaleDateLayout.visibility = View.GONE}
         if(!mProperty.agent.equals("")){ mAgent.text = mProperty.agent} else{ mAgentLayout.visibility = View.GONE}
         if(mProperty.price != null){ mPrice.text =  Utils.formatPriceDollars(mProperty.price!!)} else{ mPriceLayout.visibility = View.GONE}
         if(!mProperty.address.equals("")){
-            mLocation.text = mProperty.address
+            mAddress.text = mProperty.address
             val mapUrl: String = Utils.getMapUrl(mProperty.address)
             Picasso.with(context).load(mapUrl).fit().into(mMap)
-        } else{ mLocationLayout.visibility = View.GONE}
+        } else{ mAddressLayout.visibility = View.GONE}
     }
 
     private fun configViews(){
+        mType = property_card_type
+        mNeighborhood = property_card_neighborhood
         mDescription = property_card_description
         mSurface = property_card_surface
         mNumberRooms = property_card_numberRooms
-        mLocation = property_card_location
+        mAddress = property_card_address
         mPOIs = property_card_POIs
         mEntryDate = property_card_entry_date
         mAvailable = property_card_available
@@ -145,7 +150,7 @@ class PropertyCardFragment : Fragment() {
         mDescriptionLayout = property_card_description_layout
         mSurfaceLayout = property_card_surface_layout
         mNumberRoomsLayout = property_card_numberRooms_layout
-        mLocationLayout = property_card_location_layout
+        mAddressLayout = property_card_address_layout
         mPOIsLayout = property_card_POIs_layout
         mEntryDateLayout = property_card_entry_date_layout
         mSaleDateLayout = property_card_sale_date_layout

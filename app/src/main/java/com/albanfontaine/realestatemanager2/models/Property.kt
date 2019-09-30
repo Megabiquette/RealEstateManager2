@@ -14,6 +14,7 @@ data class Property(
     @ColumnInfo(name = "room_number") var roomNumber: Int?,
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "address") var address: String?,
+    @ColumnInfo(name = "neighborhood") var neighborhood: String?,
     @ColumnInfo(name = "points_of_interest") var pointsOfInterest: String?,
     @ColumnInfo(name = "available") var available: Boolean = true,
     @ColumnInfo(name = "market_entry_date") var marketEntryDate: Int?,

@@ -137,6 +137,7 @@
                             android:layout_height="wrap_content"
                             android:textAlignment="viewEnd"
                             android:maxLength="20"
+                            android:inputType="number"
                             android:singleLine="true"/>
                     </LinearLayout>
                     <LinearLayout
@@ -160,6 +161,7 @@
                             android:layout_height="wrap_content"
                             android:textAlignment="viewEnd"
                             android:maxLength="20"
+                            android:inputType="number"
                             android:singleLine="true"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -202,6 +204,7 @@
                             android:textAlignment="viewEnd"
                             android:maxLength="20"
                             android:singleLine="true"
+                            android:inputType="number"
                             android:layout_marginStart="@dimen/item_padding"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -225,6 +228,7 @@
                             android:textAlignment="viewEnd"
                             android:maxLength="20"
                             android:singleLine="true"
+                            android:inputType="number"
                             android:layout_marginStart="@dimen/item_padding"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -370,6 +374,7 @@
                     android:textAlignment="viewEnd"
                     android:maxLength="2"
                     android:singleLine="true"
+                    android:inputType="number"
                     android:layout_marginStart="@dimen/item_padding"/>
             </LinearLayout>
 

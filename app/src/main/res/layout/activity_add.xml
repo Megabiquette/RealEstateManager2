@@ -33,7 +33,7 @@
                         android:text="@string/property_type"/>
                 <Spinner
                         android:id="@+id/add_activity_type_spinner"
-                        android:layout_width="@dimen/field_width"
+                        android:layout_width="@dimen/spinner_width"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/item_margin_horizontal"
                         android:layout_marginEnd="@dimen/item_margin_horizontal"/>
@@ -82,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="viewEnd"
                         android:maxLength="20"
+                        android:inputType="number"
                         android:singleLine="true"/>
             </LinearLayout>
 
@@ -102,6 +103,7 @@
                         android:maxLength="7"
                         android:textAlignment="viewEnd"
                         android:layout_marginStart="@dimen/item_margin_horizontal"
+                        android:inputType="number"
                         android:singleLine="true"/>
                 <TextView
                         android:layout_width="wrap_content"
@@ -126,6 +128,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="5"
                         android:singleLine="true"
+                        android:inputType="number"
                         android:layout_marginStart="@dimen/item_margin_horizontal"/>
             </LinearLayout>
 
@@ -138,9 +141,9 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/property_location"/>
+                        android:text="@string/property_address"/>
                 <EditText
-                        android:id="@+id/add_activity_location_editText"
+                        android:id="@+id/add_activity_address_editText"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,6 +151,27 @@
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLength="2000"
                         android:maxLines="6" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/field_padding"
+                android:layout_marginStart="@dimen/item_margin_horizontal"
+                android:layout_marginEnd="@dimen/item_margin_horizontal"  >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_neighborhood"/>
+                <EditText
+                    android:id="@+id/add_activity_neighborhood_editText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/item_margin_horizontal"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLength="2000"
+                    android:singleLine="true"/>
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_title">22sp</dimen>
+    <dimen name="text_subtitle">18sp</dimen>
 
     <dimen name="item_padding">12dp</dimen>
     <dimen name="item_margin_horizontal">20dp</dimen>
@@ -8,6 +9,7 @@
     <dimen name="item_media_width_height">128dp</dimen>
 
     <dimen name="field_width">130dp</dimen>
+    <dimen name="spinner_width">180dp</dimen>
     <dimen name="field_padding">2dp</dimen>
     <dimen name="field_button_height">60dp</dimen>
 

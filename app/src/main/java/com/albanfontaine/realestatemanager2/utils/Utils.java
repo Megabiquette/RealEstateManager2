@@ -81,11 +81,11 @@ public class Utils {
     /**
      * Takes a String and returns a Google Maps Static API url
      * like https://maps.googleapis.com/maps/api/staticmap?markers=108+boulevard+saint+germain+75006+paris&zoom=15&size=300x300&scale=3&key=AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI
-     * @param location
+     * @param address
      * @return
      */
-    public static String getMapUrl(String location){
-        String[] addressParts = location.split(" ");
+    public static String getMapUrl(String address){
+        String[] addressParts = address.split(" ");
         StringBuilder sb = new StringBuilder(Constants.MAP_URL_BEGINNING);
         sb.append(addressParts[0]);
         for (int i = 1; i < addressParts.length; i++){
@@ -105,6 +105,18 @@ public class Utils {
         String[] array = date.split("/");
         result.append(array[2]).append(array[1]).append(array[0]);
         return Integer.parseInt(result.toString());
+    }
+
+    /**
+     * Takes a date in yyyyMMdd format and converts it to dd/MM/yyyy format for textViews
+     * @param date
+     * @return
+     */
+    public static String formatDateToText(int date){
+        String input = String.valueOf(date);
+        StringBuilder result = new StringBuilder();
+        result.append(input.substring(6)).append("/").append(input.substring(4,6)).append("/").append(input.substring(0,4));
+        return result.toString();
     }
 
     /**
@@ -159,41 +171,5 @@ public class Utils {
         result.append("€");
         return result.toString();
     }
-
-    /**
-     * Takes a String of a price in dollars and returns a String of a price in euros with the proper format
-     * @param priceDollars
-     * @return
-     */
-    /*
-    public static String formatStringDollarsToEuros(String priceDollars){
-        // 1 - Remove commas
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < priceDollars.length(); i++){
-            if(priceDollars.charAt(i) != ',')
-                sb.append(priceDollars.charAt(i));
-        }
-        // 2 - Convert to euros
-        String priceEuros = String.valueOf(Utils.convertDollarToEuro(Integer.parseInt(sb.toString())));
-        // 3 - Add spaces every 3 digits
-        ArrayList<Character> resultArray = new ArrayList<>();
-        int x = 0;
-        for(int i = priceEuros.length()-1; i >= 0; i--){
-            if(x == 3){
-                resultArray.add(0, ' ');
-                x = 0;
-            }
-            resultArray.add(0, priceEuros.charAt(i));
-            x++;
-        }
-        // 4 Convert arraylist to string
-        StringBuilder result = new StringBuilder();
-        for(int i = 0; i < resultArray.size(); i++){
-            result.append(resultArray.get(i));
-        }
-        return result.toString();
-    }
-    */
-
 }
 

@@ -23,7 +23,8 @@
     <string name="property_surface">Surface:</string>
     <string name="property_numberRooms">Nombre de pièces:</string>
     <string name="property_description">Description:</string>
-    <string name="property_location">Adresse:</string>
+    <string name="property_address">Adresse:</string>
+    <string name="property_neighborhood">Quartier:</string>
     <string name="property_POIs">Points d\'interêts:</string>
     <string name="dollar_sign">$</string>
     <string name="square_meters">m²</string>
@@ -46,6 +47,7 @@
     <string name="media_dialog_cancel">Annuler</string>
     <string name="media_dialog_add_description">Ajouter description</string>
     <string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
+    <string name="media_dialog_error_no_description">Vous devez ajouter une description à la photo</string>
     <string name="property_error_0_media">Vous devez ajouter au moins une photo</string>
     <string name="property_added">Bien ajouté</string>
     <string name="property_edited">Bien édité</string>
