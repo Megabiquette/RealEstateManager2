@@ -16,7 +16,6 @@
             android:id="@+id/property_card_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Appartement"
             android:textSize="@dimen/text_title"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
@@ -25,7 +24,6 @@
             android:id="@+id/property_card_neighborhood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quartier latin"
             android:textSize="@dimen/text_subtitle"
             android:textStyle="bold"
             android:textColor="@color/colorAccent"/>

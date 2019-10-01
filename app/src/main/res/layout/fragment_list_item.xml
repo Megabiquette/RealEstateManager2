@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:layout_marginTop="@dimen/item_margin_top"/>
         <TextView
             android:id="@+id/list_item_neighborhood"
             android:layout_width="wrap_content"

@@ -116,6 +116,7 @@ class PropertyCardFragment : Fragment() {
 
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
+        mType.setText(mProperty.type)
         if(!mProperty.neighborhood.equals("")){ mNeighborhood.text = mProperty.neighborhood} else{ mNeighborhood.visibility = View.GONE}
         if(!mProperty.description.equals("")){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
         if(mProperty.surface != null){ mSurface.text = mProperty.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}

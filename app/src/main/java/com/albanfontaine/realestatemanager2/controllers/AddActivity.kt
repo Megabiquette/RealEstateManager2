@@ -190,7 +190,8 @@ class AddActivity : AppCompatActivity() {
             // For EDIT only
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{
-                val i:Int? = mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
+				mDb = AppDatabase.getInstance(this)
+				val i:Int? = mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
                 Log.e("i", i.toString())
             }
         }

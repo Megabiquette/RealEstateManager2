@@ -56,6 +56,9 @@
     <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
 
+    <string name="no_neighborhood">Quartier non renseigné</string>
+    <string name="no_price">Prix non renseigné</string>
+
     <string name="edit_property">Editer bien</string>
     <string name="min">Min:</string>
     <string name="max">Max:</string>
