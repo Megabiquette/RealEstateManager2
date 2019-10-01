@@ -290,14 +290,22 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/add_activity_delete_medias_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_button_delete_medias"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
                     android:id="@+id/add_activity_add_property_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/field_button_height"
                     android:text="@string/property_button_add_property"
+                    android:background="@color/colorPrimary"
                     android:padding="@dimen/item_margin_horizontal"
                     android:layout_marginTop="@dimen/item_margin_top"
+                    android:layout_marginBottom="@dimen/item_margin_top"
                     android:layout_gravity="center_horizontal"/>
-
         </LinearLayout>
 
     </ScrollView>

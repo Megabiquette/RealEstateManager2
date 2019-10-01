@@ -37,8 +37,8 @@ import java.util.concurrent.Executors
 
 class AddActivity : AppCompatActivity() {
     private var mMedias: ArrayList<Media> = ArrayList()
-    private var mMediasNumber: Int = 0
     private lateinit var mMediaDialog: AlertDialog
+    private lateinit var mDeleteMediasDialog: AlertDialog
     private lateinit var mCurrentMediaPath: String
 
     // Property to be EDITED only
@@ -66,12 +66,14 @@ class AddActivity : AppCompatActivity() {
 
         configureToolbar()
         configureSpinner()
-        configureMediaDialog(this)
+        configureMediaDialogs(this)
 
         val addMediaButton = add_activity_add_media_button
+        val deleteMediasButton = add_activity_delete_medias_button
         val addPropertyButton = add_activity_add_property_button
 
         addMediaButton.setOnClickListener{mMediaDialog.show()}
+        deleteMediasButton.setOnClickListener{mDeleteMediasDialog.show()}
         addPropertyButton.setOnClickListener{addProperty()}
 
         // Checks if the user wants to edit a property
@@ -131,7 +133,6 @@ class AddActivity : AppCompatActivity() {
                     if(!input.text.toString().trim().equals("")){
                         mediaDescription = input.text.toString()
                         mMedias.add(Media(0, mCurrentMediaPath, mediaDescription, null))
-                        mMediasNumber++
                         setMediasText()
                     }else{
                         Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.media_dialog_error_no_description), Toast.LENGTH_LONG).show()
@@ -184,8 +185,21 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
+    private fun deleteMedias(){
+        if(mPropertyId != null){
+            // For EDIT only
+            val executor: Executor = Executors.newSingleThreadExecutor()
+            executor.execute{
+                val i:Int? = mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
+                Log.e("i", i.toString())
+            }
+        }
+        mMedias = ArrayList()
+        setMediasText()
+    }
+
     private fun addProperty(){
-        if(mMediasNumber <= 0){
+        if(mMedias.size <= 0){
             // ERROR: no media added
             Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
         }else{
@@ -202,7 +216,7 @@ class AddActivity : AppCompatActivity() {
                         mDb?.mediaDAO()?.insertMedia(mediaToAdd)
                     }
                     runOnUiThread{
-                        Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_LONG).show()
                         finish()
                     }
                 }
@@ -212,17 +226,18 @@ class AddActivity : AppCompatActivity() {
                 executor.execute{
                     mDb?.propertyDAO()?.updateProperty(property)
                     for(media: Media in mMedias){
-                        val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
-                        mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+                        if(media.propertyId == null){
+                            val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
+                            mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+                        }
                     }
                     runOnUiThread{
-                        Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_LONG).show()
                         startActivity(Intent(this, MainActivity::class.java))
                     }
                 }
             }
         }
-
     }
 
     private fun getForm(){
@@ -251,7 +266,8 @@ class AddActivity : AppCompatActivity() {
         val executor = Executors.newSingleThreadExecutor()
         executor.execute{
             mProperty = db?.propertyDAO()?.getProperty(mPropertyId!!)
-            mMediasNumber = db?.mediaDAO()?.getMedias(mPropertyId!!)?.size!!
+            val listMedias: List<Media>? = db?.mediaDAO()?.getMedias(mPropertyId!!)
+            mMedias = ArrayList(listMedias!!)
             this.runOnUiThread{
                 setupFields()
                 setMediasText()
@@ -299,7 +315,7 @@ class AddActivity : AppCompatActivity() {
             }
     }
 
-    private fun configureMediaDialog(activity: Activity){
+    private fun configureMediaDialogs(activity: Activity){
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity, R.style.DialogTheme)
         builder.apply {
             setPositiveButton(R.string.media_dialog_gallery,
@@ -310,9 +326,19 @@ class AddActivity : AppCompatActivity() {
         builder.setMessage(R.string.media_dialog_message)
             .setTitle(R.string.media_dialog_title)
         mMediaDialog = builder.create()
+
+        val builder2: AlertDialog.Builder = AlertDialog.Builder(activity, R.style.DialogTheme)
+        builder2.apply {
+            setPositiveButton(R.string.media_dialog_ok,
+                DialogInterface.OnClickListener{ dialog, which ->  deleteMedias() })
+            setNegativeButton(R.string.media_dialog_cancel,
+                DialogInterface.OnClickListener{dialog, which ->  dialog.cancel() })
+        }
+        builder2.setTitle(R.string.media_dialog_delete_medias_title)
+        mDeleteMediasDialog = builder2.create()
     }
 
     private fun setMediasText(){
-        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, mMediasNumber, mMediasNumber)
+        add_activity_media_added_textView.text = resources.getQuantityString(R.plurals.property_medias_added, mMedias.size, mMedias.size)
     }
 }

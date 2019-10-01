@@ -34,6 +34,7 @@
     <string name="property_sale_date">Date de vente:</string>
     <string name="property_agent">Agent immobilier:</string>
     <string name="property_button_add_media">Ajouter photo</string>
+    <string name="property_button_delete_medias">Effacer les photos</string>
     <plurals name="property_medias_added">
         <item quantity="one">%1d photo ajoutée</item>
         <item quantity="other">%1d photos ajoutées</item>
@@ -46,6 +47,7 @@
     <string name="media_dialog_ok">OK</string>
     <string name="media_dialog_cancel">Annuler</string>
     <string name="media_dialog_add_description">Ajouter description</string>
+    <string name="media_dialog_delete_medias_title">Effacer toutes les photos ?</string>
     <string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
     <string name="media_dialog_error_no_description">Vous devez ajouter une description à la photo</string>
     <string name="property_error_0_media">Vous devez ajouter au moins une photo</string>

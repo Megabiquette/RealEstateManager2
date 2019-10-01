@@ -12,4 +12,7 @@ interface MediaDAO {
 
     @Insert
     fun insertMedia(media: Media) : Long
+
+    @Query("DELETE FROM Media WHERE property_id = :propertyId")
+    fun deleteAllMedias(propertyId: Long): Int
 }
