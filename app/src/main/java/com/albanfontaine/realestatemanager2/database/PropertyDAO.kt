@@ -19,4 +19,7 @@ interface PropertyDAO{
 
     @Update
     fun updateProperty(property: Property) : Int
+
+    @Query("SELECT * FROM Property WHERE :query")
+    fun searchProperties(query: String) : List<Property>
 }

@@ -229,6 +229,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="10"
                         android:singleLine="true"
+                        android:hint="@string/date_hint"
                         android:layout_marginStart="@dimen/item_margin_horizontal"/>
             </LinearLayout>
 
@@ -248,6 +249,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="10"
                         android:singleLine="true"
+                        android:hint="@string/date_hint"
                         android:layout_marginStart="@dimen/item_margin_horizontal"/>
             </LinearLayout>
 

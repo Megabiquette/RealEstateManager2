@@ -100,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/item_margin_top"
-                android:layout_marginStart="@dimen/item_margin_horizontal">
+                android:layout_marginStart="@dimen/item_margin_horizontal"
+                android:layout_marginEnd="@dimen/item_margin_horizontal">
 
                 <TextView
                     android:layout_width="0dp"
@@ -172,6 +173,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/item_margin_horizontal"
+                android:layout_marginEnd="@dimen/item_margin_horizontal"
                 android:layout_marginTop="@dimen/item_margin_top">
 
                 <TextView
@@ -239,6 +241,52 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/item_margin_top"
+                android:layout_marginEnd="@dimen/item_margin_horizontal"
+                android:layout_marginStart="@dimen/item_margin_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_neighborhood"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/search_neighborhood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:maxLength="25"
+                    android:singleLine="true"
+                    android:layout_marginStart="@dimen/item_padding"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/item_margin_top"
+                android:layout_marginEnd="@dimen/item_margin_horizontal"
+                android:layout_marginStart="@dimen/item_margin_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_POIs"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/search_POIs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:maxLength="35"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -258,12 +306,13 @@
                         android:text="@string/from"
                         android:textSize="@dimen/text_title"/>
                     <EditText
-                        android:id="@+id/search_entry_date_min"
+                        android:id="@+id/search_entry_date_from"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:textAlignment="viewEnd"
                         android:maxLength="10"
                         android:singleLine="true"
+                        android:hint="@string/date_hint"
                         android:layout_marginStart="@dimen/item_padding"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -272,12 +321,13 @@
                         android:textSize="@dimen/text_title"
                         android:layout_marginStart="@dimen/item_margin_horizontal"/>
                     <EditText
-                        android:id="@+id/search_entry_date_max"
+                        android:id="@+id/search_entry_date_to"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:textAlignment="viewEnd"
                         android:maxLength="10"
                         android:singleLine="true"
+                        android:hint="@string/date_hint"
                         android:layout_marginStart="@dimen/item_padding"/>
                 </LinearLayout>
 
@@ -304,12 +354,13 @@
                             android:text="@string/from"
                             android:textSize="@dimen/text_title"/>
                         <EditText
-                            android:id="@+id/search_sale_date_min"
+                            android:id="@+id/search_sale_date_from"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:textAlignment="viewEnd"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:hint="@string/date_hint"
                             android:layout_marginStart="@dimen/item_padding"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -318,12 +369,13 @@
                             android:textSize="@dimen/text_title"
                             android:layout_marginStart="@dimen/item_margin_horizontal"/>
                         <EditText
-                            android:id="@+id/search_sale_date_max"
+                            android:id="@+id/search_sale_date_to"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:textAlignment="viewEnd"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:hint="@string/date_hint"
                             android:layout_marginStart="@dimen/item_padding"/>
                     </LinearLayout>
                 </LinearLayout>

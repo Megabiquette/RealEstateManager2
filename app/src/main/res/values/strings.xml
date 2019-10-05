@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
+    <string name="googlemaps_api">AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI</string>
+
+    <string name="map_style">
+        [
+  {
+    "featureType": "poi",
+     "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+]
+    </string>
 
     <string name="toolbar_menu_add">Ajouter</string>
     <string name="toolbar_menu_edit">Editer</string>
@@ -55,6 +70,7 @@
     <string name="property_edited">Bien édité</string>
     <string name="property_medias">Photos</string>
     <string name="property_description_2">Description</string>
+    <string name="date_hint">"jj/mm/aaaa</string>
 
     <string name="no_neighborhood">Quartier non renseigné</string>
     <string name="no_price">Prix non renseigné</string>
@@ -66,4 +82,8 @@
     <string name="to">Au</string>
     <string name="min_medias">Photos minimum:</string>
     <string name="reset">Effacer</string>
+
+    <string name="search_check_type">Vous devez choisir au moins un type de bien</string>
+    <string name="search_check_available">Vous devez choisir au moins les biens disponibles ou les biens vendus</string>
+
 </resources>

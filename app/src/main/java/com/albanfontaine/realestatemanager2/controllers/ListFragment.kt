@@ -67,10 +67,7 @@ class ListFragment : Fragment() {
         val executor: Executor = Executors.newSingleThreadExecutor()
         executor.execute{
             mProperties = mDb?.propertyDAO()?.getProperties()!!
-            if(!mProperties.isNullOrEmpty()){
-                mProperties?.forEach {
-                }
-            }
+
             activity?.runOnUiThread{
                 configureRecyclerView()
                 configureOnClickRecyclerView();
