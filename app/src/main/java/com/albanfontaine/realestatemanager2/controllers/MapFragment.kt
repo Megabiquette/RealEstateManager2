@@ -93,7 +93,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 	}
 
 	override fun onMarkerClick(marker: Marker?): Boolean {
-		val intent = Intent(requireContext(), PropertyCardFragment::class.java)
+		val intent = Intent(requireContext(), MainActivity::class.java)
 		intent.putExtra(Constants.PROPERTY_ID, marker?.tag as Long)
 		startActivity(intent)
 
