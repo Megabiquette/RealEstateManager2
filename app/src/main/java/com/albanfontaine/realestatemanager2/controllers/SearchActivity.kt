@@ -40,11 +40,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var mMediasMinForm: EditText
 
     // Query values
-    /*private var mFlat: Boolean = true
-    private var mHouse: Boolean = true
-    private var mLoft: Boolean = true
-    private var mManor: Boolean = true*/
-    private lateinit var mTypes: String
+    private lateinit var mTypes: List<String>
     private var mPriceMin: Int = 0
     private var mPriceMax: Int = 999999999
     private var mSurfaceMin: Int = 0
@@ -55,8 +51,7 @@ class SearchActivity : AppCompatActivity() {
     private var mEntryDateTo: Int = 999999999
     private var mSaleDateFrom: Int = 0
     private var mSaleDateTo: Int = 999999999
-    private lateinit var mAvailable: String
-    //private var mSold: Boolean = true
+    private lateinit var mAvailable: List<Int>
     private var mMediasMin: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,10 +74,7 @@ class SearchActivity : AppCompatActivity() {
             executor.execute{
                 properties = db?.propertyDAO()?.searchProperties(mTypes, mPriceMin, mPriceMax, mSurfaceMin, mSurfaceMax, mNeighborhood, mPOIs,
                     mEntryDateFrom, mEntryDateTo, mSaleDateFrom, mSaleDateTo, mAvailable, mMediasMin)!!
-                Log.e("type", mTypes)
-                Log.e("available", mAvailable)
-                Log.e("quartier", mNeighborhood)
-                Log.e("POIs", mPOIs)
+                //properties = db?.propertyDAO()?.searchTest(mNeighborhood)!!
                 for(property: Property in properties){
                     Log.e("result", property.toString())
                 }
@@ -91,12 +83,12 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun getForm(){
-        val typesArray = ArrayList<String>()
-        if(mFlatForm.isChecked){typesArray.add(baseContext.resources.getString(R.string.flat))}
-        if(mHouseForm.isChecked){typesArray.add(baseContext.resources.getString(R.string.house))}
-        if(mLoftForm.isChecked){typesArray.add(baseContext.resources.getString(R.string.loft))}
-        if(mManorForm.isChecked){typesArray.add(baseContext.resources.getString(R.string.manor))}
-        mTypes = typesArray.joinToString(",")
+        val typeList = mutableListOf<String>()
+        if(mFlatForm.isChecked){typeList.add(baseContext.resources.getString(R.string.flat))}
+        if(mHouseForm.isChecked){typeList.add(baseContext.resources.getString(R.string.house))}
+        if(mLoftForm.isChecked){typeList.add(baseContext.resources.getString(R.string.loft))}
+        if(mManorForm.isChecked){typeList.add(baseContext.resources.getString(R.string.manor))}
+        mTypes = typeList
 
         if(!mPriceMinForm.text.toString().trim().equals("")){mPriceMin = mPriceMinForm.text.toString().toInt()}
         if(!mPriceMaxForm.text.toString().trim().equals("")){mPriceMax = mPriceMaxForm.text.toString().toInt()}
@@ -104,17 +96,15 @@ class SearchActivity : AppCompatActivity() {
         if(!mSurfaceMaxForm.text.toString().trim().equals("")){mSurfaceMax = mSurfaceMaxForm.text.toString().toInt()}
         mNeighborhood = "%" + mNeighborhoodForm.text.toString().trim() + "%"
         mPOIs = "%" + mPOIsForm.text.toString().trim() + "%"
-        //if(!mNeighborhoodForm.text.toString().trim().equals("")){mNeighborhood = mNeighborhoodForm.text.toString()}
-        //if(!mPOIsForm.text.toString().trim().equals("")){mPOIs = mPOIsForm.text.toString()}
         if(!mEntryDateFromForm.text.toString().trim().equals("")){mEntryDateFrom = mEntryDateFromForm.text.toString().toInt()}
         if(!mEntryDateToForm.text.toString().trim().equals("")){mEntryDateTo = mEntryDateToForm.text.toString().toInt()}
         if(!mSaleDateFromForm.text.toString().trim().equals("")){mSaleDateFrom = mSaleDateFromForm.text.toString().toInt()}
         if(!mSaleDateToForm.text.toString().trim().equals("")){mSaleDateTo = mSaleDateToForm.text.toString().toInt()}
 
-        val availableArray = ArrayList<String>()
-        if(mAvailableForm.isChecked){availableArray.add(baseContext.resources.getString(R.string.property_available))}
-        if(mSoldForm.isChecked){availableArray.add(baseContext.resources.getString(R.string.property_sold))}
-        mAvailable = availableArray.joinToString(",")
+        val availableList = mutableListOf<Int>()
+        if(mAvailableForm.isChecked){availableList.add(1)}
+        if(mSoldForm.isChecked){availableList.add(0)}
+        mAvailable = availableList
 
         if(!mMediasMinForm.text.toString().trim().equals("")){mMediasMin = mMediasMinForm.text.toString().toInt()}
     }
