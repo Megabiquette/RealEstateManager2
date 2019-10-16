@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,7 +31,9 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
             mDb = AppDatabase.getInstance(context)
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{
-                if(mDb?.mediaDAO()?.getMedias(property.id)?.size != 0){
+                val mediasNb = mDb?.mediaDAO()?.getMedias(property.id)?.size
+                Log.e(property.id.toString(), mediasNb.toString())
+                if(mediasNb != 0){
                     val mediaURI: String = mDb?.mediaDAO()?.getMedias(property.id)?.get(0)!!.uri
                     activity.runOnUiThread{
                         val uri: Uri = Uri.parse(mediaURI)

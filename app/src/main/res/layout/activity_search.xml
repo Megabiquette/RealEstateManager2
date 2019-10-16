@@ -416,6 +416,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/property_agent"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/search_agent"
+                    android:layout_width="@dimen/field_width"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:maxLength="30"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:layout_marginStart="@dimen/item_padding"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/item_margin_horizontal"
+                android:layout_marginTop="@dimen/item_margin_top">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/min_medias"
                     android:textSize="@dimen/text_title"
                     android:textStyle="bold"/>

@@ -1,12 +1,16 @@
 package com.albanfontaine.realestatemanager2.controllers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
+import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         // Check if the activity was called from the MapFragment
         val extras: Bundle? = intent.extras
-        if(extras != null){
+
+        if(extras?.getString(Constants.SEARCH_QUERY) != null){
+            // Show properties from search query
+            val searchQueryJSON = intent.extras!!.getString(Constants.SEARCH_QUERY)
+            showListFragmentFromSearch(searchQueryJSON!!)
+        }else if(extras?.getLong(Constants.PROPERTY_ID) != null && extras.getLong(Constants.PROPERTY_ID) != 0.toLong()){
+            // Show property card
             showPropertyCardFragment(extras.getLong(Constants.PROPERTY_ID))
         }else{
+            // Show all properties
             showListFragment()
         }
     }
@@ -30,6 +41,16 @@ class MainActivity : AppCompatActivity() {
     private fun showListFragment(){
         supportFragmentManager.beginTransaction()
             .add(R.id.activity_base_frame_layout, ListFragment())
+            .commit()
+    }
+
+    private fun showListFragmentFromSearch(searchQueryJSON: String){
+        val bundle = Bundle()
+        bundle.putString(Constants.SEARCH_QUERY, searchQueryJSON)
+        val listFragment = ListFragment()
+        listFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .add(R.id.activity_base_frame_layout, listFragment)
             .commit()
     }
 
