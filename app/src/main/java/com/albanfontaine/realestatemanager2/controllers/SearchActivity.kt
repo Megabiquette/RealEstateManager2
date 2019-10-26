@@ -83,36 +83,8 @@ class SearchActivity : AppCompatActivity() {
 
             val searchQueryJSON = gson.toJson(searchQuery, searchQueryType)
             intent.putExtra(Constants.SEARCH_QUERY, searchQueryJSON)
-            /*
-            intent.putExtra(Constants.SEARCH_TYPE, typeString)
-            intent.putExtra(Constants.SEARCH_PRICE_MIN, mPriceMin)
-            intent.putExtra(Constants.SEARCH_PRICE_MAX, mPriceMax)
-            intent.putExtra(Constants.SEARCH_SURFACE_MIN, mSurfaceMin)
-            intent.putExtra(Constants.SEARCH_SURFACE_MAX, mSurfaceMax)
-            intent.putExtra(Constants.SEARCH_NEIGHBORHOOD, mNeighborhood)
-            intent.putExtra(Constants.SEARCH_POIS, mPOIs)
-            intent.putExtra(Constants.SEARCH_ENTRY_DATE_FROM, mEntryDateFrom)
-            intent.putExtra(Constants.SEARCH_ENTRY_DATE_TO, mEntryDateTo)
-            intent.putExtra(Constants.SEARCH_SALE_DATE_FROM, mSaleDateFrom)
-            intent.putExtra(Constants.SEARCH_SALE_DATE_TO, mSaleDateTo)
-            val availableString = gson.toJson(mAvailable)
-            intent.putExtra(Constants.SEARCH_AVAILABLE, availableString)
-            intent.putExtra(Constants.SEARCH_AGENT, mAgent)
-            intent.putExtra(Constants.SEARCH_MEDIA_MIN, mMediasMin)
-            */
-            startActivity(intent)
 
-            val db = AppDatabase.getInstance(baseContext)
-            var properties: List<Property>
-            val executor: Executor = Executors.newSingleThreadExecutor()
-            executor.execute{
-                properties = db?.propertyDAO()?.searchProperties(mTypes, mPriceMin, mPriceMax, mSurfaceMin, mSurfaceMax, mNeighborhood, mPOIs,
-                    mEntryDateFrom, mEntryDateTo, mSaleDateFrom, mSaleDateTo, mAvailable, mAgent, mMediasMin)!!
-                //properties = db?.propertyDAO()?.searchTest(mNeighborhood)!!
-                for(property: Property in properties){
-                    Log.e("result", property.toString())
-                }
-            }
+            startActivity(intent)
         }
     }
 

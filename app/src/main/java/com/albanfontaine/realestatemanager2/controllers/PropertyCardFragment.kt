@@ -91,8 +91,6 @@ class PropertyCardFragment : Fragment() {
             mMedias = db.mediaDAO().getMedias(id)
             activity?.runOnUiThread{
                 setupPropertyCard()
-            }
-            activity?.runOnUiThread{
                 configureRecyclerView()
             }
         }

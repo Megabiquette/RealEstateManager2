@@ -11,4 +11,4 @@ data class Media(
     @ColumnInfo(name="id") val id: Long,
     @ColumnInfo(name = "uri") val uri: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "property_id", index = true) var propertyId: Long?)
+    @ColumnInfo(name = "property_id", index = true) val propertyId: Long?)

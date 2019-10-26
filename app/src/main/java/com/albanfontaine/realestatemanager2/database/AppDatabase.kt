@@ -12,11 +12,12 @@ abstract class AppDatabase : RoomDatabase{
 
     abstract fun propertyDAO(): PropertyDAO
     abstract fun mediaDAO(): MediaDAO
+    abstract fun propertyAndMediasDAO(): PropertyAndMediasDAO
 
     constructor()
 
     companion object{
-        var INSTANCE: AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase?{
             if(INSTANCE == null){

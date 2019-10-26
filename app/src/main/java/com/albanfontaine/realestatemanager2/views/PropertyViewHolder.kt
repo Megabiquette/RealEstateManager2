@@ -58,7 +58,7 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
                 mPrice.text = Utils.formatPriceDollars(property.price!!)
             }else{
                 mPrice.text = activity.resources.getString(R.string.no_price)
-                mPrice.setTypeface(mNeighborhood.typeface, Typeface.ITALIC)
+                mPrice.setTypeface(mPrice.typeface, Typeface.ITALIC)
             }
         }
     }

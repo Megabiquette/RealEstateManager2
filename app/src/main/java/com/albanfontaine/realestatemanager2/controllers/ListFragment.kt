@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Property
+import com.albanfontaine.realestatemanager2.models.PropertyAndMedias
 import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.ItemClickSupport
@@ -24,9 +25,9 @@ import java.util.concurrent.Executors
 class ListFragment : Fragment() {
 
     private lateinit var mProperties: List<Property>
+	private lateinit var mPropertiesAndMedias: List<PropertyAndMedias>
     private lateinit var mRecyclerView: RecyclerView
     private var mAdapter: PropertyAdapter? = null
-    private var mFromSearch: Boolean = false
     private var mSearchQuery: SearchQuery? = null
 
     private var mDb: AppDatabase? = null
@@ -38,8 +39,6 @@ class ListFragment : Fragment() {
             val searchQueryType = object: TypeToken<SearchQuery>(){}.type
             mSearchQuery = gson.fromJson(arguments?.getString(Constants.SEARCH_QUERY), searchQueryType)
             Log.e("args", arguments?.getString(Constants.SEARCH_QUERY))
-        }else{
-            Log.e("args", "null")
         }
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
@@ -80,14 +79,24 @@ class ListFragment : Fragment() {
         val executor: Executor = Executors.newSingleThreadExecutor()
         executor.execute{
             if(mSearchQuery != null){
-                mProperties = mDb?.propertyDAO()?.searchProperties(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
+                mProperties = mDb?.propertyDAO()?.searchProperties2(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
+                    mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
+                    mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
+                mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.searchProperties(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
                     mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
                     mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
 
                 Log.e("afterQuery", mProperties.toString())
+                for(pm in mPropertiesAndMedias){
+                    Log.e("propsAndMeds", pm.property.toString())
+                }
             }else{
-                mProperties = mDb?.propertyDAO()?.getProperties()!!
-                Log.e("noQuery", mProperties.toString())
+				mProperties = mDb?.propertyDAO()?.getProperties()!!
+                mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.getProperties()!!
+				Log.e("noQuery", mProperties.toString())
+                for(pm in mPropertiesAndMedias){
+                    Log.e("propsAndMeds", pm.property.toString())
+                }
             }
 
             activity?.runOnUiThread{
