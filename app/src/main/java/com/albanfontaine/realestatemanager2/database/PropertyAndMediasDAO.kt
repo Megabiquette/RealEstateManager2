@@ -12,9 +12,13 @@ interface PropertyAndMediasDAO {
 	fun getProperties() : List<PropertyAndMedias>
 
 	@Transaction
-	@Query("SELECT *, COUNT(media.property_id) " +
+	@Query("SELECT * FROM Property WHERE property_id = :id")
+	fun getProperty(id: Long): PropertyAndMedias
+
+	@Transaction
+	@Query("SELECT *, COUNT(media.associated_property_id) " +
 			"FROM Property " +
-			"INNER JOIN media ON media.property_id = property.id " +
+			"INNER JOIN media ON media.associated_property_id = property.property_id " +
 			"WHERE type IN (:type) " +
 			"AND (price BETWEEN :priceMin AND :priceMax OR (CASE WHEN :priceMin = 0 AND :priceMax = 999999999 THEN price IS NULL ELSE price IS NOT NULL END)) " +
 			"AND (surface BETWEEN :surfaceMin AND :surfaceMax OR (CASE WHEN :surfaceMin = 0 AND :surfaceMax = 999999999 THEN surface IS NULL ELSE surface IS NOT NULL END)) " +
@@ -24,7 +28,7 @@ interface PropertyAndMediasDAO {
 			"AND (sell_date BETWEEN :sellDateFrom AND :sellDateTo OR (CASE WHEN :sellDateFrom = 0 AND :sellDateTo = 999999999 THEN sell_date IS NULL ELSE sell_date IS NOT NULL END)) " +
 			"AND available IN (:available) " +
 			"AND agent LIKE :agent " +
-			"GROUP BY property.id HAVING COUNT(media.property_id) >= :mediaMin")
+			"GROUP BY property.property_id HAVING COUNT(media.associated_property_id) >= :mediaMin")
 	fun searchProperties(type: List<String>, priceMin: Int, priceMax: Int, surfaceMin: Int, surfaceMax: Int, neighborhood: String, POIs: String,
 						 entryDateFrom: Int, entryDateTo: Int, sellDateFrom: Int, sellDateTo: Int, available: List<Int>, agent: String, mediaMin: Int) : List<PropertyAndMedias>
 

@@ -14,6 +14,7 @@ import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.Property
+import com.albanfontaine.realestatemanager2.models.PropertyAndMedias
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils
 import com.albanfontaine.realestatemanager2.views.MediaAdapter
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_property_card.*
 import java.util.concurrent.Executors
 
 class PropertyCardFragment : Fragment() {
-    private lateinit var mProperty: Property
+    private lateinit var mPropertyAndMedias: PropertyAndMedias
     private lateinit var mMedias: List<Media>
 
     private lateinit var mRecyclerView: RecyclerView
@@ -87,8 +88,8 @@ class PropertyCardFragment : Fragment() {
         val db = AppDatabase.getInstance(requireContext())
         val executor = Executors.newSingleThreadExecutor()
         executor.execute{
-            mProperty = db?.propertyDAO()?.getProperty(id)!!
-            mMedias = db.mediaDAO().getMedias(id)
+            mPropertyAndMedias = db?.propertyAndMediasDAO()?.getProperty(id)!!
+            mMedias = mPropertyAndMedias.medias
             activity?.runOnUiThread{
                 setupPropertyCard()
                 configureRecyclerView()
@@ -98,15 +99,15 @@ class PropertyCardFragment : Fragment() {
 
     private fun changePriceCurrency(){
         if (mPrice.text.toString()[0] == '$'){
-            mPrice.text = Utils.formatPriceEuros(Utils.convertDollarToEuro(mProperty.price!!))
+            mPrice.text = Utils.formatPriceEuros(Utils.convertDollarToEuro(mPropertyAndMedias.property?.price!!))
         }else{
-            mPrice.text = Utils.formatPriceDollars(mProperty.price!!)
+            mPrice.text = Utils.formatPriceDollars(mPropertyAndMedias.property?.price!!)
         }
     }
 
     private fun editProperty(){
         val intent = Intent(activity, AddActivity::class.java)
-        intent.putExtra(Constants.PROPERTY_ID, mProperty.id)
+        intent.putExtra(Constants.PROPERTY_ID, mPropertyAndMedias.property?.id)
         startActivity(intent)
     }
 
@@ -114,20 +115,20 @@ class PropertyCardFragment : Fragment() {
 
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
-        mType.setText(mProperty.type)
-        if(!mProperty.neighborhood.equals("")){ mNeighborhood.text = mProperty.neighborhood} else{ mNeighborhood.visibility = View.GONE}
-        if(!mProperty.description.equals("")){ mDescription.text = mProperty.description} else{ mDescriptionLayout.visibility = View.GONE}
-        if(mProperty.surface != null){ mSurface.text = mProperty.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}
-        if(mProperty.roomNumber != null){ mNumberRooms.text = mProperty.roomNumber.toString()} else{ mNumberRoomsLayout.visibility = View.GONE}
-        if(!mProperty.pointsOfInterest.equals("")){ mPOIs.text = mProperty.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
-        if(mProperty.marketEntryDate != null){ mEntryDate.text = Utils.formatDateToText(mProperty.marketEntryDate!!)} else{ mEntryDateLayout.visibility = View.GONE}
-        if(mProperty.available){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
-        if(mProperty.sellDate != null){mSaleDate.text = Utils.formatDateToText(mProperty.sellDate!!)} else{ mSaleDateLayout.visibility = View.GONE}
-        if(!mProperty.agent.equals("")){ mAgent.text = mProperty.agent} else{ mAgentLayout.visibility = View.GONE}
-        if(mProperty.price != null){ mPrice.text =  Utils.formatPriceDollars(mProperty.price!!)} else{ mPriceLayout.visibility = View.GONE}
-        if(!mProperty.address.equals("")){
-            mAddress.text = mProperty.address
-            val mapUrl: String = Utils.getMapUrl(mProperty.address)
+        mType.setText(mPropertyAndMedias.property?.type)
+        if(!mPropertyAndMedias.property?.neighborhood.equals("")){ mNeighborhood.text = mPropertyAndMedias.property?.neighborhood} else{ mNeighborhood.visibility = View.GONE}
+        if(!mPropertyAndMedias.property?.description.equals("")){ mDescription.text = mPropertyAndMedias.property?.description} else{ mDescriptionLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.surface != null){ mSurface.text = mPropertyAndMedias.property?.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.roomNumber != null){ mNumberRooms.text = mPropertyAndMedias.property?.roomNumber.toString()} else{ mNumberRoomsLayout.visibility = View.GONE}
+        if(!mPropertyAndMedias.property?.pointsOfInterest.equals("")){ mPOIs.text = mPropertyAndMedias.property?.pointsOfInterest} else{ mPOIsLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.marketEntryDate != null){ mEntryDate.text = Utils.formatDateToText(mPropertyAndMedias.property?.marketEntryDate!!)} else{ mEntryDateLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.available!!){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
+        if(mPropertyAndMedias.property?.sellDate != null){mSaleDate.text = Utils.formatDateToText(mPropertyAndMedias.property?.sellDate!!)} else{ mSaleDateLayout.visibility = View.GONE}
+        if(!mPropertyAndMedias.property?.agent.equals("")){ mAgent.text = mPropertyAndMedias.property?.agent} else{ mAgentLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.price != null){ mPrice.text =  Utils.formatPriceDollars(mPropertyAndMedias.property?.price!!)} else{ mPriceLayout.visibility = View.GONE}
+        if(!mPropertyAndMedias.property?.address.equals("")){
+            mAddress.text = mPropertyAndMedias.property?.address
+            val mapUrl: String = Utils.getMapUrl(mPropertyAndMedias.property?.address)
             Picasso.with(context).load(mapUrl).fit().into(mMap)
         } else{ mAddressLayout.visibility = View.GONE}
     }

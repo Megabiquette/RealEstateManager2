@@ -7,6 +7,6 @@ class PropertyAndMedias{
 	@Embedded
 	var property: Property? = null
 
-	@Relation(parentColumn = "id", entityColumn = "property_id")
+	@Relation(parentColumn = "property_id", entityColumn = "associated_property_id")
 	var medias: List<Media> = ArrayList()
 }

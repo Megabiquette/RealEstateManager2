@@ -227,7 +227,7 @@ class AddActivity : AppCompatActivity() {
                 executor.execute{
                     mDb?.propertyDAO()?.updateProperty(property)
                     for(media: Media in mMedias){
-                        if(media.propertyId == null){
+                        if(media.associatedPropertyId == null){
                             val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
                             mDb?.mediaDAO()?.insertMedia(mediaToAdd)
                         }

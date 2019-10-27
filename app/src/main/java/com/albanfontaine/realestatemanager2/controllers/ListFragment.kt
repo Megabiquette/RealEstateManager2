@@ -24,7 +24,7 @@ import java.util.concurrent.Executors
 
 class ListFragment : Fragment() {
 
-    private lateinit var mProperties: List<Property>
+    //private lateinit var mProperties: List<Property>
 	private lateinit var mPropertiesAndMedias: List<PropertyAndMedias>
     private lateinit var mRecyclerView: RecyclerView
     private var mAdapter: PropertyAdapter? = null
@@ -79,26 +79,18 @@ class ListFragment : Fragment() {
         val executor: Executor = Executors.newSingleThreadExecutor()
         executor.execute{
             if(mSearchQuery != null){
-                mProperties = mDb?.propertyDAO()?.searchProperties2(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
-                    mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
-                    mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.searchProperties(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
                     mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
                     mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
-
-                Log.e("afterQuery", mProperties.toString())
-                for(pm in mPropertiesAndMedias){
-                    Log.e("propsAndMeds", pm.property.toString())
+                for(property: PropertyAndMedias in mPropertiesAndMedias){
+                    Log.e("search", property.property?.id.toString())
                 }
             }else{
-				mProperties = mDb?.propertyDAO()?.getProperties()!!
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.getProperties()!!
-				Log.e("noQuery", mProperties.toString())
-                for(pm in mPropertiesAndMedias){
-                    Log.e("propsAndMeds", pm.property.toString())
+                for(property: PropertyAndMedias in mPropertiesAndMedias){
+                    Log.e("normal", property.property?.id.toString())
                 }
             }
-
             activity?.runOnUiThread{
                 configureRecyclerView()
                 configureOnClickRecyclerView()
@@ -108,7 +100,7 @@ class ListFragment : Fragment() {
 
     private fun configureRecyclerView(){
         mRecyclerView = fragment_list_recycler_view
-        mAdapter = PropertyAdapter(mProperties, requireContext(), requireActivity())
+        mAdapter = PropertyAdapter(mPropertiesAndMedias, requireContext(), requireActivity())
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
@@ -117,9 +109,9 @@ class ListFragment : Fragment() {
         ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_list_item)
             .setOnItemClickListener(object: ItemClickSupport.OnItemClickListener{
                 override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
-                    val id = mProperties[position].id
+                    val id = mPropertiesAndMedias[position].property?.id
                     val bundle = Bundle()
-                    bundle.putLong(Constants.PROPERTY_ID, id)
+                    bundle.putLong(Constants.PROPERTY_ID, id!!)
                     val propertyCardFragment = PropertyCardFragment()
                     propertyCardFragment.arguments = bundle
                     activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.addToBackStack(null)?.commit()
