@@ -3,6 +3,7 @@ package com.albanfontaine.realestatemanager2.controllers
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -51,6 +52,7 @@ class PropertyCardFragment : Fragment() {
     private lateinit var mSaleDateLayout: LinearLayout
     private lateinit var mAgentLayout: LinearLayout
     private lateinit var mPriceLayout: LinearLayout
+    private lateinit var mLoanButton : Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -111,6 +113,12 @@ class PropertyCardFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun simulateLoan(){
+        val intent = Intent(activity, LoanActivity::class.java)
+        intent.putExtra(Constants.PROPERTY_PRICE, mPropertyAndMedias.property?.price)
+        startActivity(intent)
+    }
+
     // CONFIGURATION
 
     private fun setupPropertyCard(){
@@ -125,7 +133,12 @@ class PropertyCardFragment : Fragment() {
         if(mPropertyAndMedias.property?.available!!){ mSaleDateLayout.visibility = View.GONE}else{ mAvailable.text = activity?.resources?.getString(R.string.property_sold)}
         if(mPropertyAndMedias.property?.sellDate != null){mSaleDate.text = Utils.formatDateToText(mPropertyAndMedias.property?.sellDate!!)} else{ mSaleDateLayout.visibility = View.GONE}
         if(!mPropertyAndMedias.property?.agent.equals("")){ mAgent.text = mPropertyAndMedias.property?.agent} else{ mAgentLayout.visibility = View.GONE}
-        if(mPropertyAndMedias.property?.price != null){ mPrice.text =  Utils.formatPriceDollars(mPropertyAndMedias.property?.price!!)} else{ mPriceLayout.visibility = View.GONE}
+        if(mPropertyAndMedias.property?.price != null){
+            mPrice.text =  Utils.formatPriceDollars(mPropertyAndMedias.property?.price!!)
+        } else{
+            mPriceLayout.visibility = View.GONE
+            mLoanButton.visibility = View.GONE
+        }
         if(!mPropertyAndMedias.property?.address.equals("")){
             mAddress.text = mPropertyAndMedias.property?.address
             val mapUrl: String = Utils.getMapUrl(mPropertyAndMedias.property?.address)
@@ -156,8 +169,11 @@ class PropertyCardFragment : Fragment() {
         mSaleDateLayout = property_card_sale_date_layout
         mAgentLayout = property_card_agent_layout
         mPriceLayout = property_card_price_layout
+        mLoanButton = property_card_loan
+
 
         mPrice.setOnClickListener{ changePriceCurrency() }
+        mLoanButton.setOnClickListener{ simulateLoan()}
     }
 
     private fun configureRecyclerView(){

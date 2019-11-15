@@ -24,7 +24,6 @@ import java.util.concurrent.Executors
 
 class ListFragment : Fragment() {
 
-    //private lateinit var mProperties: List<Property>
 	private lateinit var mPropertiesAndMedias: List<PropertyAndMedias>
     private lateinit var mRecyclerView: RecyclerView
     private var mAdapter: PropertyAdapter? = null

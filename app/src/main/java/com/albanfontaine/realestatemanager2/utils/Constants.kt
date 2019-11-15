@@ -9,8 +9,8 @@ class Constants{
         const val GALLERY_REQUEST_CODE = 100
         const val CAMERA_REQUEST_CODE = 200
 
-        const val PROPERTY_ID = "property_id"
-
+        const val PROPERTY_ID = "propertyId"
+        const val PROPERTY_PRICE = "propertyPrice"
         const val SEARCH_QUERY = "searchQuery"
         
         const val MAP_URL_BEGINNING = "https://maps.googleapis.com/maps/api/staticmap?markers="

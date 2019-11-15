@@ -254,6 +254,15 @@
                 android:textSize="@dimen/text_title" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/property_card_loan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_top"
+            android:background="@color/colorPrimary"
+            android:text="@string/simulate_loan"
+            android:padding="12dp"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 </ScrollView>

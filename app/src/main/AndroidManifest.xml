@@ -21,7 +21,13 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/REMTheme">
-
+		<activity android:name=".controllers.LoanActivity"
+			android:label="Simuler un prêt"
+			android:screenOrientation="portrait">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".controllers.MainActivity"/>
+		</activity>
 		<activity
 			android:name=".controllers.MapActivity"
 			android:label="Carte des biens"
