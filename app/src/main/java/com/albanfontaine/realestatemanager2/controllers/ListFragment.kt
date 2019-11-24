@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
-import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.models.PropertyAndMedias
 import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
@@ -32,23 +31,24 @@ class ListFragment : Fragment() {
     private var mDb: AppDatabase? = null
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		Log.e("onCreateView", "onCreateView")
         setHasOptionsMenu(true)
         if (arguments != null){
             val gson = Gson()
             val searchQueryType = object: TypeToken<SearchQuery>(){}.type
             mSearchQuery = gson.fromJson(arguments?.getString(Constants.SEARCH_QUERY), searchQueryType)
-            Log.e("args", arguments?.getString(Constants.SEARCH_QUERY))
         }
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        getProperties()
+		Log.e("onViewCreated", "onViewCreated")
+		getProperties()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        if (!resources.getBoolean(R.bool.isTablet)){
+        if(!resources.getBoolean(R.bool.isTablet)){
             val editProperty = menu.findItem(R.id.toolbar_edit)
             editProperty?.isVisible = false
         }
@@ -74,21 +74,17 @@ class ListFragment : Fragment() {
     }
 
     private fun getProperties(){
-        mDb = AppDatabase.getInstance(requireContext())
+		Log.e("getProps", "getProps")
+		mDb = AppDatabase.getInstance(requireContext())
         val executor: Executor = Executors.newSingleThreadExecutor()
         executor.execute{
             if(mSearchQuery != null){
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.searchProperties(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
                     mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
                     mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
-                for(property: PropertyAndMedias in mPropertiesAndMedias){
-                    Log.e("search", property.property?.id.toString())
-                }
+
             }else{
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.getProperties()!!
-                for(property: PropertyAndMedias in mPropertiesAndMedias){
-                    Log.e("normal", property.property?.id.toString())
-                }
             }
             activity?.runOnUiThread{
                 configureRecyclerView()
@@ -98,7 +94,8 @@ class ListFragment : Fragment() {
     }
 
     private fun configureRecyclerView(){
-        mRecyclerView = fragment_list_recycler_view
+		Log.e("configRV", "configRV")
+		mRecyclerView = fragment_list_recycler_view
         mAdapter = PropertyAdapter(mPropertiesAndMedias, requireContext(), requireActivity())
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -113,7 +110,11 @@ class ListFragment : Fragment() {
                     bundle.putLong(Constants.PROPERTY_ID, id!!)
                     val propertyCardFragment = PropertyCardFragment()
                     propertyCardFragment.arguments = bundle
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.addToBackStack(null)?.commit()
+					if (!resources.getBoolean(R.bool.isTablet)){
+                    	activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.addToBackStack(null)?.commit()
+					}else{
+						activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout_right, propertyCardFragment)?.addToBackStack(null)?.commit()
+					}
                 }
             })
     }

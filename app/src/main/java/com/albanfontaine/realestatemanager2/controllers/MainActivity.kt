@@ -1,19 +1,14 @@
 package com.albanfontaine.realestatemanager2.controllers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
-import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +44,6 @@ class MainActivity : AppCompatActivity() {
         bundle.putString(Constants.SEARCH_QUERY, searchQueryJSON)
         val listFragment = ListFragment()
         listFragment.arguments = bundle
-        supportFragmentManager.beginTransaction()
-            .add(R.id.activity_base_frame_layout, listFragment)
-            .commit()
     }
 
     private fun showPropertyCardFragment(id: Long){
@@ -59,9 +51,15 @@ class MainActivity : AppCompatActivity() {
         bundle.putLong(Constants.PROPERTY_ID, id)
         val propertyCardFragment = PropertyCardFragment()
         propertyCardFragment.arguments = bundle
-        supportFragmentManager.beginTransaction()
-            .add(R.id.activity_base_frame_layout, propertyCardFragment)
-            .commit()
+        if (!resources.getBoolean(R.bool.isTablet)){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.activity_base_frame_layout, propertyCardFragment)
+                .commit()
+        }else{
+            supportFragmentManager.beginTransaction()
+                .add(R.id.activity_base_frame_layout_right, propertyCardFragment)
+                .commit()
+        }
     }
 
     ///////////////////

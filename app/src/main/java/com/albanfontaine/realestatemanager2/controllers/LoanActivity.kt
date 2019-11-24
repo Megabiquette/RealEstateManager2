@@ -1,6 +1,5 @@
 package com.albanfontaine.realestatemanager2.controllers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -8,11 +7,13 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.utils.Constants
+import com.albanfontaine.realestatemanager2.utils.Utils
 import kotlinx.android.synthetic.main.activity_loan.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class LoanActivity : AppCompatActivity() {
+class LoanActivity : BaseActivity() {
 
+	private var mPriceInt: Int? = null
 	private lateinit var mPrice: TextView
 	private lateinit var mContribution: EditText
 	private lateinit var mRate: EditText
@@ -30,20 +31,19 @@ class LoanActivity : AppCompatActivity() {
 
 		val extras = intent.extras
 		if(extras != null){
-			val price = extras.getInt(Constants.PROPERTY_PRICE)
-			mPrice.text = price.toString()
+			mPriceInt = extras.getInt(Constants.PROPERTY_PRICE)
+			mPrice.text = Utils.formatPriceDollars(mPriceInt!!)
 		}
 	}
 
 	private fun calculate(){
 		if(checkFields()){
-			val price = mPrice.text.toString().toDouble()
+			val price = mPriceInt?.toDouble()!!
 			val contribution = mContribution.text.toString().toDouble()
 			val rate = mRate.text.toString().toDouble()
 			val duration = mDuration.text.toString().toDouble()
 
-			val interests = ((price - contribution) * rate) / 100
-			val payment = ((price - contribution) + interests) / duration
+			val payment = Utils.calculatePayment(price, contribution, rate, duration)
 
 			mPayment.text = String.format("%.2f", payment)
 			mPaymentLayout.visibility = View.VISIBLE

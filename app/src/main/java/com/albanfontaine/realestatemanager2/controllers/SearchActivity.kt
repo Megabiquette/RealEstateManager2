@@ -1,29 +1,21 @@
 package com.albanfontaine.realestatemanager2.controllers
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
-import com.albanfontaine.realestatemanager2.database.AppDatabase
-import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.activity_search.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.lang.StringBuilder
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
 
     // Form views
     private lateinit var mFlatForm: CheckBox

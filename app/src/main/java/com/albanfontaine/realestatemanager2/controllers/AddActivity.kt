@@ -6,12 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -35,7 +33,7 @@ import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class AddActivity : AppCompatActivity() {
+class AddActivity : BaseActivity() {
     private var mMedias: ArrayList<Media> = ArrayList()
     private lateinit var mMediaDialog: AlertDialog
     private lateinit var mDeleteMediasDialog: AlertDialog
@@ -192,7 +190,6 @@ class AddActivity : AppCompatActivity() {
             executor.execute{
 				mDb = AppDatabase.getInstance(this)
 				val i:Int? = mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
-                Log.e("i", i.toString())
             }
         }
         mMedias = ArrayList()

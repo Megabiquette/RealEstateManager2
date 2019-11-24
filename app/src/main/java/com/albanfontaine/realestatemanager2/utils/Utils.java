@@ -171,5 +171,19 @@ public class Utils {
         result.append("€");
         return result.toString();
     }
+
+    /**
+     * Calculates the monthly payment of a loan
+     * @param price
+     * @param contribution
+     * @param rate
+     * @param duration in months
+     * @return
+     */
+    public static double calculatePayment(double price, double contribution, double rate, double duration){
+        Double loan = price - contribution;
+        Double interests = (loan * rate) / 100;
+        return (loan + interests) / duration;
+    }
 }
 

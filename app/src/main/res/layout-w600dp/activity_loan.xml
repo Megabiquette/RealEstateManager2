@@ -30,73 +30,82 @@
 				android:layout_height="wrap_content"
 				android:text="@string/property_price"
 				android:textStyle="bold"
-				android:textSize="@dimen/text_title"/>
+				android:textSize="40sp"/>
 			<TextView
 				android:id="@+id/loan_price"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:textSize="40sp"
 				android:layout_marginStart="@dimen/item_margin_horizontal"/>
 		</LinearLayout>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:padding="@dimen/field_padding">
-			<TextView
-				android:layout_width="wrap_content"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="@string/loan_contribution"/>
-			<EditText
-				android:id="@+id/loan_contribution"
-				android:layout_width="@dimen/field_width"
+				android:layout_weight="1"
+				android:orientation="horizontal"
+				android:padding="@dimen/field_padding">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/loan_contribution"/>
+				<EditText
+					android:id="@+id/loan_contribution"
+					android:layout_width="@dimen/field_width"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/item_margin_horizontal"
+					android:textAlignment="viewEnd"
+					android:maxLength="20"
+					android:inputType="number"
+					android:singleLine="true"/>
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/item_margin_horizontal"
-				android:textAlignment="viewEnd"
-				android:maxLength="20"
-				android:inputType="number"
-				android:singleLine="true"/>
+				android:layout_weight="1"
+				android:padding="@dimen/field_padding">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/loan_rate"/>
+				<EditText
+					android:id="@+id/loan_rate"
+					android:layout_width="@dimen/field_width"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/item_margin_horizontal"
+					android:maxLength="20"
+					android:inputType="numberDecimal"
+					android:textAlignment="viewEnd"
+					android:singleLine="true"/>
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:padding="@dimen/field_padding">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/loan_duration"/>
+				<EditText
+					android:id="@+id/loan_duration"
+					android:layout_width="@dimen/field_width"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/item_margin_horizontal"
+					android:maxLength="20"
+					android:inputType="number"
+					android:textAlignment="viewEnd"
+					android:singleLine="true"/>
+			</LinearLayout>
 		</LinearLayout>
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:padding="@dimen/field_padding">
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/loan_rate"/>
-			<EditText
-				android:id="@+id/loan_rate"
-				android:layout_width="@dimen/field_width"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/item_margin_horizontal"
-				android:maxLength="20"
-				android:inputType="numberDecimal"
-				android:textAlignment="viewEnd"
-				android:singleLine="true"/>
-		</LinearLayout>
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:padding="@dimen/field_padding">
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/loan_duration"/>
-			<EditText
-				android:id="@+id/loan_duration"
-				android:layout_width="@dimen/field_width"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/item_margin_horizontal"
-				android:maxLength="20"
-				android:inputType="number"
-				android:textAlignment="viewEnd"
-				android:singleLine="true"/>
-		</LinearLayout>
 
 		<Button
 			android:id="@+id/loan_calculate_button"

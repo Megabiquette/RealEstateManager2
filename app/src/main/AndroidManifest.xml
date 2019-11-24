@@ -21,25 +21,27 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/REMTheme">
-		<activity android:name=".controllers.LoanActivity"
-			android:label="Simuler un prêt"
-			android:screenOrientation="portrait">
+		<activity android:name=".controllers.BaseActivity">
+		</activity>
+		<activity
+			android:name=".controllers.LoanActivity"
+			android:label="Simuler un prêt">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value=".controllers.MainActivity"/>
+				android:value=".controllers.MainActivity" />
 		</activity>
 		<activity
 			android:name=".controllers.MapActivity"
-			android:label="Carte des biens"
-			android:screenOrientation="portrait">
+			android:parentActivityName=".controllers.MainActivity"
+			android:label="Carte des biens">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
 		</activity>
 		<activity
 			android:name=".controllers.SearchActivity"
-			android:label="Recherche"
-			android:screenOrientation="portrait">
+			android:parentActivityName=".controllers.MainActivity"
+			android:label="Recherche">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
@@ -47,19 +49,16 @@
 		<activity
 			android:name=".controllers.AddActivity"
 			android:label="Ajouter bien"
-			android:parentActivityName=".controllers.MainActivity"
-			android:screenOrientation="portrait">
+			android:parentActivityName=".controllers.MainActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
 		</activity>
 		<activity
-			android:name=".controllers.MainActivity"
-			android:screenOrientation="portrait">
+			android:name=".controllers.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<action android:name="android.intent.action.VIEW" />
-
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>

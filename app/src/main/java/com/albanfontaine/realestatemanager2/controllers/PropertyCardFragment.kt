@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Media
-import com.albanfontaine.realestatemanager2.models.Property
 import com.albanfontaine.realestatemanager2.models.PropertyAndMedias
 import com.albanfontaine.realestatemanager2.utils.Constants
 import com.albanfontaine.realestatemanager2.utils.Utils

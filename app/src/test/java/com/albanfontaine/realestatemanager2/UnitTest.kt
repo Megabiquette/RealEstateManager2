@@ -52,4 +52,13 @@ class UnitTest{
         val priceEuros = 10000
         assertEquals("10 000€", Utils.formatPriceEuros(priceEuros))
     }
+
+    @Test
+    fun calculatePaymentTest(){
+        val price = 230000.00
+        val contribution = 40000.00
+        val rate = 1.5
+        val duration = 300.00
+        assertEquals(642.83, Utils.calculatePayment(price, contribution, rate, duration), 0.1)
+    }
 }
