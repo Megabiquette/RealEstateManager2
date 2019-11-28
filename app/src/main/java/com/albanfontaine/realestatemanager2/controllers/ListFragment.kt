@@ -1,9 +1,10 @@
 package com.albanfontaine.realestatemanager2.controllers
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,38 +32,21 @@ class ListFragment : Fragment() {
     private var mDb: AppDatabase? = null
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		Log.e("onCreateView", "onCreateView")
         setHasOptionsMenu(true)
         if (arguments != null){
+			// Activity was called from search
             val gson = Gson()
             val searchQueryType = object: TypeToken<SearchQuery>(){}.type
             mSearchQuery = gson.fromJson(arguments?.getString(Constants.SEARCH_QUERY), searchQueryType)
         }
-        return inflater.inflate(R.layout.fragment_list, container, false)
+		return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		Log.e("onViewCreated", "onViewCreated")
+		mRecyclerView = fragment_list_recycler_view
 		getProperties()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu)
-        if(!resources.getBoolean(R.bool.isTablet)){
-            val editProperty = menu.findItem(R.id.toolbar_edit)
-            editProperty?.isVisible = false
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.toolbar_add -> startActivity(Intent(activity,AddActivity::class.java))
-            //R.id.toolbar_edit ->
-            R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
-            R.id.toolbar_map -> startActivity(Intent(activity,MapActivity::class.java))
-            else -> return true
-        }
-        return true
+		val activity = activity as AppCompatActivity
+		activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     override fun onResume() {
@@ -74,7 +58,6 @@ class ListFragment : Fragment() {
     }
 
     private fun getProperties(){
-		Log.e("getProps", "getProps")
 		mDb = AppDatabase.getInstance(requireContext())
         val executor: Executor = Executors.newSingleThreadExecutor()
         executor.execute{
@@ -87,15 +70,26 @@ class ListFragment : Fragment() {
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.getProperties()!!
             }
             activity?.runOnUiThread{
+				if(mPropertiesAndMedias.isEmpty()){
+					val noPropertyTextView: TextView = fragment_list_no_property_found
+					noPropertyTextView.visibility = View.VISIBLE
+				}
                 configureRecyclerView()
                 configureOnClickRecyclerView()
+				// If device is a tablet, show first property card in right fragment
+				if(resources.getBoolean(R.bool.isTablet) && !mPropertiesAndMedias.isEmpty()){
+					val id = mPropertiesAndMedias[0].property?.id
+					val bundle = Bundle()
+					bundle.putLong(Constants.PROPERTY_ID, id!!)
+					val propertyCardFragment = PropertyCardFragment()
+					propertyCardFragment.arguments = bundle
+					activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout_right, propertyCardFragment)?.addToBackStack(null)?.commit()
+				}
             }
         }
     }
 
     private fun configureRecyclerView(){
-		Log.e("configRV", "configRV")
-		mRecyclerView = fragment_list_recycler_view
         mAdapter = PropertyAdapter(mPropertiesAndMedias, requireContext(), requireActivity())
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -113,6 +107,15 @@ class ListFragment : Fragment() {
 					if (!resources.getBoolean(R.bool.isTablet)){
                     	activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout, propertyCardFragment)?.addToBackStack(null)?.commit()
 					}else{
+						// Highlight selected property in the recycler view
+						for(i in 0 until recyclerView.childCount){
+							val view:View? = recyclerView.layoutManager?.findViewByPosition(i)
+							if(i == position){
+								view!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+							}else{
+								view!!.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.quantum_white_100))
+							}
+						}
 						activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_base_frame_layout_right, propertyCardFragment)?.addToBackStack(null)?.commit()
 					}
                 }

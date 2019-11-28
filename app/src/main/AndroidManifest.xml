@@ -14,6 +14,10 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+
 	<application
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
@@ -21,11 +25,11 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/REMTheme">
-		<activity android:name=".controllers.BaseActivity">
-		</activity>
 		<activity
 			android:name=".controllers.LoanActivity"
-			android:label="Simuler un prêt">
+			android:label="Simuler un prêt"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="behind">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
@@ -33,7 +37,9 @@
 		<activity
 			android:name=".controllers.MapActivity"
 			android:parentActivityName=".controllers.MainActivity"
-			android:label="Carte des biens">
+			android:label="Carte des biens"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="behind">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
@@ -41,7 +47,9 @@
 		<activity
 			android:name=".controllers.SearchActivity"
 			android:parentActivityName=".controllers.MainActivity"
-			android:label="Recherche">
+			android:label="Recherche"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="behind">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
@@ -49,13 +57,17 @@
 		<activity
 			android:name=".controllers.AddActivity"
 			android:label="Ajouter bien"
-			android:parentActivityName=".controllers.MainActivity">
+			android:parentActivityName=".controllers.MainActivity"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="behind">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".controllers.MainActivity" />
 		</activity>
 		<activity
-			android:name=".controllers.MainActivity">
+			android:name=".controllers.MainActivity"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="behind">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<action android:name="android.intent.action.VIEW" />

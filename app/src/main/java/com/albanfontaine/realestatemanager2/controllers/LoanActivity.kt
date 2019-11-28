@@ -45,7 +45,7 @@ class LoanActivity : BaseActivity() {
 
 			val payment = Utils.calculatePayment(price, contribution, rate, duration)
 
-			mPayment.text = String.format("%.2f", payment)
+			mPayment.text = applicationContext.resources.getString(R.string.loan_payment_dollar, String.format("%.2f", payment))
 			mPaymentLayout.visibility = View.VISIBLE
 		}else{
 			Toast.makeText(applicationContext, R.string.loan_error, Toast.LENGTH_LONG).show()

@@ -1,6 +1,10 @@
 package com.albanfontaine.realestatemanager2.controllers
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
@@ -33,6 +37,28 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        if(!resources.getBoolean(R.bool.isTablet)){
+            val editProperty = menu.findItem(R.id.toolbar_edit)
+            editProperty?.isVisible = false
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> return false
+            R.id.toolbar_add -> startActivity(Intent(this, AddActivity::class.java))
+            R.id.toolbar_edit -> return false
+            R.id.toolbar_search -> startActivity(Intent(this, SearchActivity::class.java))
+            R.id.toolbar_map -> startActivity(Intent(this, MapActivity::class.java))
+            else -> return true
+        }
+        return true
+    }
+
     private fun showListFragment(){
         supportFragmentManager.beginTransaction()
             .add(R.id.activity_base_frame_layout, ListFragment())
@@ -44,6 +70,9 @@ class MainActivity : BaseActivity() {
         bundle.putString(Constants.SEARCH_QUERY, searchQueryJSON)
         val listFragment = ListFragment()
         listFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .add(R.id.activity_base_frame_layout, listFragment)
+            .commit()
     }
 
     private fun showPropertyCardFragment(id: Long){
@@ -57,18 +86,14 @@ class MainActivity : BaseActivity() {
                 .commit()
         }else{
             supportFragmentManager.beginTransaction()
-                .add(R.id.activity_base_frame_layout_right, propertyCardFragment)
+                .replace(R.id.activity_base_frame_layout_right, propertyCardFragment)
                 .commit()
         }
     }
 
-    ///////////////////
-    // CONFIGURATION //
-    ///////////////////
-
     private fun configureToolbar(){
         setSupportActionBar(toolbar as Toolbar)
-        val ab : ActionBar? = getSupportActionBar()
+        val ab : ActionBar? = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(false)
     }
 }

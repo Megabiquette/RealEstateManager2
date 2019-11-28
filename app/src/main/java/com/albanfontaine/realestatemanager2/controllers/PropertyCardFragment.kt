@@ -2,12 +2,16 @@ package com.albanfontaine.realestatemanager2.controllers
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -64,9 +68,14 @@ class PropertyCardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         configViews()
+        if (!resources.getBoolean(R.bool.isTablet)){
+            val activity = activity as AppCompatActivity
+            activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.toolbar_menu, menu)
         if (!resources.getBoolean(R.bool.isTablet)){
             val addProperty = menu.findItem(R.id.toolbar_add)
@@ -76,7 +85,8 @@ class PropertyCardFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            //R.id.toolbar_add -> AddActivity::class.java
+            android.R.id.home -> activity?.supportFragmentManager?.popBackStack()
+            R.id.toolbar_add -> return false
             R.id.toolbar_edit -> editProperty()
             R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
             R.id.toolbar_map -> startActivity(Intent(activity,MapActivity::class.java))
@@ -122,7 +132,7 @@ class PropertyCardFragment : Fragment() {
 
     private fun setupPropertyCard(){
         // Populate the fields. If a field is null, hide its layout
-        mType.setText(mPropertyAndMedias.property?.type)
+        mType.text = mPropertyAndMedias.property?.type
         if(!mPropertyAndMedias.property?.neighborhood.equals("")){ mNeighborhood.text = mPropertyAndMedias.property?.neighborhood} else{ mNeighborhood.visibility = View.GONE}
         if(!mPropertyAndMedias.property?.description.equals("")){ mDescription.text = mPropertyAndMedias.property?.description} else{ mDescriptionLayout.visibility = View.GONE}
         if(mPropertyAndMedias.property?.surface != null){ mSurface.text = mPropertyAndMedias.property?.surface.toString()} else{ mSurfaceLayout.visibility = View.GONE}
@@ -170,13 +180,14 @@ class PropertyCardFragment : Fragment() {
         mPriceLayout = property_card_price_layout
         mLoanButton = property_card_loan
 
-
         mPrice.setOnClickListener{ changePriceCurrency() }
         mLoanButton.setOnClickListener{ simulateLoan()}
+
+        mRecyclerView = property_card_recycler_view
+
     }
 
     private fun configureRecyclerView(){
-        mRecyclerView = property_card_recycler_view
         mAdapter = MediaAdapter(mMedias, requireContext())
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

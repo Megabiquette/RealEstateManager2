@@ -79,6 +79,7 @@
 	<string name="loan_calculate">Calculer mensualités</string>
 	<string name="loan_payment">Mensualités:</string>
 	<string name="loan_error">Veuillez remplir tous les champs</string>
+	<string name="loan_payment_dollar">$%1$s</string>
 
 	<string name="no_neighborhood">Quartier non renseigné</string>
 	<string name="no_price">Prix non renseigné</string>
@@ -93,5 +94,7 @@
 
 	<string name="search_check_type">Vous devez choisir au moins un type de bien</string>
 	<string name="search_check_available">Vous devez choisir au moins les biens disponibles ou les biens vendus</string>
+
+	<string name="no_property_found">Aucun bien trouvé</string>
 
 </resources>
