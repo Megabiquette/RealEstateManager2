@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
 import com.albanfontaine.realestatemanager2.models.SearchQuery
 import com.albanfontaine.realestatemanager2.utils.Constants
+import com.albanfontaine.realestatemanager2.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_search.*
@@ -94,10 +95,10 @@ class SearchActivity : BaseActivity() {
         if(!mSurfaceMaxForm.text.toString().trim().equals("")){mSurfaceMax = mSurfaceMaxForm.text.toString().toInt()}
         mNeighborhood = "%" + mNeighborhoodForm.text.toString().trim() + "%"
         mPOIs = "%" + mPOIsForm.text.toString().trim() + "%"
-        if(!mEntryDateFromForm.text.toString().trim().equals("")){mEntryDateFrom = mEntryDateFromForm.text.toString().toInt()}
-        if(!mEntryDateToForm.text.toString().trim().equals("")){mEntryDateTo = mEntryDateToForm.text.toString().toInt()}
-        if(!mSaleDateFromForm.text.toString().trim().equals("")){mSaleDateFrom = mSaleDateFromForm.text.toString().toInt()}
-        if(!mSaleDateToForm.text.toString().trim().equals("")){mSaleDateTo = mSaleDateToForm.text.toString().toInt()}
+        if(!mEntryDateFromForm.text.toString().trim().equals("")){mEntryDateFrom = Utils.formatDateForDB(mEntryDateFromForm.text.toString())}
+        if(!mEntryDateToForm.text.toString().trim().equals("")){mEntryDateTo = Utils.formatDateForDB(mEntryDateToForm.text.toString())}
+        if(!mSaleDateFromForm.text.toString().trim().equals("")){mSaleDateFrom = Utils.formatDateForDB(mSaleDateFromForm.text.toString())}
+        if(!mSaleDateToForm.text.toString().trim().equals("")){mSaleDateTo = Utils.formatDateForDB(mSaleDateToForm.text.toString())}
 
         val availableList = mutableListOf<Int>()
         if(mAvailableForm.isChecked){availableList.add(1)}

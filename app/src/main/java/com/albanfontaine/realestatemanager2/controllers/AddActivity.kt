@@ -189,7 +189,7 @@ class AddActivity : BaseActivity() {
             val executor: Executor = Executors.newSingleThreadExecutor()
             executor.execute{
 				mDb = AppDatabase.getInstance(this)
-				val i:Int? = mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
+				mDb?.mediaDAO()?.deleteAllMedias(mPropertyId!!)
             }
         }
         mMedias = ArrayList()
@@ -251,12 +251,8 @@ class AddActivity : BaseActivity() {
         if(!add_activity_surface_editText.text.toString().trim().equals("")){mPropSurface = (add_activity_surface_editText.text.toString().trim()).toInt()}
         if(!add_activity_numberRooms_editText.text.toString().trim().equals("")){mPropRoomNb = (add_activity_numberRooms_editText.text.toString().trim()).toInt()}
         if(!add_activity_entry_date_editText.text.toString().trim().equals("")){mPropMarketEntryDate = (Utils.formatDateForDB(add_activity_entry_date_editText.text.toString().trim()))}
-        if(!add_activity_sale_date_editText.text.toString().trim().equals("")){mPropSellDate = (Utils.formatDateForDB(add_activity_sale_date_editText.text.toString().trim())).toInt()}
+        if(!add_activity_sale_date_editText.text.toString().trim().equals("")){mPropSellDate = (Utils.formatDateForDB(add_activity_sale_date_editText.text.toString().trim()))}
     }
-
-    ///////////////////
-    // CONFIGURATION //
-    ///////////////////
 
     // For EDIT only
     private fun getPropertyToEdit(){

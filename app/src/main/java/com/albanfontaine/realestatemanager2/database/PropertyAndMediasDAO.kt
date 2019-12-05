@@ -20,12 +20,12 @@ interface PropertyAndMediasDAO {
 			"FROM Property " +
 			"INNER JOIN media ON media.associated_property_id = property.property_id " +
 			"WHERE type IN (:type) " +
-			"AND (price BETWEEN :priceMin AND :priceMax OR (CASE WHEN :priceMin = 0 AND :priceMax = 999999999 THEN price IS NULL ELSE price IS NOT NULL END)) " +
-			"AND (surface BETWEEN :surfaceMin AND :surfaceMax OR (CASE WHEN :surfaceMin = 0 AND :surfaceMax = 999999999 THEN surface IS NULL ELSE surface IS NOT NULL END)) " +
+			"AND ((price BETWEEN :priceMin AND :priceMax) OR price IS NULL) " +
+			"AND ((surface BETWEEN :surfaceMin AND :surfaceMax) OR surface IS NULL)" +
 			"AND neighborhood LIKE :neighborhood " +
 			"AND points_of_interest LIKE :POIs " +
-			"AND (market_entry_date BETWEEN :entryDateFrom AND :entryDateTo OR (CASE WHEN :entryDateFrom = 0 AND :entryDateTo = 999999999 THEN market_entry_date IS NULL ELSE market_entry_date IS NOT NULL END)) " +
-			"AND (sell_date BETWEEN :sellDateFrom AND :sellDateTo OR (CASE WHEN :sellDateFrom = 0 AND :sellDateTo = 999999999 THEN sell_date IS NULL ELSE sell_date IS NOT NULL END)) " +
+			"AND ((market_entry_date BETWEEN :entryDateFrom AND :entryDateTo) OR market_entry_date IS NULL) " +
+			"AND ((sell_date BETWEEN :sellDateFrom AND :sellDateTo) OR sell_date IS NULL) " +
 			"AND available IN (:available) " +
 			"AND agent LIKE :agent " +
 			"GROUP BY property.property_id HAVING COUNT(media.associated_property_id) >= :mediaMin")

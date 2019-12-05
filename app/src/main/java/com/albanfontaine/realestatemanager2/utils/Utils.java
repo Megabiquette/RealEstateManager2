@@ -37,12 +37,11 @@ public class Utils {
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param context
+     * @param connectivityManager
      * @return
      */
-    public static Boolean isInternetAvailable(Context context){
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+    public static Boolean isInternetAvailable(ConnectivityManager connectivityManager){
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 
     /**
