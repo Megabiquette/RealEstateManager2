@@ -41,7 +41,7 @@ public class Utils {
      * @return
      */
     public static Boolean isInternetAvailable(ConnectivityManager connectivityManager){
-        return connectivityManager.getActiveNetworkInfo() != null;
+        return connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     /**

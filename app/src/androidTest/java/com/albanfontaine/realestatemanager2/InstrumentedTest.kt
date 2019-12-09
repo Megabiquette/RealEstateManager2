@@ -1,9 +1,7 @@
 package com.albanfontaine.realestatemanager2
 
-import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.runner.AndroidJUnit4
 import com.albanfontaine.realestatemanager2.utils.Utils
 
@@ -22,11 +20,11 @@ class InstrumentedTest {
         val networkInfo: NetworkInfo = mock(NetworkInfo::class.java)
         `when`(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
 
+		// Testing when internet is on
         `when`(networkInfo.isConnected).thenReturn(true)
         assertTrue(Utils.isInternetAvailable(connectivityManager))
 
-        `when`(connectivityManager.activeNetworkInfo).thenReturn(null)
-
+		// Testing when internet is off
         `when`(networkInfo.isConnected).thenReturn(false)
         assertFalse(Utils.isInternetAvailable(connectivityManager))
     }
