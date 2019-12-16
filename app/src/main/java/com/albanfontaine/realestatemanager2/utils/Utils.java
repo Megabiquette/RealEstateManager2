@@ -2,7 +2,6 @@ package com.albanfontaine.realestatemanager2.utils;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 
@@ -41,7 +40,7 @@ public class Utils {
      * @return
      */
     public static Boolean isInternetAvailable(ConnectivityManager connectivityManager){
-        return connectivityManager.getActiveNetworkInfo().isConnected();
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 
     /**

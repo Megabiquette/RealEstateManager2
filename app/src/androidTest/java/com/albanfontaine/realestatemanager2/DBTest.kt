@@ -19,14 +19,12 @@ import org.junit.Assert.*
 
 @RunWith(AndroidJUnit4::class)
 class DBTest{
-	//private lateinit var PropertyAndMediasDAO: PropertyAndMediasDAO
 	private lateinit var db: AppDatabase
 
 	@Before
 	fun createDb(){
 		val context = ApplicationProvider.getApplicationContext<Context>()
 		db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-		//PropertyAndMediasDAO = db.propertyAndMediasDAO()
 	}
 
 	@After

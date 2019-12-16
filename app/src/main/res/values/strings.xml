@@ -96,5 +96,6 @@
 	<string name="search_check_available">Vous devez choisir au moins les biens disponibles ou les biens vendus</string>
 
 	<string name="no_property_found">Aucun bien trouvé</string>
+	<string name="no_internet">Aucune connexion internet détectée</string>
 
 </resources>

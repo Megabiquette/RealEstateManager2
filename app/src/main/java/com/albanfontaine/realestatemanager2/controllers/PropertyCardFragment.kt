@@ -1,13 +1,12 @@
 package com.albanfontaine.realestatemanager2.controllers
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -86,7 +85,7 @@ class PropertyCardFragment : Fragment() {
             R.id.toolbar_add -> return false
             R.id.toolbar_edit -> editProperty()
             R.id.toolbar_search -> startActivity(Intent(activity,SearchActivity::class.java))
-            R.id.toolbar_map -> startActivity(Intent(activity,MapActivity::class.java))
+            R.id.toolbar_map -> startMapActivity()
             else -> return true
         }
         return true
@@ -145,11 +144,19 @@ class PropertyCardFragment : Fragment() {
             mPriceLayout.visibility = View.GONE
             mLoanButton.visibility = View.GONE
         }
-        if(!mPropertyAndMedias.property?.address.equals("")){
+        if(!mPropertyAndMedias.property?.address.equals("") && Utils.isInternetAvailable(context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)){
             mAddress.text = mPropertyAndMedias.property?.address
             val mapUrl: String = Utils.getMapUrl(mPropertyAndMedias.property?.address)
             Picasso.with(context).load(mapUrl).fit().into(mMap)
         } else{ mAddressLayout.visibility = View.GONE}
+    }
+
+    private fun startMapActivity(){
+        if(Utils.isInternetAvailable(context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)){
+            startActivity(Intent(activity, MapActivity::class.java))
+        }else{
+            Toast.makeText(context, resources.getString(R.string.no_internet), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun configViews(){

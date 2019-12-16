@@ -1,10 +1,13 @@
 package com.albanfontaine.realestatemanager2.controllers
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.albanfontaine.realestatemanager2.R
@@ -21,7 +24,7 @@ class MainActivity : BaseActivity() {
         Utils.verifyStoragePermissions(this)
         configureToolbar()
 
-        // Check if the activity was called from the MapFragment
+        // Check if the activity was called from the SearchFragment
         val extras: Bundle? = intent.extras
 
         if(extras?.getString(Constants.SEARCH_QUERY) != null){
@@ -53,7 +56,7 @@ class MainActivity : BaseActivity() {
             R.id.toolbar_add -> startActivity(Intent(this, AddActivity::class.java))
             R.id.toolbar_edit -> return false
             R.id.toolbar_search -> startActivity(Intent(this, SearchActivity::class.java))
-            R.id.toolbar_map -> startActivity(Intent(this, MapActivity::class.java))
+            R.id.toolbar_map -> startMapActivity()
             else -> return true
         }
         return true
@@ -88,6 +91,15 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_base_frame_layout_right, propertyCardFragment)
                 .commit()
+        }
+    }
+
+    private fun startMapActivity(){
+        val cm: ConnectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if(Utils.isInternetAvailable(cm)){
+            startActivity(Intent(this, MapActivity::class.java))
+        }else{
+            Toast.makeText(applicationContext, resources.getString(R.string.no_internet), Toast.LENGTH_LONG).show()
         }
     }
 
