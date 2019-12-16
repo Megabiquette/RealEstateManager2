@@ -18,14 +18,13 @@ class InstrumentedTest {
         //val appContext = ApplicationProvider.getApplicationContext<Context>()
         val connectivityManager: ConnectivityManager = mock(ConnectivityManager::class.java)
         val networkInfo: NetworkInfo = mock(NetworkInfo::class.java)
-        `when`(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
 
 		// Testing when internet is on
-        `when`(networkInfo.isConnected).thenReturn(true)
+        `when`(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
         assertTrue(Utils.isInternetAvailable(connectivityManager))
 
 		// Testing when internet is off
-        `when`(networkInfo.isConnected).thenReturn(false)
+        `when`(connectivityManager.activeNetworkInfo).thenReturn(null)
         assertFalse(Utils.isInternetAvailable(connectivityManager))
     }
 }
