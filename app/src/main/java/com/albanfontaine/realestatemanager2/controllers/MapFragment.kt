@@ -39,9 +39,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 	override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_map, container, false)
 		val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-		mapFragment.getMapAsync(this)
 		getProperties()
-
+		mapFragment.getMapAsync(this)
 		return view
 	}
 
@@ -82,14 +81,19 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
 	private fun addMarkers(context: Context){
 		val geocoder = Geocoder(context)
-		for (property: Property in mProperties){
-			if(!property.address.equals("")){
-				val addresses: List<Address> = geocoder.getFromLocationName(property.address, 1)
-				val marker: Marker = mMap.addMarker(MarkerOptions()
-					.position(LatLng(addresses.get(0).latitude, addresses.get(0).longitude)))
-				marker.tag = property.id
+		val thread = Thread{
+			for(property: Property in mProperties){
+				if(!property.address.equals("")){
+					val addresses: List<Address> = geocoder.getFromLocationName(property.address, 1)
+					activity?.runOnUiThread{
+						val marker: Marker = mMap.addMarker(MarkerOptions()
+							.position
+						(LatLng(addresses[0].latitude, addresses[0].longitude)))
+						marker.tag = property.id
+					}
+				}
 			}
-		}
+		}.start()
 	}
 
 	override fun onMarkerClick(marker: Marker?): Boolean {

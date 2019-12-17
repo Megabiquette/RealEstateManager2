@@ -70,9 +70,9 @@ class AddActivity : BaseActivity() {
         val deleteMediasButton = add_activity_delete_medias_button
         val addPropertyButton = add_activity_add_property_button
 
-        addMediaButton.setOnClickListener{mMediaDialog.show()}
-        deleteMediasButton.setOnClickListener{mDeleteMediasDialog.show()}
-        addPropertyButton.setOnClickListener{addProperty()}
+        addMediaButton.setOnClickListener{ mMediaDialog.show() }
+        deleteMediasButton.setOnClickListener{ mDeleteMediasDialog.show() }
+        addPropertyButton.setOnClickListener{ addProperty() }
 
         // Checks if the user wants to edit a property
         val extras: Bundle? = intent.extras

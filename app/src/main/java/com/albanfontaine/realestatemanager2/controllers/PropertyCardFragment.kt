@@ -188,7 +188,6 @@ class PropertyCardFragment : Fragment() {
         mLoanButton.setOnClickListener{ simulateLoan()}
 
         mRecyclerView = property_card_recycler_view
-
     }
 
     private fun configureRecyclerView(){
