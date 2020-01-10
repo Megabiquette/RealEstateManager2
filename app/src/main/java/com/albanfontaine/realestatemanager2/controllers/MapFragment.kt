@@ -94,8 +94,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 									(LatLng(addresses[0].latitude, addresses[0].longitude)))
 							marker.tag = property.id
 						}
-					}else{
-						Toast.makeText(context, activity?.resources?.getString(R.string.address_error), Toast.LENGTH_LONG).show()
 					}
 				}
 			}

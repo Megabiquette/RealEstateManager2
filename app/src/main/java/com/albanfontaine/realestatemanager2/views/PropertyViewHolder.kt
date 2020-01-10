@@ -33,12 +33,16 @@ class PropertyViewHolder(var view: View): RecyclerView.ViewHolder(view){
             }
 
             mType.text = propertyAndMedias.property?.type
+
             if(!propertyAndMedias.property?.neighborhood.equals("")){
                 mNeighborhood.text = propertyAndMedias.property?.neighborhood
-            }else{
+            }else if(!propertyAndMedias.property?.city.equals("")){
+                mNeighborhood.text = propertyAndMedias.property?.city
+            } else{
                 mNeighborhood.text = activity.resources.getString(R.string.no_neighborhood)
                 mNeighborhood.setTypeface(mNeighborhood.typeface, Typeface.ITALIC)
             }
+
             if(propertyAndMedias.property?.price != null){
                 mPrice.text = Utils.formatPriceDollars(propertyAndMedias.property?.price!!)
             }else{

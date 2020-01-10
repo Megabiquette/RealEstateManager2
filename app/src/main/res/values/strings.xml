@@ -69,7 +69,7 @@
 	<string name="media_dialog_error_no_description">Vous devez ajouter une description à la photo</string>
 	<string name="property_error_0_media">Vous devez ajouter au moins une photo</string>
 	<string name="property_address_error">Vous devez ajouter l\'adresse complète ou laisser tous les champs de l\'adresse vide</string>
-	<string name="address_error">L\'adresse semble erronnée</string>
+	<string name="address_error">L\'adresse semble erronée</string>
 
 	<string name="property_added">Bien ajouté</string>
 	<string name="property_edited">Bien édité</string>
@@ -86,7 +86,7 @@
 	<string name="loan_error">Veuillez remplir tous les champs</string>
 	<string name="loan_payment_dollar">$%1$s</string>
 
-	<string name="no_neighborhood">Quartier non renseigné</string>
+	<string name="no_neighborhood">Adresse non renseignée</string>
 	<string name="no_price">Prix non renseigné</string>
 
 	<string name="edit_property">Editer bien</string>

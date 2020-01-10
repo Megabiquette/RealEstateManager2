@@ -37,7 +37,7 @@ class DBTest{
 	@Throws(Exception::class)
 	fun insertAndGetproperty(){
 		// Create a property and a media associated to it
-		val property: Property = Property(0, null, 300000, 75, null, null, null, null, null, true, null, null,null)
+		val property: Property = Property(0, null, 300000, 75, null, null, null, null, null, null, null, true,null, null, null)
 		val propId = db.propertyDAO().insertProperty(property)
 		val media: Media = Media(0, "URITest", "DescriptionTest", propId)
 		val mediaId = db.mediaDAO().insertMedia(media)
