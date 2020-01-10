@@ -5,13 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -29,7 +27,6 @@ import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.media_description.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.*
-import okhttp3.internal.wait
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -78,7 +75,7 @@ class AddActivity : BaseActivity() {
 
         addMediaButton.setOnClickListener{ mMediaDialog.show() }
         deleteMediasButton.setOnClickListener{ mDeleteMediasDialog.show() }
-        addPropertyButton.setOnClickListener{ addProperty() }
+        addPropertyButton.setOnClickListener{ addPropertyChecks() }
 
         // Checks if the user wants to edit a property
         val extras: Bundle? = intent.extras
@@ -203,51 +200,49 @@ class AddActivity : BaseActivity() {
     }
 
     private fun addProperty(){
-        if(mMedias.size <= 0){
-            // ERROR: no media added
-            Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
-        }else{
-			getForm()
-			if(checkAddressForm() && checkAddressExists()){
-				mDb = AppDatabase.getInstance(this)
-				val executor: Executor = Executors.newSingleThreadExecutor()
-				if (mPropertyId == null){
-					// ADD the property
-					val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
-					executor.execute{
-						val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
-						for(media: Media in mMedias){
-							val mediaToAdd = Media(0, media.uri, media.description, propId)
-							mDb?.mediaDAO()?.insertMedia(mediaToAdd)
-						}
-						runOnUiThread{
-							Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_LONG).show()
-							finish()
-						}
-					}
-				} else {
-					// EDIT the property
-					val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
-					executor.execute{
-						mDb?.propertyDAO()?.updateProperty(property)
-						for(media: Media in mMedias){
-							if(media.associatedPropertyId == null){
-								val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
-								mDb?.mediaDAO()?.insertMedia(mediaToAdd)
-							}
-						}
-						runOnUiThread{
-							Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_LONG).show()
-							startActivity(Intent(this, MainActivity::class.java))
-						}
-					}
+		mDb = AppDatabase.getInstance(this)
+		val executor: Executor = Executors.newSingleThreadExecutor()
+		if (mPropertyId == null){
+			// ADD the property
+			val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+			executor.execute{
+				val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
+				for(media: Media in mMedias){
+					val mediaToAdd = Media(0, media.uri, media.description, propId)
+					mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+				}
+				runOnUiThread{
+					Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_LONG).show()
+					finish()
 				}
 			}
-        }
+		} else {
+			// EDIT the property
+			val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+			executor.execute{
+				mDb?.propertyDAO()?.updateProperty(property)
+				for(media: Media in mMedias){
+					if(media.associatedPropertyId == null){
+						val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
+						mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+					}
+				}
+				runOnUiThread{
+					Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_LONG).show()
+					startActivity(Intent(this, MainActivity::class.java))
+				}
+			}
+		}
     }
 
-	private fun AddPropertyChecks(){
-
+	private fun addPropertyChecks(){
+		getForm()
+		if(mMedias.size <= 0){
+			// ERROR: no media added
+			Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
+		}else if(checkAddressForm()){
+			checkAddressExists()
+		}
 	}
 
 	private fun checkAddressForm(): Boolean{
@@ -261,8 +256,7 @@ class AddActivity : BaseActivity() {
 		return false
 	}
 
-    private fun checkAddressExists(): Boolean{
-		var addressExists = true
+    private fun checkAddressExists(){
         val url = Utils.getMapUrl("$mPropAddress $mPropZipCode $mPropCity")
         val client = OkHttpClient.Builder().build()
         val request = Request.Builder().url(url).build()
@@ -272,19 +266,15 @@ class AddActivity : BaseActivity() {
             val response = client.newCall(request).execute()
 			if(response.headers[Constants.STATICMAP_ERROR_HEADER] != null){
 				//If error header exists, address was not found
-				addressExists = false
 				runOnUiThread{
 					Toast.makeText(applicationContext, R.string.address_error, Toast.LENGTH_LONG).show()
 				}
-				Log.e("response", "error")
 			}else{
-				Log.e("response", "works")
+				addProperty()
 			}
 			response.body?.close()
             }
-
-        return addressExists
-    }
+	}
 
     private fun getForm(){
         mPropType = add_activity_type_spinner.selectedItem.toString().trim()

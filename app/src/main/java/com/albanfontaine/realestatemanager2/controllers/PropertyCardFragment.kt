@@ -16,13 +16,10 @@ import com.albanfontaine.realestatemanager2.database.AppDatabase
 import com.albanfontaine.realestatemanager2.models.Media
 import com.albanfontaine.realestatemanager2.models.PropertyAndMedias
 import com.albanfontaine.realestatemanager2.utils.Constants
-import com.albanfontaine.realestatemanager2.utils.TestInterceptor
 import com.albanfontaine.realestatemanager2.utils.Utils
 import com.albanfontaine.realestatemanager2.views.MediaAdapter
-import com.jakewharton.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_property_card.*
-import okhttp3.OkHttpClient
 import java.util.concurrent.Executors
 
 class PropertyCardFragment : Fragment() {
@@ -150,15 +147,7 @@ class PropertyCardFragment : Fragment() {
         if(!mPropertyAndMedias.property?.address.equals("") && Utils.isInternetAvailable(context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)){
             mAddress.text = Utils.formatAddress(mPropertyAndMedias.property?.address, mPropertyAndMedias.property?.zipCode!!, mPropertyAndMedias.property?.city)
             val mapUrl: String = Utils.getMapUrl(mAddress.text.toString())
-
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(TestInterceptor())
-                .build()
-            val downloader = OkHttp3Downloader(okHttpClient)
-
-            val picasso = Picasso.Builder(requireContext()).downloader(downloader).build()
-            picasso.load(mapUrl).fit().into(mMap)
-            //Picasso.with(context).load(mapUrl).fit().into(mMap)
+            Picasso.with(context).load(mapUrl).fit().into(mMap)
         } else{ mAddressLayout.visibility = View.GONE}
     }
 
