@@ -5,11 +5,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -26,6 +28,8 @@ import com.albanfontaine.realestatemanager2.utils.Utils
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.media_description.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import okhttp3.*
+import okhttp3.internal.wait
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -51,6 +55,8 @@ class AddActivity : BaseActivity() {
     private var mPropRoomNb: Int? = null
     private var mPropDescription: String? = null
     private var mPropAddress: String? = null
+    private var mPropZipCode: Int? = null
+    private var mPropCity: String? = null
     private var mPropNeighborhood: String? = null
     private var mPropPOI: String? = null
     private var mPropAvailable: Boolean = true
@@ -201,52 +207,96 @@ class AddActivity : BaseActivity() {
             // ERROR: no media added
             Toast.makeText(applicationContext, R.string.property_error_0_media, Toast.LENGTH_SHORT).show()
         }else{
-            mDb = AppDatabase.getInstance(this)
-            val executor: Executor = Executors.newSingleThreadExecutor()
-            getForm()
-            if (mPropertyId == null){
-                // ADD the property
-                val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
-                executor.execute{
-                    val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
-                    for(media: Media in mMedias){
-                        val mediaToAdd = Media(0, media.uri, media.description, propId)
-                        mDb?.mediaDAO()?.insertMedia(mediaToAdd)
-                    }
-                    runOnUiThread{
-                        Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_LONG).show()
-                        finish()
-                    }
-                }
-            } else {
-                // EDIT the property
-                val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress,mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
-                executor.execute{
-                    mDb?.propertyDAO()?.updateProperty(property)
-                    for(media: Media in mMedias){
-                        if(media.associatedPropertyId == null){
-                            val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
-                            mDb?.mediaDAO()?.insertMedia(mediaToAdd)
-                        }
-                    }
-                    runOnUiThread{
-                        Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this, MainActivity::class.java))
-                    }
-                }
-            }
+			getForm()
+			if(checkAddressForm() && checkAddressExists()){
+				mDb = AppDatabase.getInstance(this)
+				val executor: Executor = Executors.newSingleThreadExecutor()
+				if (mPropertyId == null){
+					// ADD the property
+					val property = Property(0, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+					executor.execute{
+						val propId: Long? = mDb?.propertyDAO()?.insertProperty(property)
+						for(media: Media in mMedias){
+							val mediaToAdd = Media(0, media.uri, media.description, propId)
+							mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+						}
+						runOnUiThread{
+							Toast.makeText(applicationContext, R.string.property_added, Toast.LENGTH_LONG).show()
+							finish()
+						}
+					}
+				} else {
+					// EDIT the property
+					val property = Property(mProperty?.id!!, mPropType, mPropPrice, mPropSurface, mPropRoomNb, mPropDescription, mPropAddress, mPropZipCode, mPropCity, mPropNeighborhood, mPropPOI, mPropAvailable, mPropMarketEntryDate, mPropSellDate, mPropAgent)
+					executor.execute{
+						mDb?.propertyDAO()?.updateProperty(property)
+						for(media: Media in mMedias){
+							if(media.associatedPropertyId == null){
+								val mediaToAdd = Media(0, media.uri, media.description, mProperty?.id!!)
+								mDb?.mediaDAO()?.insertMedia(mediaToAdd)
+							}
+						}
+						runOnUiThread{
+							Toast.makeText(applicationContext, R.string.property_edited, Toast.LENGTH_LONG).show()
+							startActivity(Intent(this, MainActivity::class.java))
+						}
+					}
+				}
+			}
         }
+    }
+
+	private fun AddPropertyChecks(){
+
+	}
+
+	private fun checkAddressForm(): Boolean{
+		if(mPropAddress.equals("") && mPropZipCode == null && mPropCity.equals("")){
+			return true
+		}
+		if(!mPropAddress.equals("") && mPropZipCode != null && !mPropCity.equals("")){
+			return true
+		}
+		Toast.makeText(applicationContext, R.string.property_address_error, Toast.LENGTH_LONG).show()
+		return false
+	}
+
+    private fun checkAddressExists(): Boolean{
+		var addressExists = true
+        val url = Utils.getMapUrl("$mPropAddress $mPropZipCode $mPropCity")
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder().url(url).build()
+
+        val executor: Executor = Executors.newSingleThreadExecutor()
+        executor.execute{
+            val response = client.newCall(request).execute()
+			if(response.headers[Constants.STATICMAP_ERROR_HEADER] != null){
+				//If error header exists, address was not found
+				addressExists = false
+				runOnUiThread{
+					Toast.makeText(applicationContext, R.string.address_error, Toast.LENGTH_LONG).show()
+				}
+				Log.e("response", "error")
+			}else{
+				Log.e("response", "works")
+			}
+			response.body?.close()
+            }
+
+        return addressExists
     }
 
     private fun getForm(){
         mPropType = add_activity_type_spinner.selectedItem.toString().trim()
         mPropDescription = add_activity_description_editText.text.toString().trim()
         mPropAddress = add_activity_address_editText.text.toString().trim()
+        mPropCity = add_activity_city_editText.text.toString().trim()
         mPropNeighborhood = add_activity_neighborhood_editText.text.toString().trim()
         mPropPOI = add_activity_POIs_editText.text.toString().trim()
         mPropAvailable = add_activity_available_checkBox.isChecked
         mPropAgent = add_activity_agent_editText.text.toString().trim()
 
+        if(!add_activity_zip_code_editText.text.toString().trim().equals("")){mPropZipCode = add_activity_zip_code_editText.text.toString().trim().toInt()}
         if(!add_activity_price_editText.text.toString().trim().equals("")){mPropPrice = (add_activity_price_editText.text.toString().trim()).toInt()}
         if(!add_activity_surface_editText.text.toString().trim().equals("")){mPropSurface = (add_activity_surface_editText.text.toString().trim()).toInt()}
         if(!add_activity_numberRooms_editText.text.toString().trim().equals("")){mPropRoomNb = (add_activity_numberRooms_editText.text.toString().trim()).toInt()}
@@ -284,8 +334,10 @@ class AddActivity : BaseActivity() {
         if(!mProperty?.available!!){ add_activity_available_checkBox.isChecked = false}
         if(!mProperty?.agent.equals("")){ add_activity_agent_editText.setText(mProperty?.agent)}
         if(!mProperty?.address.equals("")){ add_activity_address_editText.setText(mProperty?.address)}
+        if(!mProperty?.city.equals("")){ add_activity_city_editText.setText(mProperty?.city)}
         if(!mProperty?.neighborhood.equals("")){ add_activity_neighborhood_editText.setText(mProperty?.neighborhood)}
 
+        if(mProperty?.zipCode != null){ add_activity_zip_code_editText.setText(mProperty?.zipCode.toString())}
         if(mProperty?.price != null){ add_activity_price_editText.setText(mProperty?.price.toString())}
         if(mProperty?.surface != null){ add_activity_surface_editText.setText(mProperty?.surface.toString())}
         if(mProperty?.roomNumber != null){ add_activity_numberRooms_editText.setText(mProperty?.roomNumber.toString())}

@@ -54,6 +54,7 @@ class ListFragment : Fragment() {
         if(mAdapter != null){
             getProperties()
             mAdapter?.notifyDataSetChanged()
+			checkListSize()
         }
     }
 
@@ -70,10 +71,7 @@ class ListFragment : Fragment() {
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.getProperties()!!
             }
             activity?.runOnUiThread{
-				if(mPropertiesAndMedias.isEmpty()){
-					val noPropertyTextView: TextView = fragment_list_no_property_found
-					noPropertyTextView.visibility = View.VISIBLE
-				}
+				checkListSize()
                 configureRecyclerView()
                 configureOnClickRecyclerView()
 				// If device is a tablet, show first property card in right fragment
@@ -88,6 +86,15 @@ class ListFragment : Fragment() {
             }
         }
     }
+
+	private fun checkListSize(){
+		val noPropertyTextView: TextView = fragment_list_no_property_found
+		if(mPropertiesAndMedias.isEmpty()){
+			noPropertyTextView.visibility = View.VISIBLE
+		}else{
+			noPropertyTextView.visibility = View.GONE
+		}
+	}
 
     private fun configureRecyclerView(){
         mAdapter = PropertyAdapter(mPropertiesAndMedias, requireContext(), requireActivity())

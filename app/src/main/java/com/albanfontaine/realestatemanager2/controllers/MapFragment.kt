@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Address
 import android.location.Criteria
 import android.location.Geocoder
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -85,11 +87,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 			for(property: Property in mProperties){
 				if(!property.address.equals("")){
 					val addresses: List<Address> = geocoder.getFromLocationName(property.address, 1)
-					activity?.runOnUiThread{
-						val marker: Marker = mMap.addMarker(MarkerOptions()
-							.position
-						(LatLng(addresses[0].latitude, addresses[0].longitude)))
-						marker.tag = property.id
+					if(!addresses.isNullOrEmpty()){
+						activity?.runOnUiThread{
+							val marker: Marker = mMap.addMarker(MarkerOptions()
+								.position
+									(LatLng(addresses[0].latitude, addresses[0].longitude)))
+							marker.tag = property.id
+						}
+					}else{
+						Toast.makeText(context, activity?.resources?.getString(R.string.address_error), Toast.LENGTH_LONG).show()
 					}
 				}
 			}

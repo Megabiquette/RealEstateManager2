@@ -76,6 +76,13 @@ public class Utils {
     }
 
     /**
+     *
+     */
+    public static String formatAddress(String address, int zipCode, String city){
+        return address + " " + String.valueOf(zipCode) + " " + city;
+    }
+
+    /**
      * Takes a String and returns a Google Maps Static API url
      * like https://maps.googleapis.com/maps/api/staticmap?markers=108+boulevard+saint+germain+75006+paris&zoom=15&size=300x300&scale=3&key=AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI
      * @param address

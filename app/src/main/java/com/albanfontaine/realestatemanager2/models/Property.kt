@@ -14,6 +14,8 @@ data class Property(
     @ColumnInfo(name = "room_number") val roomNumber: Int?,
     @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "address") val address: String?,
+    @ColumnInfo(name = "zip_code") val zipCode: Int?,
+    @ColumnInfo(name = "city") val city: String?,
     @ColumnInfo(name = "neighborhood") val neighborhood: String?,
     @ColumnInfo(name = "points_of_interest") val pointsOfInterest: String?,
     @ColumnInfo(name = "available") val available: Boolean = true,

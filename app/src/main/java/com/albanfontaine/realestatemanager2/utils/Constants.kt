@@ -16,5 +16,7 @@ class Constants{
         const val MAP_URL_BEGINNING = "https://maps.googleapis.com/maps/api/staticmap?markers="
         const val MAP_URL_END = "&zoom=15&size=300x300&scale=3&key=AIzaSyADBmQ_3NHCQjEFjqwO4R8YSe3WUc5AwcI"
 
+        const val STATICMAP_ERROR_HEADER = "x-staticmap-api-warning"
+
     }
 }

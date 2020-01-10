@@ -39,6 +39,8 @@
 	<string name="property_numberRooms">Nombre de pièces:</string>
 	<string name="property_description">Description:</string>
 	<string name="property_address">Adresse:</string>
+	<string name="property_zip_code">Code postal:</string>
+	<string name="property_city">Ville:</string>
 	<string name="property_neighborhood">Quartier:</string>
 	<string name="property_POIs">Points d\'interêts:</string>
 	<string name="dollar_sign">$</string>
@@ -66,6 +68,9 @@
 	<string name="media_dialog_no_cam">Aucune caméra trouvée sur l\'appareil</string>
 	<string name="media_dialog_error_no_description">Vous devez ajouter une description à la photo</string>
 	<string name="property_error_0_media">Vous devez ajouter au moins une photo</string>
+	<string name="property_address_error">Vous devez ajouter l\'adresse complète ou laisser tous les champs de l\'adresse vide</string>
+	<string name="address_error">L\'adresse semble erronnée</string>
+
 	<string name="property_added">Bien ajouté</string>
 	<string name="property_edited">Bien édité</string>
 	<string name="property_medias">Photos</string>
@@ -97,5 +102,6 @@
 
 	<string name="no_property_found">Aucun bien trouvé</string>
 	<string name="no_internet">Aucune connexion internet détectée</string>
+
 
 </resources>
