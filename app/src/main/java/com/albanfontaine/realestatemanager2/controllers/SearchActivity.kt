@@ -28,6 +28,7 @@ class SearchActivity : BaseActivity() {
     private lateinit var mSurfaceMinForm: EditText
     private lateinit var mSurfaceMaxForm: EditText
     private lateinit var mNeighborhoodForm: EditText
+    private lateinit var mCityForm: EditText
     private lateinit var mPOIsForm: EditText
     private lateinit var mEntryDateFromForm: EditText
     private lateinit var mEntryDateToForm: EditText
@@ -45,6 +46,7 @@ class SearchActivity : BaseActivity() {
     private var mSurfaceMin: Int = 0
     private var mSurfaceMax: Int = 999999999
     private lateinit var mNeighborhood: String
+    private lateinit var mCity: String
     private lateinit var mPOIs: String
     private var mEntryDateFrom: Int = 0
     private var mEntryDateTo: Int = 999999999
@@ -71,7 +73,7 @@ class SearchActivity : BaseActivity() {
             val intent = Intent(this, MainActivity::class.java)
             val gson = Gson()
 
-            val searchQuery = SearchQuery(mTypes, mPriceMin, mPriceMax, mSurfaceMin, mSurfaceMax, mNeighborhood, mPOIs, mEntryDateFrom, mEntryDateTo, mSaleDateFrom, mSaleDateTo, mAvailable, mAgent, mMediasMin)
+            val searchQuery = SearchQuery(mTypes, mPriceMin, mPriceMax, mSurfaceMin, mSurfaceMax, mNeighborhood, mCity, mPOIs, mEntryDateFrom, mEntryDateTo, mSaleDateFrom, mSaleDateTo, mAvailable, mAgent, mMediasMin)
             val searchQueryType = object: TypeToken<SearchQuery>(){}.type
 
             val searchQueryJSON = gson.toJson(searchQuery, searchQueryType)
@@ -94,6 +96,7 @@ class SearchActivity : BaseActivity() {
         if(!mSurfaceMinForm.text.toString().trim().equals("")){mSurfaceMin = mSurfaceMinForm.text.toString().toInt()}
         if(!mSurfaceMaxForm.text.toString().trim().equals("")){mSurfaceMax = mSurfaceMaxForm.text.toString().toInt()}
         mNeighborhood = "%" + mNeighborhoodForm.text.toString().trim() + "%"
+        mCity = "%" + mCityForm.text.toString().trim() + "%"
         mPOIs = "%" + mPOIsForm.text.toString().trim() + "%"
         if(!mEntryDateFromForm.text.toString().trim().equals("")){mEntryDateFrom = Utils.formatDateForDB(mEntryDateFromForm.text.toString())}
         if(!mEntryDateToForm.text.toString().trim().equals("")){mEntryDateTo = Utils.formatDateForDB(mEntryDateToForm.text.toString())}
@@ -131,6 +134,7 @@ class SearchActivity : BaseActivity() {
         mSurfaceMinForm.setText("")
         mSurfaceMaxForm.setText("")
         mNeighborhoodForm.setText("")
+        mCityForm.setText("")
         mPOIsForm.setText("")
         mEntryDateFromForm.setText("")
         mEntryDateToForm.setText("")
@@ -156,6 +160,7 @@ class SearchActivity : BaseActivity() {
         mSurfaceMinForm = search_surface_min
         mSurfaceMaxForm = search_surface_max
         mNeighborhoodForm = search_neighborhood
+        mCityForm = search_city
         mPOIsForm = search_POIs
         mEntryDateFromForm = search_entry_date_from
         mEntryDateToForm = search_entry_date_to

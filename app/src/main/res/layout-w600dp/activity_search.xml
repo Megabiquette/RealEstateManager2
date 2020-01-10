@@ -264,6 +264,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/item_margin_top"
+                android:layout_marginEnd="@dimen/item_margin_horizontal"
+                android:layout_marginStart="@dimen/item_margin_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/property_city"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/search_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:maxLength="25"
+                    android:singleLine="true"
+                    android:layout_marginStart="@dimen/item_padding"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/item_margin_top"
                 android:layout_marginEnd="@dimen/item_margin_horizontal"

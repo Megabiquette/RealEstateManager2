@@ -64,7 +64,7 @@ class ListFragment : Fragment() {
         executor.execute{
             if(mSearchQuery != null){
                 mPropertiesAndMedias = mDb?.propertyAndMediasDAO()?.searchProperties(mSearchQuery?.types!!, mSearchQuery?.priceMin!!, mSearchQuery?.priceMax!!, mSearchQuery?.surfaceMin!!, mSearchQuery?.surfaceMax!!,
-                    mSearchQuery?.neighborhood!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
+                    mSearchQuery?.neighborhood!!, mSearchQuery?.city!!, mSearchQuery?.POIs!!, mSearchQuery?.entryDateFrom!!, mSearchQuery?.entryDateTo!!, mSearchQuery?.saleDateFrom!!, mSearchQuery?.saleDateTo!!,
                     mSearchQuery?.available!!, mSearchQuery?.agent!!, mSearchQuery?.mediaMin!!)!!
 
             }else{
